@@ -6,5 +6,6 @@ SET commit_message="[DOCS] Update %current_date% %current_time%"
 
 echo %commit_message%
 
+echo START AUTO GIT COMMIT...
 git add .
 git commit -m %commit_message%
