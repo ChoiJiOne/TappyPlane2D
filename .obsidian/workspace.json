@@ -1,0 +1,173 @@
+{
+  "main": {
+    "id": "0651718b29c21544",
+    "type": "split",
+    "children": [
+      {
+        "id": "cfcb1cc6c216854c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "21a39cd35dc2fed9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fb5957f28816afad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "TappyPlane2D 프로젝트 이미지 리소스.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7681d13eddc763aa",
+    "type": "split",
+    "children": [
+      {
+        "id": "38436c93a5d67d95",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4cfcff1c1f50273c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "d03a8dc7294f1389",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0c3eb5e3b3b1f97a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "af2adbb63b2b6475",
+    "type": "split",
+    "children": [
+      {
+        "id": "9bbb511d3cf7506a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c6a1eb10fb948907",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "TappyPlane2D 프로젝트 이미지 리소스.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "313dd1b0f5b8cd2b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "TappyPlane2D 프로젝트 이미지 리소스.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "47fcb2eb38e14868",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "5520a41eb9bee502",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "TappyPlane2D 프로젝트 이미지 리소스.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:퀵 스위처 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 데일리 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "fb5957f28816afad",
+  "lastOpenFiles": [
+    "commit.bat",
+    "test.py",
+    "새 텍스트 문서.txt",
+    "Resource/Pasted image 20231029155737.png",
+    "Resource/Pasted image 20231029155703.png",
+    "README.md",
+    "TappyPlane2D 프로젝트 이미지 리소스.md",
+    "Resource"
+  ]
+}
