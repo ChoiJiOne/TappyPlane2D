@@ -14,8 +14,21 @@
               "type": "empty",
               "state": {}
             }
+          },
+          {
+            "id": "7b1d6e3c049c217a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Docs/프로젝트의 저장소 복제본 얻기.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -81,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Docs/프로젝트의 저장소 복제본 얻기.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Docs/프로젝트의 저장소 복제본 얻기.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +133,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Docs/프로젝트의 저장소 복제본 얻기.md"
+              }
             }
           }
         ]
@@ -138,10 +155,11 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "a735384f5f34b37e",
+  "active": "4cfcff1c1f50273c",
   "lastOpenFiles": [
-    "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
     "Docs/GLFW에서 Windows 빌드에 필요한 소스 파일.md",
+    "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+    "Docs/프로젝트의 저장소 복제본 얻기.md",
     "README.md",
     "Docs/Visual Studio 솔루션 하위 프로젝트 구성.md",
     "Docs",
