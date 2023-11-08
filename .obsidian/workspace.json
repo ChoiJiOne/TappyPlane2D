@@ -21,7 +21,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -111,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Docs/프로젝트에서 사용한 라이브러리 & 툴.md"
+                "file": "README.md"
               }
             }
           }
@@ -155,10 +155,10 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "4cfcff1c1f50273c",
+  "active": "00f545e5e0f1a4fb",
   "lastOpenFiles": [
-    "Docs/Visual Studio 솔루션 하위 프로젝트 구성.md",
     "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+    "Docs/Visual Studio 솔루션 하위 프로젝트 구성.md",
     "Docs",
     "프로젝트 기대 수준.md",
     "문서 관리 스크립트.md",
