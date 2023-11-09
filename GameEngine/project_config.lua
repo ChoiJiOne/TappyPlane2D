@@ -20,6 +20,7 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
     
     files {
         "%{engine_directory}/*",
+        "%{engine_directory}/Script/**", -- 엔진 스크립트 폴더 하위의 파일들을 추가합니다.
         "%{engine_directory}/Source/**", -- 엔진 소스 폴더 하위의 파일들을 추가합니다.
     }
 
