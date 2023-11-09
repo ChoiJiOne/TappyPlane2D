@@ -15,6 +15,7 @@ TypeName& operator=(TypeName&&) = delete;\
 TypeName& operator=(const TypeName) = delete;
 #endif
 
+
 /**
  * @brief 타입(클래스 혹은 구조체)의 디폴트 생성자와 아무 동작도 수행하지 않는 가상 소멸자를 선언합니다.
  *
@@ -25,6 +26,7 @@ TypeName& operator=(const TypeName) = delete;
 TypeName() = default;\
 virtual ~TypeName() {}
 #endif
+
 
 /**
  * @brief 타입(클래스 혹은 구조체)을 싱글턴으로 설정합니다.
