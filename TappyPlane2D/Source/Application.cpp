@@ -1,3 +1,7 @@
+#include "Common/Assertion.h"
+
+#include "Vector/Vector.h"
+
 #include <string>
 
 #include <glad/glad.h>
@@ -5,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-	glfwInit();
+	ASSERTION(glfwInit() == GLFW_TRUE, "failed to initialize GLFW...");
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -16,11 +20,7 @@ int main(int argc, char* argv[])
 	const int32_t height = 800;
 
 	GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-	if (window == nullptr)
-	{
-		glfwTerminate();
-		return -1;
-	}
+	ASSERTION(window != nullptr, "failed to create GLFW window...");
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, 
@@ -29,15 +29,8 @@ int main(int argc, char* argv[])
 			glViewport(0, 0, width, height);
 		}
 	);
-
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		glfwDestroyWindow(window);
-		window = nullptr;
-
-		glfwTerminate();
-		return -1;
-	}
+	
+	ASSERTION(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "failed to initialize OpenGL function loader...");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -46,7 +39,7 @@ int main(int argc, char* argv[])
 			glfwSetWindowShouldClose(window, true);
 		}
 
-		glClearColor(0.1f, 0.5f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glfwSwapBuffers(window);
