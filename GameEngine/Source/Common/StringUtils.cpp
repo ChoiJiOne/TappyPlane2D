@@ -96,3 +96,21 @@ std::wstring StringUtils::ToLower(const std::wstring& text)
 
 	return lower;
 }
+
+std::string StringUtils::ToUpper(const std::string& text)
+{
+	std::string upper = text;
+
+	std::transform(upper.begin(), upper.end(), upper.begin(), std::toupper);
+
+	return upper;
+}
+
+std::wstring StringUtils::ToUpper(const std::wstring& text)
+{
+	std::wstring upper = text;
+
+	std::transform(upper.begin(), upper.end(), upper.begin(), std::toupper);
+
+	return upper;
+}
