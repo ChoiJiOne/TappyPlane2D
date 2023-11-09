@@ -12,7 +12,7 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
     }
 
     files {
-        "%{engine_directory}/**", -- 엔진의 파일 경로를 추가합니다.
+        "%{engine_directory}/**", -- 엔진의 디렉토리 하위의 파일들을 추가합니다.
     }
 
     links {
@@ -20,7 +20,7 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
     }
     
     disablewarnings { 
-        "4996", -- C4996 경로를 비활성화합니다.
+        "4996", -- C4996 경고를 비활성화합니다.
     }
 
     filter "configurations:Debug" -- 프로젝트의 Debug 모드 설정을 수행합니다.
