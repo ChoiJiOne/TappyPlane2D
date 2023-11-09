@@ -9,14 +9,28 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
 
     includedirs {
         "%{engine_directory}/Source", -- 엔진의 소스 파일 경로를 추가합니다.
-    }
 
+        "%{glad_path}",              -- glad 라이브러리 헤더 경로를 추가합니다.
+        "%{glfw_include_path}",      -- glfw 라이브러리 헤더 경로를 추가합니다.
+        "%{imgui_include_path}",     -- imgui 라이브러리 헤더 경로를 추가합니다.
+        "%{jsoncpp_include_path}",   -- jsoncpp 라이브러리 헤더 경로를 추가합니다.
+        "%{miniaudio_include_path}", -- miniaudio 라이브러리 헤더 경로를 추가합니다.
+        "%{stb_include_path}",       -- stb 라이브러리 헤더 경로를 추가합니다.
+    }
+    
     files {
-        "%{engine_directory}/**", -- 엔진의 디렉토리 하위의 파일들을 추가합니다.
+        "%{engine_directory}/*",
+        "%{engine_directory}/Source/**", -- 엔진 소스 폴더 하위의 파일들을 추가합니다.
     }
 
     links {
         "Dbghelp.lib", -- 디버깅을 위한 라이브러리를 추가합니다.
+        "glad",
+        "glfw",
+        "imgui",
+        "jsoncpp",
+        "miniaudio",
+        "stb",
     }
     
     disablewarnings { 
