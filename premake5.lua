@@ -19,6 +19,24 @@ thirdparty_directory = "%{engine_directory}/ThirdParty"
 -- 게임 프로젝트 디렉토리입니다.
 game_directory = "%{root_directory}/%{game_project}"
 
+-- glad 라이브러리 헤더 경로입니다.
+glad_path = "%{thirdparty_directory}/glad/include"
+
+-- glfw 라이브러리 헤더 경로입니다.
+glfw_include_path = "%{thirdparty_directory}/glfw/include"
+
+-- imgui 라이브러리 헤더 경로입니다.
+imgui_include_path = "%{thirdparty_directory}/imgui/include"
+
+-- jsoncpp 라이브러리 헤더 경로입니다.
+jsoncpp_include_path = "%{thirdparty_directory}/jsoncpp/include"
+
+-- miniaudio 라이브러리 헤더 경로입니다.
+miniaudio_include_path = "%{thirdparty_directory}/miniaudio/include"
+
+-- stb 라이브러리 헤더 경로입니다.
+stb_include_path = "%{thirdparty_directory}/stb/include"
+
 -- 게임 개발 작업 영역입니다.
 workspace "%{game_project}"
     -- 빌드 구성 요소입니다.
@@ -36,6 +54,9 @@ workspace "%{game_project}"
 
     -- 시작 프로젝트를 설정합니다.
     startproject "%{game_project}"
+
+    -- 서드 파티 라이브러리 프로젝트 설정을 추가합니다.
+    include "GameEngine/ThirdParty/thirdparty_config.lua"
 
     -- 게임 엔진 프로젝트 설정을 추가합니다.
     include "GameEngine/project_config.lua"
