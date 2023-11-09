@@ -68,3 +68,13 @@ std::string StringUtils::Convert(const std::wstring& text)
 	std::size_t size = std::wcstombs(charBuffer_, text.c_str(), MAX_BUFFER_SIZE);
 	return std::string(charBuffer_, size);
 }
+
+bool StringUtils::IsEqual(const std::string& lhs, const std::string& rhs)
+{
+	return lhs.compare(rhs) == 0;
+}
+
+bool StringUtils::IsEqual(const std::wstring& lhs, const std::wstring& rhs)
+{
+	return lhs.compare(rhs) == 0;
+}

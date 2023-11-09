@@ -93,6 +93,28 @@ public:
 	static std::string Convert(const std::wstring& text);
 
 
+	/**
+	 * @brief 두 문자열이 동일한지 확인합니다.
+	 *
+	 * @param 비교할 두 문자열 중 왼쪽 문자열입니다.
+	 * @param 비교할 두 문자열 중 오른쪽 문자열입니다.
+	 *
+	 * @return 두 문자열이 동일하다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	static bool IsEqual(const std::string& lhs, const std::string& rhs);
+
+
+	/**
+	 * @brief 두 문자열이 동일한지 확인합니다.
+	 *
+	 * @param 비교할 두 문자열 중 왼쪽 문자열입니다.
+	 * @param 비교할 두 문자열 중 오른쪽 문자열입니다.
+	 *
+	 * @return 두 문자열이 동일하다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	static bool IsEqual(const std::wstring& lhs, const std::wstring& rhs);
+
+
 private:
 	/**
 	 * @brief 문자열 버퍼의 최대 크기입니다.
