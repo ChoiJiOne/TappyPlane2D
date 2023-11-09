@@ -33,7 +33,7 @@ if "%project%" == "" (
 )
 
 echo START premake5.exe...
-%premake5% %visualstudio% %project%
+%premake5_path% %visualstudio% %project%
 
 echo START visual studio solution...
 start Solution\%project%.sln
