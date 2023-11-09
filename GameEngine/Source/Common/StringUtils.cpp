@@ -78,3 +78,21 @@ bool StringUtils::IsEqual(const std::wstring& lhs, const std::wstring& rhs)
 {
 	return lhs.compare(rhs) == 0;
 }
+
+std::string StringUtils::ToLower(const std::string& text)
+{
+	std::string lower = text;
+
+	std::transform(lower.begin(), lower.end(), lower.begin(), std::tolower);
+
+	return lower;
+}
+
+std::wstring StringUtils::ToLower(const std::wstring& text)
+{
+	std::wstring lower = text;
+
+	std::transform(lower.begin(), lower.end(), lower.begin(), std::tolower);
+
+	return lower;
+}
