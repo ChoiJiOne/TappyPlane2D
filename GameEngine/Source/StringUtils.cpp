@@ -1,5 +1,7 @@
 #include "StringUtils.h"
 
+#include <algorithm>
+
 const int32_t MAX_BUFFER_SIZE = 1024;	// 문자열 버퍼의 최대 크기입니다.
 char charBuffer[MAX_BUFFER_SIZE];		// char 문자열 버퍼입니다.
 wchar_t wcharBuffer[MAX_BUFFER_SIZE];	// wchar_t 문자열 버퍼입니다.
@@ -66,4 +68,18 @@ std::string StringUtils::Convert(const std::wstring& text)
 {
 	std::size_t size = std::wcstombs(charBuffer, text.c_str(), MAX_BUFFER_SIZE);
 	return std::string(charBuffer, size);
+}
+
+std::string StringUtils::ToLower(const std::string& text)
+{
+	std::string lower = text;
+	std::transform(lower.begin(), lower.end(), lower.begin(), std::tolower);
+	return lower;
+}
+
+std::wstring StringUtils::ToLower(const std::wstring& text)
+{
+	std::wstring lower = text;
+	std::transform(lower.begin(), lower.end(), lower.begin(), std::tolower);
+	return lower;
 }
