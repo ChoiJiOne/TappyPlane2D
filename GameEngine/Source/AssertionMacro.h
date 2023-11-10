@@ -69,8 +69,8 @@ inline void DebugPrintF(const wchar_t* format, ...)
  * - 디버거가 존재하지 않으면 크래시 덤프 파일을 생성합니다.
  */
 #if defined(DEBUG)
-#ifndef ASSERTION // assertion(...);
-#define ASSERTION(EXPRESSION, ...)\
+#ifndef ASSERT
+#define ASSERT(EXPRESSION, ...)\
 {\
 if (!(bool)(EXPRESSION))\
 {\
@@ -83,8 +83,8 @@ ExitProcess(-1);\
 }
 #endif
 #elif defined(RELEASE)
-#ifndef ASSERTION
-#define ASSERTION(EXPRESSION, ...)\
+#ifndef ASSERT
+#define ASSERT(EXPRESSION, ...)\
 {\
 if (!(bool)(EXPRESSION))\
 {\
@@ -96,7 +96,7 @@ __debugbreak(); \
 }
 #endif
 #else
-#ifndef ASSERTION
-#define ASSERTION(EXPRESSION, ...) ((void)(EXPRESSION))
+#ifndef ASSERT
+#define ASSERT(EXPRESSION, ...) ((void)(EXPRESSION))
 #endif
 #endif
