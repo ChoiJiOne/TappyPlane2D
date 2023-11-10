@@ -368,3 +368,15 @@ struct Vector4
 		T data[4];
 	};
 };
+
+
+/**
+ * @brief int32_t 타입의 4차원 벡터입니다.
+ */
+using Vector4i = Vector4<int32_t>;
+
+
+/**
+ * @brief float 타입의 4차원 벡터입니다.
+ */
+using Vector4f = Vector4<float>;
