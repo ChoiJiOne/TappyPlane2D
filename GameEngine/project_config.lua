@@ -26,6 +26,7 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
 
     links {
         "Dbghelp.lib", -- 디버깅을 위한 라이브러리를 추가합니다.
+        "Shlwapi.lib",
         "glad",
         "glfw",
         "imgui",
