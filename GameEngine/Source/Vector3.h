@@ -350,3 +350,15 @@ struct Vector3
 		T data[3];
 	};
 };
+
+
+/**
+ * @brief int32_t 타입의 3차원 벡터입니다.
+ */
+using Vector3i = Vector3<int32_t>;
+
+
+/**
+ * @brief float 타입의 3차원 벡터입니다.
+ */
+using Vector3f = Vector3<float>;
