@@ -332,3 +332,15 @@ struct Vector2
 		T data[2];
 	};
 };
+
+
+/**
+ * @brief int32_t 타입의 2차원 벡터입니다.
+ */
+using Vector2i = Vector2<int32_t>;
+
+
+/**
+ * @brief float 타입의 2차원 벡터입니다.
+ */
+using Vector2f = Vector2<float>;
