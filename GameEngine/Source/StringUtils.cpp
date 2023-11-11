@@ -129,3 +129,33 @@ bool StringUtils::ToInt(const std::wstring& integerStr, int32_t& integer)
 	integer = static_cast<int32_t>(ans);
 	return true;
 }
+
+bool StringUtils::ToFloat(const std::string& floatStr, float& floating)
+{
+	const char* strPtr = floatStr.c_str();
+	char* endPtr = nullptr;
+
+	const float ans = strtof(strPtr, &endPtr);
+	if (strPtr == endPtr)
+	{
+		return false;
+	}
+
+	floating = ans;
+	return true;
+}
+
+bool StringUtils::ToFloat(const std::wstring& floatStr, float& floating)
+{
+	const wchar_t* strPtr = floatStr.c_str();
+	wchar_t* endPtr = nullptr;
+
+	const float ans = wcstof(strPtr, &endPtr);
+	if (strPtr == endPtr)
+	{
+		return false;
+	}
+
+	floating = ans;
+	return true;
+}

@@ -154,4 +154,30 @@ namespace StringUtils
 	 * @see https://learn.microsoft.com/ko-kr/cpp/c-runtime-library/reference/strtol-wcstol-strtol-l-wcstol-l?view=msvc-170
 	 */
 	bool ToInt(const std::wstring& integerStr, int32_t& integer);
+
+
+	/**
+	 * @brief 부동 소수점으로 구성된 문자열을 부동 소수점 수 값으로 변환합니다.
+	 * 
+	 * @param floatStr 부동 소수점으로 구성된 문자열입니다.
+	 * @param floating 변환된 부동 소수점 수 값을 저장할 참조 변수입니다.
+	 * 
+	 * @return 변환에 성공하면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/cpp/c-runtime-library/reference/strtof-strtof-l-wcstof-wcstof-l?view=msvc-170
+	 */
+	bool ToFloat(const std::string& floatStr, float& floating);
+
+
+	/**
+	 * @brief 부동 소수점으로 구성된 문자열을 부동 소수점 수 값으로 변환합니다.
+	 *
+	 * @param floatStr 부동 소수점으로 구성된 문자열입니다.
+	 * @param floating 변환된 부동 소수점 수 값을 저장할 참조 변수입니다.
+	 *
+	 * @return 변환에 성공하면 true, 그렇지 않으면 false를 반환합니다.
+	 *
+	 * @see https://learn.microsoft.com/ko-kr/cpp/c-runtime-library/reference/strtof-strtof-l-wcstof-wcstof-l?view=msvc-170
+	 */
+	bool ToFloat(const std::wstring& floatStr, float& floating);
 }
