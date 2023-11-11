@@ -17,7 +17,7 @@
  * - Debug와 Release모드에서만 디버그 창에 문자열이 출력됩니다.
  * - Shipping 모드에서는 디버그 창에 문자열이 출력되지 않습니다.
  */
-inline void DebugAssertPrintF(const char* format, ...)
+inline void AssertPrintF(const char* format, ...)
 {
 	const int32_t BUFFER_SIZE = 1024;
 	char buffer[BUFFER_SIZE];
@@ -42,7 +42,7 @@ inline void DebugAssertPrintF(const char* format, ...)
  * - Debug와 Release모드에서만 디버그 창에 문자열이 출력됩니다.
  * - Shipping 모드에서는 디버그 창에 문자열이 출력되지 않습니다.
  */
-inline void DebugAssertPrintF(const wchar_t* format, ...)
+inline void AssertPrintF(const wchar_t* format, ...)
 {
 	const int32_t BUFFER_SIZE = 1024;
 	wchar_t buffer[BUFFER_SIZE];
@@ -75,9 +75,9 @@ inline void DebugAssertPrintF(const wchar_t* format, ...)
 {\
 if (!(bool)(EXPRESSION))\
 {\
-DebugAssertPrintF("\nAssertion check point failed!\nFILE : %s\nLINE : %d\nEXPRESSION : %s\nMESSAGE : ", __FILE__, __LINE__, #EXPRESSION);\
-DebugAssertPrintF(__VA_ARGS__);\
-DebugAssertPrintF("\n");\
+AssertPrintF("\nAssertion check point failed!\nFILE : %s\nLINE : %d\nEXPRESSION : %s\nMESSAGE : ", __FILE__, __LINE__, #EXPRESSION);\
+AssertPrintF(__VA_ARGS__);\
+AssertPrintF("\n");\
 __debugbreak(); \
 ExitProcess(-1);\
 }\
@@ -89,9 +89,9 @@ ExitProcess(-1);\
 {\
 if (!(bool)(EXPRESSION))\
 {\
-DebugAssertPrintF("\nAssertion check point failed!\nFILE : %s\nLINE : %d\nEXPRESSION : %s\nMESSAGE : ", __FILE__, __LINE__, #EXPRESSION);\
-DebugAssertPrintF(__VA_ARGS__);\
-DebugAssertPrintF("\n");\
+AssertPrintF("\nAssertion check point failed!\nFILE : %s\nLINE : %d\nEXPRESSION : %s\nMESSAGE : ", __FILE__, __LINE__, #EXPRESSION);\
+AssertPrintF(__VA_ARGS__);\
+AssertPrintF("\n");\
 __debugbreak(); \
 }\
 }
