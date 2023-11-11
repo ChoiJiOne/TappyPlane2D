@@ -7,7 +7,6 @@
 #include <json/json.h>
 
 #include "IManager.h"
-#include "Macro.h"
 #include "SingletonMacro.h"
 
 
