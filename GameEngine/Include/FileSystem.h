@@ -30,4 +30,24 @@ namespace FileSystem
 	 * @return 파일 혹은 디렉토리가 유효하다면 true, 그렇지 않으면 false를 반환합니다.
 	 */
 	bool IsValidPath(const std::wstring& path);
+
+
+	/**
+	 * @brief 경로가 파일 경로인지 확인합니다.
+	 *
+	 * @param path 파일 경로인지 확인할 전체 경로입니다.
+	 *
+	 * @return 경로가 파일 경로라면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsFilePath(const std::string& path);
+
+
+	/**
+	 * @brief 경로가 파일 경로인지 확인합니다.
+	 *
+	 * @param path 파일 경로인지 확인할 전체 경로입니다.
+	 *
+	 * @return 경로가 파일 경로라면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsFilePath(const std::wstring& path);
 }
