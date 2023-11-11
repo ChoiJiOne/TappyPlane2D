@@ -6,16 +6,19 @@ else
     os.exit()
 end
 
-root_directory = _MAIN_SCRIPT_DIR                                       -- 프로젝트 루트 디렉토리입니다.
-engine_directory = "%{root_directory}/GameEngine"                       -- 게임 엔진 디렉토리입니다.
-thirdparty_directory = "%{engine_directory}/ThirdParty"                 -- 서드 파티 라이브러리 디렉토리입니다.
-game_directory = "%{root_directory}/%{game_project}"                    -- 게임 프로젝트 디렉토리입니다.
-glad_path = "%{thirdparty_directory}/glad/include"                      -- glad 라이브러리 헤더 경로입니다.
-glfw_include_path = "%{thirdparty_directory}/glfw/include"              -- glfw 라이브러리 헤더 경로입니다.
-imgui_include_path = "%{thirdparty_directory}/imgui/include"            -- imgui 라이브러리 헤더 경로입니다.
-jsoncpp_include_path = "%{thirdparty_directory}/jsoncpp/include"        -- jsoncpp 라이브러리 헤더 경로입니다.
-miniaudio_include_path = "%{thirdparty_directory}/miniaudio/include"    -- miniaudio 라이브러리 헤더 경로입니다.
-stb_include_path = "%{thirdparty_directory}/stb/include"                -- stb 라이브러리 헤더 경로입니다.
+root_directory = _MAIN_SCRIPT_DIR                                         -- 프로젝트 루트 디렉토리입니다.
+engine_directory = "%{root_directory}/GameEngine"                         -- 게임 엔진 디렉토리입니다.
+thirdparty_directory = "%{engine_directory}/ThirdParty"                   -- 서드 파티 라이브러리 디렉토리입니다.
+game_directory = "%{root_directory}/%{game_project}"                      -- 게임 프로젝트 디렉토리입니다.
+glad_path = "%{thirdparty_directory}/glad/include"                        -- glad 라이브러리 헤더 경로입니다.
+glfw_include_path = "%{thirdparty_directory}/glfw/include"                -- glfw 라이브러리 헤더 경로입니다.
+imgui_include_path = "%{thirdparty_directory}/imgui/include"              -- imgui 라이브러리 헤더 경로입니다.
+jsoncpp_include_path = "%{thirdparty_directory}/jsoncpp/include"          -- jsoncpp 라이브러리 헤더 경로입니다.
+miniaudio_include_path = "%{thirdparty_directory}/miniaudio/include"      -- miniaudio 라이브러리 헤더 경로입니다.
+stb_include_path = "%{thirdparty_directory}/stb/include"                  -- stb 라이브러리 헤더 경로입니다.
+glsl_path = "%{wks.location}..\\GameEngine\\GLSL"                         -- GLSL 셰이더 파일 경로입니다.
+resource_path = "%{wks.location}..\\%{game_project}\\Resource"            -- 프로젝트 리소스 파일 경로입니다.
+properties_path = "%{wks.location}..\\%{game_project}\\Properties.json"   -- 프로젝트 설정 Json 파일 경로입니다. 
 
 workspace "%{game_project}" -- 게임 개발 작업 영역입니다.
 
