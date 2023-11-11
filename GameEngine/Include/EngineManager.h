@@ -1,8 +1,15 @@
 #pragma once
 
+#include <memory>
+
+#include "AssertionMacro.h"
+#include "CommandLineArg.h"
+#include "FileManager.h"
 #include "IManager.h"
 #include "Macro.h"
 #include "SingletonMacro.h"
+#include "StringUtils.h"
+#include "Window.h"
 
 
 /**
@@ -26,4 +33,28 @@ public:
 	 * @brief 엔진 매니저의 사용을 종료합니다.
 	 */
 	virtual void Shutdown() override;
+
+
+	/**
+	 * @brief 엔진이 관리하는 윈도우를 얻습니다.
+	 * 
+	 * @return 엔진이 관리하는 윈도우의 포인터를 반환합니다.
+	 */
+	Window* GetWindowPtr() { return window_.get(); }
+
+
+private:
+	/**
+	 * @brief 엔진이 관리하는 윈도우를 생성합니다.
+	 * 
+	 * @param properties 게임 설정이 포함된 Json 객체입니다. 
+	 */
+	void CreateEngineWindow(const Json::Value& properties);
+	
+
+private:
+	/**
+	 * @brief 게임이 플레이되는 윈도우입니다.
+	 */
+	std::unique_ptr<Window> window_ = nullptr;
 };
