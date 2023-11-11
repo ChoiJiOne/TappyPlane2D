@@ -11,8 +11,7 @@ void FileManager::Startup()
 {
 	ASSERT(!bIsStartup_, "already startup file manager...");
 
-	codecvt_ = std::make_unique<std::codecvt_utf8<wchar_t>>();
-	locale_ = std::locale(std::locale::empty(), codecvt_.get());
+	locale_ = std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t>);
 
 	bIsStartup_ = true;
 }
@@ -20,8 +19,6 @@ void FileManager::Startup()
 void FileManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
-
-	codecvt_.reset();
 
 	bIsStartup_ = false;
 }

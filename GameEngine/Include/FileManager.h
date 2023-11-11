@@ -1,9 +1,10 @@
 #pragma once
 
 #include <codecvt>
-#include <memory>
 #include <vector>
 #include <string>
+
+#include <json/json.h>
 
 #include "IManager.h"
 #include "Macro.h"
@@ -286,7 +287,7 @@ public:
 	 */
 	std::wstring ReadTextFileToString(const std::wstring& path);
 
-
+	
 private:
 	/**
 	 * @brief 디렉토리 하위의 파일과 디렉토리 목록을 얻습니다.
@@ -313,12 +314,6 @@ private:
 
 
 private:
-	/**
-	 * @brief std::wstring을 UTF-8 문자열로 변환하기 위한 객체입니다.
-	 */
-	std::unique_ptr<std::codecvt_utf8<wchar_t>> codecvt_ = nullptr;
-
-
 	/**
 	 * @brief 영어권 이외의 문자열을 처리하기 위한 locale입니다.
 	 */
