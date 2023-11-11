@@ -31,6 +31,12 @@ project (game_project) -- 게임 프로젝트입니다.
         disablewarnings { 
             "4996", -- C4996 경로를 비활성화합니다.
         }
+        
+        debugargs {
+            "glsl=%{glsl_path}",
+            "resource=%{resource_path}",
+            "properties=%{properties_path}",
+        }
 
         filter "configurations:Debug" -- 프로젝트의 Debug 모드 설정을 수행합니다.
             defines { "DEBUG" }
