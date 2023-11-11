@@ -287,7 +287,17 @@ public:
 	 */
 	std::wstring ReadTextFileToString(const std::wstring& path);
 
-	
+
+	/**
+	 * @brief Json 파일을 읽어 Json 객체를 반환합니다.
+	 * 
+	 * @param path Json 파일의 경로입니다.
+	 * 
+	 * @return Json 파일 객체를 반환합니다.
+	 */
+	Json::Value ReadJsonFile(const std::string& path);
+
+
 private:
 	/**
 	 * @brief 디렉토리 하위의 파일과 디렉토리 목록을 얻습니다.

@@ -215,6 +215,23 @@ std::wstring FileManager::ReadTextFileToString(const std::wstring& path)
 	return fileStringStream.str();
 }
 
+Json::Value FileManager::ReadJsonFile(const std::string& path)
+{
+	ASSERT(IsValidPath(path), "invalid %s path...", path.c_str());
+	ASSERT(IsFilePath(path), "%s is not file path...", path.c_str());
+
+	std::ifstream fileStream(path);
+	ASSERT(fileStream.is_open(), "failed to %s file open...", path.c_str());
+	
+	Json::Value root;
+	Json::CharReaderBuilder builder;
+	ASSERT(Json::parseFromStream(builder, fileStream, &root, nullptr), "failed to parse %s json file...", path.c_str());
+
+	fileStream.close();	
+
+	return root;
+}
+
 std::vector<std::string> FileManager::GetDirectoryContents(const std::string& path, bool bIsIncludeFile, bool bIsIncludeDirectory)
 {
 	std::vector<std::string> contents;
