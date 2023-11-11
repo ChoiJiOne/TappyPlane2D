@@ -1,5 +1,7 @@
 #pragma once
 
+#include <codecvt>
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -9,10 +11,28 @@
 
 
 /**
- * @brief 파일 및 디렉토리 확장 기능을 수행합니다.
+ * @brief 파일 및 디렉토리 관련 처리를 수행하는 매니저입니다.
+ *
+ * @note 이 클래스는 싱글턴입니다.
  */
-namespace FileSystem
+class FileManager : public IManager
 {
+	SINGLETON(FileManager);
+
+
+public:
+	/**
+	 * @brief 파일 및 디렉토리 관련 처리를 수행하는 매니저의 사용을 시작합니다.
+	 */
+	virtual void Startup() override;
+
+
+	/**
+	 * @brief 파일 및 디렉토리 관련 처리를 수행하는 매니저의 사용을 종료합니다.
+	 */
+	virtual void Shutdown() override;
+
+
 	/**
 	 * @brief 파일 혹은 디렉토리 경로가 유효한지 확인합니다.
 	 *
@@ -265,4 +285,42 @@ namespace FileSystem
 	 * @see https://stackoverflow.com/questions/4775437/read-unicode-utf-8-file-into-wstring
 	 */
 	std::wstring ReadTextFileToString(const std::wstring& path);
-}
+
+
+private:
+	/**
+	 * @brief 디렉토리 하위의 파일과 디렉토리 목록을 얻습니다.
+	 *
+	 * @param path 파일과 디렉토리 목록을 얻을 상위 디렉토리 경로입니다.
+	 * @param bIsIncludeFile 목록에 파일을 추가시킬지의 여부입니다. true면 추가하고, 그렇지 않으면 추가하지 않습니다.
+	 * @param bIsIncludeDirectory 목록에 디렉토리를 추가시킬지의 여부입니다. true면 추가하고 그렇지 않으면 추가하지 않습니다.
+	 *
+	 * @return 파일 경로와 디렉토리 경로가 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::string> GetDirectoryContents(const std::string& path, bool bIsIncludeFile, bool bIsIncludeDirectory);
+
+
+	/**
+	 * @brief 디렉토리 하위의 파일과 디렉토리 목록을 얻습니다.
+	 *
+	 * @param path 파일과 디렉토리 목록을 얻을 상위 디렉토리 경로입니다.
+	 * @param bIsIncludeFile 목록에 파일을 추가시킬지의 여부입니다. true면 추가하고, 그렇지 않으면 추가하지 않습니다.
+	 * @param bIsIncludeDirectory 목록에 디렉토리를 추가시킬지의 여부입니다. true면 추가하고 그렇지 않으면 추가하지 않습니다.
+	 *
+	 * @return 파일 경로와 디렉토리 경로가 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::wstring> GetDirectoryContents(const std::wstring& path, bool bIsIncludeFile, bool bIsIncludeDirectory);
+
+
+private:
+	/**
+	 * @brief std::wstring을 UTF-8 문자열로 변환하기 위한 객체입니다.
+	 */
+	std::unique_ptr<std::codecvt_utf8<wchar_t>> codecvt_ = nullptr;
+
+
+	/**
+	 * @brief 영어권 이외의 문자열을 처리하기 위한 locale입니다.
+	 */
+	std::locale locale_;
+};
