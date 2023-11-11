@@ -113,3 +113,19 @@ bool StringUtils::ToInt(const std::string& integerStr, int32_t& integer)
 	integer = static_cast<int32_t>(ans);
 	return true;
 }
+
+bool StringUtils::ToInt(const std::wstring& integerStr, int32_t& integer)
+{
+	const wchar_t* strPtr = integerStr.c_str();
+	wchar_t* endPtr = nullptr;
+	const int32_t radix = 10; // 10진수 고정
+
+	const long ans = wcstol(strPtr, &endPtr, radix);
+	if (strPtr == endPtr || ans < INT_MIN || ans > INT_MAX)
+	{
+		return false;
+	}
+
+	integer = static_cast<int32_t>(ans);
+	return true;
+}
