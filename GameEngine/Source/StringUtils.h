@@ -128,4 +128,17 @@ namespace StringUtils
 	 * @return 문자열 내의 알파벳이 모두 대문자로 변환된 전체 문자열을 반환합니다.
 	 */
 	std::wstring ToUpper(const std::wstring& text);
+
+
+	/**
+	 * @brief 정수로 구성된 문자열을 10진수 정수 값으로 변환합니다.
+	 * 
+	 * @param integerStr 정수로 구성된 문자열입니다.
+	 * @param integer 변환된 정수 값을 저장할 참조 변수입니다.
+	 * 
+	 * @return 변환에 성공하면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/cpp/c-runtime-library/reference/strtol-wcstol-strtol-l-wcstol-l?view=msvc-170
+	 */
+	bool ToInt(const std::string& integerStr, int32_t& integer);
 }

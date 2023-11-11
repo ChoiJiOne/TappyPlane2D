@@ -97,3 +97,19 @@ std::wstring StringUtils::ToUpper(const std::wstring& text)
 	std::transform(upper.begin(), upper.end(), upper.begin(), std::toupper);
 	return upper;
 }
+
+bool StringUtils::ToInt(const std::string& integerStr, int32_t& integer)
+{
+	const char* strPtr = integerStr.c_str();
+	char* endPtr = nullptr;
+	const int32_t radix = 10; // 10진수 고정
+
+	const long ans = strtol(strPtr, &endPtr, radix);
+	if (strPtr == endPtr || ans < INT_MIN || ans > INT_MAX)
+	{
+		return false;
+	}
+	
+	integer = static_cast<int32_t>(ans);
+	return true;
+}
