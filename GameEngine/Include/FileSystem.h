@@ -155,4 +155,32 @@ namespace FileSystem
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "a" 입니다.
 	 */
 	std::wstring GetFileExtension(const std::wstring& path);
+
+
+	/**
+	 * @brief 전체 파일 경로에서 확장자를 삭제합니다.
+	 *
+	 * @param path 파일 확장자를 삭제할 전체 파일 경로입니다.
+	 *
+	 * @return 파일 확장자가 삭제된 전체 파일 경로를 반환합니다.
+	 *
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "D:\\AAA\\BBB\\CCC" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/CCC" 입니다.
+	 */
+	std::string RemoveFileExtension(const std::string& path);
+
+
+	/**
+	 * @brief 전체 파일 경로에서 확장자를 삭제합니다.
+	 *
+	 * @param path 파일 확장자를 삭제할 전체 파일 경로입니다.
+	 *
+	 * @return 파일 확장자가 삭제된 전체 파일 경로를 반환합니다.
+	 *
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "D:\\AAA\\BBB\\CCC" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/CCC" 입니다.
+	 */
+	std::wstring RemoveFileExtension(const std::wstring& path);
 }

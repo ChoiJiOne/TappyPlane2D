@@ -123,3 +123,13 @@ std::wstring FileSystem::GetFileExtension(const std::wstring& path)
 
 	return (offset == std::wstring::npos) ? L"" : filename.substr(offset + 1);
 }
+
+std::string FileSystem::RemoveFileExtension(const std::string& path)
+{
+	return path.substr(0, path.rfind("."));
+}
+
+std::wstring FileSystem::RemoveFileExtension(const std::wstring& path)
+{
+	return path.substr(0, path.rfind(L"."));
+}
