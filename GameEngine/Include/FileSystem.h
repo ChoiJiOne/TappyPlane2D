@@ -183,4 +183,64 @@ namespace FileSystem
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/CCC" 입니다.
 	 */
 	std::wstring RemoveFileExtension(const std::wstring& path);
+
+
+	/**
+	 * @brief 디렉토리 하위의 파일과 디렉토리 목록을 얻습니다.
+	 * 
+	 * @param path 파일과 디렉토리 목록을 얻을 상위 디렉토리 경로입니다.
+	 * 
+	 * @return 파일 경로와 디렉토리 경로가 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::string> GetDirectoryContents(const std::string& path);
+
+	
+	/**
+	 * @brief 디렉토리 하위의 파일과 디렉토리 목록을 얻습니다.
+	 * 
+	 * @param path 파일과 디렉토리 목록을 얻을 상위 디렉토리 경로입니다.
+	 * 
+	 * @return 파일 경로와 디렉토리 경로가 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::wstring> GetDirectoryContents(const std::wstring& path);
+
+
+	/**
+	 * @brief 디렉토리 하위의 디렉토리 목록을 얻습니다.
+	 * 
+	 * @param path 하위 디렉토리 목록을 얻을 상위 디렉토리 경로입니다.
+	 * 
+	 * @return 하위 디렉토리 경로가 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::string> GetSubDirectories(const std::string& path);
+	
+
+	/**
+	 * @brief 디렉토리 하위의 디렉토리 목록을 얻습니다.
+	 * 
+	 * @param path 하위 디렉토리 목록을 얻을 상위 디렉토리 경로입니다.
+	 * 
+	 * @return 하위 디렉토리 경로가 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::wstring> GetSubDirectories(const std::wstring& path);
+
+
+	/**
+	 * @brief 디렉토리의 파일 목록을 얻습니다.
+	 * 
+	 * @param path 파일 목록을 얻을 디렉토리 경로입니다.
+	 * 
+	 * @return 디렉토리 하위의 파일들이 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::string> GetFilesInDirectory(const std::string& path);
+
+
+	/**
+	 * @brief 디렉토리의 파일 목록을 얻습니다.
+	 *
+	 * @param path 파일 목록을 얻을 디렉토리 경로입니다.
+	 *
+	 * @return 디렉토리 하위의 파일들이 포함된 벡터를 반환합니다.
+	 */
+	std::vector<std::wstring> GetFilesInDirectory(const std::wstring& path);
 }
