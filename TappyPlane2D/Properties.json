@@ -4,5 +4,5 @@
     "height": 800,
     "resize": false,
     "vsync": true,
-    "opengl": 4.6
+    "opengl": "4.6"
 }
