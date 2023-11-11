@@ -8,7 +8,8 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
     }
 
     includedirs {
-        "%{engine_directory}/Source", -- 엔진의 소스 파일 경로를 추가합니다.
+        "%{engine_directory}/Include", -- 엔진의 헤더 파일 경로를 추가합니다.
+        "%{engine_directory}/Source",  -- 엔진의 소스 파일 경로를 추가합니다.
 
         "%{glad_path}",              -- glad 라이브러리 헤더 경로를 추가합니다.
         "%{glfw_include_path}",      -- glfw 라이브러리 헤더 경로를 추가합니다.
@@ -20,8 +21,9 @@ project "GameEngine"    -- 게임 엔진 프로젝트입니다.
     
     files {
         "%{engine_directory}/*",
-        "%{engine_directory}/Script/**", -- 엔진 스크립트 폴더 하위의 파일들을 추가합니다.
-        "%{engine_directory}/Source/**", -- 엔진 소스 폴더 하위의 파일들을 추가합니다.
+        "%{engine_directory}/Script/**",    -- 엔진 스크립트 폴더 하위의 파일들을 추가합니다.
+        "%{engine_directory}/Include/**",   -- 엔진 헤더 폴더 하위의 파일들을 추가합니다.
+        "%{engine_directory}/Source/**",    -- 엔진 소스 폴더 하위의 파일들을 추가합니다.
     }
 
     links {

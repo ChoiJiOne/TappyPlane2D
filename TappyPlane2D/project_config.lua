@@ -10,7 +10,7 @@ project (game_project) -- 게임 프로젝트입니다.
         includedirs {
             "%{game_directory}/Source", -- 게임 소스 파일 경로를 추가합니다.
             
-            "%{engine_directory}/Source", -- 엔진의 소스 파일 경로를 추가합니다.
+            "%{engine_directory}/Include", -- 엔진의 헤더 파일 경로를 추가합니다.
 
             "%{glad_path}",              -- glad 라이브러리 헤더 경로를 추가합니다.
             "%{glfw_include_path}",      -- glfw 라이브러리 헤더 경로를 추가합니다.
