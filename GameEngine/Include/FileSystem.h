@@ -50,4 +50,24 @@ namespace FileSystem
 	 * @return 경로가 파일 경로라면 true, 그렇지 않으면 false를 반환합니다.
 	 */
 	bool IsFilePath(const std::wstring& path);
+
+
+	/**
+	 * @brief 경로가 디렉토리 경로인지 확인합니다.
+	 *
+	 * @param path 디렉토리 경로인지 확인할 전체 경로입니다.
+	 *
+	 * @return 경로가 디렉토리 경로라면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsDirectoryPath(const std::string& path);
+
+
+	/**
+	 * @brief 경로가 디렉토리 경로인지 확인합니다.
+	 *
+	 * @param path 디렉토리 경로인지 확인할 전체 경로입니다.
+	 *
+	 * @return 경로가 디렉토리 경로라면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsDirectoryPath(const std::wstring& path);
 }

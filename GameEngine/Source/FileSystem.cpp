@@ -25,3 +25,13 @@ bool FileSystem::IsFilePath(const std::wstring& path)
 {
 	return std::filesystem::is_regular_file(std::filesystem::path(path));
 }
+
+bool FileSystem::IsDirectoryPath(const std::string& path)
+{
+	return std::filesystem::is_directory(std::filesystem::path(path));
+}
+
+bool FileSystem::IsDirectoryPath(const std::wstring& path)
+{
+	return std::filesystem::is_directory(std::filesystem::path(path));
+}
