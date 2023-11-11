@@ -1,8 +1,10 @@
 {
-    "title": "TappyPlane2D",
-    "width": 1000,
-    "height": 800,
-    "resize": false,
-    "vsync": true,
-    "opengl": "4.6"
+  "title": "TappyPlane2D",
+  "x": 200,
+  "y": 200,
+  "width": 1000,
+  "height": 800,
+  "resize": false,
+  "vsync": true,
+  "opengl": "4.6"
 }
