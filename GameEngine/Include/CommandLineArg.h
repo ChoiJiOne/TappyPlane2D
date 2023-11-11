@@ -15,12 +15,26 @@ namespace CommandLineArg
 	/**
 	 * @brief 커맨드 라인(명령행)을 파싱합니다.
 	 * 
-	 * @note 이 함수는 프로그램 시작 후 단 한 번만 호출할 수 있습니다.
+	 * @note 
+	 * - 이 함수는 프로그램 시작 후 단 한 번만 호출할 수 있습니다.
+	 * - Parse(const char* commandline)를 이전에 호출한 적이 있다면 이 함수는 사용할 수 없습니다.
 	 * 
 	 * @param argc 명령행 인수의 수입니다. 
 	 * @param argv 명령행 인수입니다.
 	 */
 	void Parse(int32_t argc, char* argv[]);
+
+
+	/**
+	 * @brief 커맨드 라인(명령행)을 파싱합니다.
+	 * 
+	 * @note 
+	 * - 이 함수는 프로그램 시작 후 단 한 번만 호출할 수 있습니다.
+	 * - Parse(int32_t argc, char* argv[])를 이전에 호출한 적이 있다면 이 함수는 사용할 수 없습니다.
+	 * 
+	 * @param commandline 전체 커맨드 라인(명령행)입니다.
+	 */
+	void Parse(const char* commandline);
 
 
 	/**
