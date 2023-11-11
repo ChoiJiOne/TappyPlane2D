@@ -2,6 +2,7 @@
 
 #include "AssertionMacro.h"
 
+#include <codecvt>
 #include <fstream>
 #include <sstream>
 #include <filesystem>
@@ -234,4 +235,38 @@ std::vector<std::string> FileSystem::GetFilesInDirectory(const std::string& path
 std::vector<std::wstring> FileSystem::GetFilesInDirectory(const std::wstring& path)
 {
 	return GetDirectoryContentsW(path, true, false);
+}
+
+std::string FileSystem::ReadTextFileToString(const std::string& path)
+{
+	ASSERT(IsValidPath(path), "invalid %s path...", path.c_str());
+	ASSERT(IsFilePath(path), "%s is not file path...", path.c_str());
+
+	std::ifstream file(path);
+	ASSERT(file.is_open(), "failed to %s file open...", path.c_str());
+
+	std::stringstream fileStringStream;
+	fileStringStream << file.rdbuf();
+
+	file.close();
+
+	return fileStringStream.str();
+}
+
+std::wstring FileSystem::ReadTextFileToString(const std::wstring& path)
+{
+	ASSERT(IsValidPath(path), "invalid %s path...", path.c_str());
+	ASSERT(IsFilePath(path), "%s is not file path...", path.c_str());
+
+	std::wifstream file(path);
+	ASSERT(file.is_open(), "failed to %s file open...", path.c_str());
+
+	file.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t>));
+
+	std::wstringstream fileStringStream;
+	fileStringStream << file.rdbuf();
+
+	file.close();
+
+	return fileStringStream.str();
 }

@@ -243,4 +243,26 @@ namespace FileSystem
 	 * @return 디렉토리 하위의 파일들이 포함된 벡터를 반환합니다.
 	 */
 	std::vector<std::wstring> GetFilesInDirectory(const std::wstring& path);
+
+
+	/**
+	 * @brief 텍스트 파일을 읽어 문자열로 반환합니다.
+	 * 
+	 * @param path 파일의 경로입니다.
+	 * 
+	 * @return 텍스트 파일 내용이 저장된 문자열을 반환합니다.
+	 */
+	std::string ReadTextFileToString(const std::string& path);
+
+
+	/**
+	 * @brief 텍스트 파일을 읽어 문자열로 반환합니다.
+	 *
+	 * @param path 파일의 경로입니다.
+	 *
+	 * @return 텍스트 파일 내용이 저장된 문자열을 반환합니다.
+	 * 
+	 * @see https://stackoverflow.com/questions/4775437/read-unicode-utf-8-file-into-wstring
+	 */
+	std::wstring ReadTextFileToString(const std::wstring& path);
 }
