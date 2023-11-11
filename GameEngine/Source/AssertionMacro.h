@@ -6,7 +6,7 @@
 #include <cstring>
 #include <windows.h>
 
-
+#if defined(DEBUG) || defined(RELEASE)
 /**
  * @brief 디버그 창에 형식화된 문자열을 출력합니다.
  * 
@@ -55,6 +55,7 @@ inline void DebugAssertPrintF(const wchar_t* format, ...)
 
 	OutputDebugStringW(buffer);
 }
+#endif
 
 
 /**
