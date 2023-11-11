@@ -55,10 +55,7 @@ bool CommandLineArg::GetIntValue(const std::string& key, int32_t& value)
 		return false;
 	}
 
-	value = std::stoi(argumentMaps.at(key));
-
-
-	return true;
+	return StringUtils::ToInt(argumentMaps.at(key), value);
 }
 
 bool CommandLineArg::GetFloatValue(const std::string& key, float& value)
@@ -68,9 +65,7 @@ bool CommandLineArg::GetFloatValue(const std::string& key, float& value)
 		return false;
 	}
 
-	value = std::stof(argumentMaps.at(key));
-
-	return true;
+	return StringUtils::ToFloat(argumentMaps.at(key), value);
 }
 
 bool CommandLineArg::GetStringValue(const std::string& key, std::string& value)
