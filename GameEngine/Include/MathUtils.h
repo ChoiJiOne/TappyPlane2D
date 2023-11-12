@@ -21,13 +21,7 @@ namespace MathUtils
 	/**
 	 * @brief float 타입의 파이(π) 값입니다.
 	 */
-	const float PI_F = 3.1415926535F;
-
-
-	/**
-	 * @brief double 타입의 파이(π) 값입니다.
-	 */
-	const double PI_D = 3.1415926535897931;
+	const float PI_F = 3.141592654f;
 
 
 	/**
@@ -37,33 +31,15 @@ namespace MathUtils
 
 
 	/**
-	 * @brief double 타입의 무한대 값입니다.
-	 */
-	const double INFINITY_D = std::numeric_limits<double>::infinity();
-
-
-	/**
 	 * @brief float 타입의 음의 무한대 값입니다.
 	 */
 	const float NINFINITY_F = -std::numeric_limits<float>::infinity();
 
 
 	/**
-	 * @brief double 타입의 음의 무한대 값입니다.
-	 */
-	const double NINFINITY_D = -std::numeric_limits<double>::infinity();
-
-
-	/**
 	 * @brief float 타입의 타입의 엡실론(ε) 값입니다.
 	 */
 	const float EPSILON_F = std::numeric_limits<float>::epsilon();
-
-
-	/**
-	 * @brief double 타입의 엡실론(ε) 값입니다.
-	 */
-	const double EPSILON_D = std::numeric_limits<double>::epsilon();
 
 
 	/**
@@ -76,19 +52,6 @@ namespace MathUtils
 	inline float ToDegree(float radian)
 	{
 		return (radian * 180.0f) / PI_F;
-	}
-
-
-	/**
-	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
-	 *
-	 * @param radian 변환할 라디안 각입니다.
-	 *
-	 * @return 변환된 육십분법 각입니다.
-	 */
-	inline double ToDegree(double radian)
-	{
-		return (radian * 180.0) / PI_D;
 	}
 
 
@@ -106,19 +69,6 @@ namespace MathUtils
 
 
 	/**
-	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
-	 *
-	 * @param degree 변환할 육십분법 각입니다.
-	 *
-	 * @return 변환된 라디안 각입니다.
-	 */
-	inline double ToRadian(double degree)
-	{
-		return (degree * PI_D) / 180.0;
-	}
-
-
-	/**
 	 * @brief 부동 소수점 값이 0에 가까운지 확인합니다.
 	 *
 	 * @param value 0에 가까운지 확인할 값입니다.
@@ -129,20 +79,6 @@ namespace MathUtils
 	inline bool NearZero(float value, float epsilon = EPSILON_F)
 	{
 		return (std::fabs(value) <= epsilon);
-	}
-
-
-	/**
-	 * @brief 부동 소수점 값이 0에 가까운지 확인합니다.
-	 *
-	 * @param value 0에 가까운지 확인할 값입니다.
-	 * @param epsilon 값 확인을 위한 엡실론 값입니다.
-	 *
-	 * @return 부동 소수점 값이 0에 가깝다면 true, 그렇지 않다면 false를 반환합니다.
-	 */
-	inline bool NearZero(double value, double epsilon = EPSILON_D)
-	{
-		return (std::abs(value) <= epsilon);
 	}
 
 
@@ -190,6 +126,17 @@ namespace MathUtils
 	{
 		return Min(upper, Max(lower, value));
 	}
+
+
+	/**
+	 * @brief 라디안 각도에 대응하는 사인 값을 반환합니다.
+	 * 
+	 * @param radian 사인 값을 얻을 라디안 각도입니다.
+	 * 
+	 * @return 라디안 각도에 대응하는 사인값을 반환합니다.
+	 */
+
+
 
 
 	/**
