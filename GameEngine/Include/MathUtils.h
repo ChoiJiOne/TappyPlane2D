@@ -57,4 +57,57 @@ namespace MathUtils
 	 * @brief double 타입의 엡실론(ε) 값입니다.
 	 */
 	const double EPSILON_D = std::numeric_limits<double>::epsilon();
+
+
+	/**
+	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
+	 *
+	 * @param Radian 변환할 라디안 각입니다.
+	 *
+	 * @return 변환된 육십분법 각입니다.
+	 */
+	inline float ToDegree(float Radian)
+	{
+		return (Radian * 180.0f) / PI_F;
+	}
+
+
+	/**
+	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
+	 *
+	 * @param Radian 변환할 라디안 각입니다.
+	 *
+	 * @return 변환된 육십분법 각입니다.
+	 */
+	inline double ToDegree(double Radian)
+	{
+		return (Radian * 180.0) / PI_D;
+	}
+
+
+	/**
+	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
+	 *
+	 * @param Degree 변환할 육십분법 각입니다.
+	 *
+	 * @return 변환된 라디안 각입니다.
+	 */
+	inline float ToRadian(float Degree)
+	{
+		return (Degree * PI_F) / 180.0f;
+	}
+
+
+	/**
+	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
+	 *
+	 * @param Degree 변환할 육십분법 각입니다.
+	 *
+	 * @return 변환된 라디안 각입니다.
+	 */
+	inline double ToRadian(double Degree)
+	{
+		return (Degree * PI_D) / 180.0;
+	}
+
 }
