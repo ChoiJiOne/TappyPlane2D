@@ -110,4 +110,31 @@ namespace MathUtils
 		return (Degree * PI_D) / 180.0;
 	}
 
+
+	/**
+	 * @brief 부동 소수점 값이 0에 가까운지 확인합니다.
+	 * 
+	 * @param value 0에 가까운지 확인할 값입니다.
+	 * @param epsilon 값 확인을 위한 엡실론 값입니다.
+	 * 
+	 * @return 부동 소수점 값이 0에 가깝다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	inline bool NearZero(float value, float epsilon = EPSILON_F)
+	{
+		return (std::fabs(value) <= epsilon);
+	}
+
+
+	/**
+	 * @brief 부동 소수점 값이 0에 가까운지 확인합니다.
+	 *
+	 * @param value 0에 가까운지 확인할 값입니다.
+	 * @param epsilon 값 확인을 위한 엡실론 값입니다.
+	 *
+	 * @return 부동 소수점 값이 0에 가깝다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	inline bool NearZero(double value, double epsilon = EPSILON_D)
+	{
+		return (std::abs(value) <= epsilon);
+	}
 }
