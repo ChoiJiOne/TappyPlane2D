@@ -264,4 +264,42 @@ namespace MathUtils
 			 p.x,  p.y,  p.z, 1.0f
 		);
 	}
+
+
+	/**
+	 * @brief 스케일 변환 행렬을 생성합니다.
+	 * 
+	 * @param xScale 변환할 x축 방향의 스케일입니다.
+	 * @param yScale 변환할 y축 방향의 스케일입니다.
+	 * @param zScale 변환할 z축 방향의 스케일입니다.
+	 * 
+	 * @return 생성된 스케일 변환 행렬을 반환합니다.
+	 */
+	inline Matrix4x4f CreateScale(float xScale, float yScale, float zScale)
+	{
+		return Matrix4x4f(
+			xScale,   0.0f,   0.0f, 0.0f,
+			  0.0f, yScale,   0.0f, 0.0f,
+			  0.0f,   0.0f, zScale, 0.0f,
+			  0.0f,   0.0f,   0.0f, 1.0f
+		);
+	}
+
+
+	/**
+	 * @brief 스케일 변환 행렬을 생성합니다.
+	 *
+	 * @param scale 변환할 스케일 벡터입니다.
+	 *
+	 * @return 생성된 스케일 변환 행렬을 반환합니다.
+	 */
+	inline Matrix4x4f CreateScale(const Vector3f& scale)
+	{
+		return Matrix4x4f(
+			scale.x,    0.0f,    0.0f, 0.0f,
+			   0.0f, scale.y,    0.0f, 0.0f,
+			   0.0f,    0.0f, scale.z, 0.0f,
+			   0.0f,    0.0f,    0.0f, 1.0f
+		);
+	}
 }
