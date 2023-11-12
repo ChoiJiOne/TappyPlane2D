@@ -45,7 +45,7 @@ public:
 	template <typename TResource>
 	TResource* CreateResource(const std::string& signature)
 	{
-		ASSERT(!VerifyResource(signature)), "already exist resource signature key : %s", signature.c_str());
+		ASSERT(!VerifyResource(signature), "already exist resource signature key : %s", signature.c_str());
 
 		std::unique_ptr<TResource> resource = std::make_unique<TResource>();
 		resources_.insert({ signature, std::move(resource) });
