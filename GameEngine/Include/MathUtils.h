@@ -19,27 +19,57 @@
 namespace MathUtils
 {
 	/**
-	 * @brief float 타입의 파이(π) 값입니다.
+	 * @brief 파이(π) 값입니다.
 	 */
-	const float PI_F = 3.141592654f;
+	const float Pi = 3.141592654f;
 
 
 	/**
-	 * @brief float 타입의 무한대 값입니다.
+	 * @brief 2파이(2π) 값입니다.
 	 */
-	const float INFINITY_F = std::numeric_limits<float>::infinity();
+	const float TwoPi = 6.283185307f;
 
 
 	/**
-	 * @brief float 타입의 음의 무한대 값입니다.
+	 * @brief 파이(π) 의 역수 값입니다.
 	 */
-	const float NINFINITY_F = -std::numeric_limits<float>::infinity();
+	const float OneDivPi = 0.318309886f;
 
 
 	/**
-	 * @brief float 타입의 타입의 엡실론(ε) 값입니다.
+	 * @brief 2파이(2π) 의 역수 값입니다.
 	 */
-	const float EPSILON_F = std::numeric_limits<float>::epsilon();
+	const float OneDivTwoPi = 0.159154943f;
+
+
+	/**
+	 * @brief 파이(π) 의 반값(π/2)입니다.
+	 */
+	const float PiDiv2 = 1.570796327f;
+
+
+	/**
+	 * @brief 파이(π) 의 반의 반 값(π/4)입니다.
+	 */
+	const float PiDiv4 = 0.785398163f;
+
+
+	/**
+	 * @brief 양의 무한대 값입니다.
+	 */
+	const float Infinity = std::numeric_limits<float>::infinity();
+
+
+	/**
+	 * @brief 음의 무한대 값입니다.
+	 */
+	const float NInfinity = -std::numeric_limits<float>::infinity();
+
+
+	/**
+	 * @brief 엡실론(ε) 값입니다.
+	 */
+	const float Epsilon = std::numeric_limits<float>::epsilon();
 
 
 	/**
@@ -51,7 +81,7 @@ namespace MathUtils
 	 */
 	inline float ToDegree(float radian)
 	{
-		return (radian * 180.0f) / PI_F;
+		return (radian * 180.0f) / Pi;
 	}
 
 
@@ -64,7 +94,7 @@ namespace MathUtils
 	 */
 	inline float ToRadian(float degree)
 	{
-		return (degree * PI_F) / 180.0f;
+		return (degree * Pi) / 180.0f;
 	}
 
 
@@ -76,7 +106,7 @@ namespace MathUtils
 	 *
 	 * @return 부동 소수점 값이 0에 가깝다면 true, 그렇지 않다면 false를 반환합니다.
 	 */
-	inline bool NearZero(float value, float epsilon = EPSILON_F)
+	inline bool NearZero(float value, float epsilon = Epsilon)
 	{
 		return (std::fabs(value) <= epsilon);
 	}
@@ -126,18 +156,7 @@ namespace MathUtils
 	{
 		return Min(upper, Max(lower, value));
 	}
-
-
-	/**
-	 * @brief 라디안 각도에 대응하는 사인 값을 반환합니다.
-	 * 
-	 * @param radian 사인 값을 얻을 라디안 각도입니다.
-	 * 
-	 * @return 라디안 각도에 대응하는 사인값을 반환합니다.
-	 */
-
-
-
+	
 
 	/**
 	 * @brief 임의의 정수를 생성합니다.
