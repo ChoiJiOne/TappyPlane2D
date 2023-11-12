@@ -53,16 +53,15 @@ int main(int argc, char* argv[])
 		{
 			float time = static_cast<float>(glfwGetTime());
 			Matrix4x4f m(
-				+std::cos(time),  std::sin(time), 0.0f, 0.0f,
-				-std::sin(time),  std::cos(time), 0.0f, 0.0f,
-				           0.0f,           0.0f,  1.0f, 0.0f,
-				           0.0f,           0.0f,  0.0f, 1.0f
+				+std::cos(time), std::sin(time), 0.0f, 0.0f,
+				-std::sin(time), std::cos(time), 0.0f, 0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f
 			);
 
-			uint32_t location = glGetUniformLocation(shader->programID_, "transform");
-			glUniformMatrix4fv(location, 1, GL_FALSE, m.GetPtr());
-			
 			Vector4f color(0.0f, 1.0f, 1.0f, 1.0f);
+
+			shader->SetMatrix4x4fParameter("transform", m);
 			shader->SetVector4fParameter("color", color);
 
 			glBindVertexArray(VAO);
