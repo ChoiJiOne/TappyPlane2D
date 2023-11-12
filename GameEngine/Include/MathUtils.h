@@ -155,7 +155,7 @@ namespace MathUtils
 	 * @return 두 값 중 큰 값을 반환합니다.
 	 */
 	template <typename T>
-	T Max(const T& lhs, const T& rhs)
+	inline T Max(const T& lhs, const T& rhs)
 	{
 		return (lhs < rhs ? rhs : lhs);
 	}
@@ -170,7 +170,7 @@ namespace MathUtils
 	 * @return 두 값 중 작은 값을 반환합니다.
 	 */
 	template <typename T>
-	T Min(const T& lhs, const T& rhs)
+	inline T Min(const T& lhs, const T& rhs)
 	{
 		return (lhs < rhs ? lhs : rhs);
 	}
@@ -186,7 +186,7 @@ namespace MathUtils
 	 * @return 범위로 잘려 나간 값을 반환합니다.
 	 */
 	template <typename T>
-	T Clamp(const T& value, const T& lower, const T& upper)
+	inline T Clamp(const T& value, const T& lower, const T& upper)
 	{
 		return Min(upper, Max(lower, value));
 	}
