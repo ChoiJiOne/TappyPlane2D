@@ -376,6 +376,21 @@ struct Matrix3x3
 
 
 	/**
+	 * @brief 3x3 행렬의 단위 행렬을 얻습니다.
+	 *
+	 * @return 3x3 행렬의 단위 행렬를 반환합니다.
+	 */
+	static Matrix3x3<T> GetIdentity()
+	{
+		return Matrix3x3(
+			static_cast<T>(1), static_cast<T>(0), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(1), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
+		);
+	}
+
+
+	/**
 	 * @brief 3x3 행렬의 원소입니다.
 	 */
 	T m[3][3];

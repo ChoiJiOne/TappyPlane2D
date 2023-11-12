@@ -336,6 +336,20 @@ struct Matrix2x2
 
 
 	/**
+	 * @brief 2x2 행렬의 단위 행렬을 얻습니다.
+	 *
+	 * @return 2x2 행렬의 단위 행렬를 반환합니다.
+	 */
+	static Matrix2x2<T> GetIdentity()
+	{
+		return Matrix2x2(
+			static_cast<T>(1), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(1)
+		);
+	}
+
+
+	/**
 	 * @brief 2x2 행렬의 원소입니다.
 	 */
 	T m[2][2];

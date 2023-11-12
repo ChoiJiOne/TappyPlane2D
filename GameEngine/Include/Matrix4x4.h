@@ -424,6 +424,22 @@ struct Matrix4x4
 
 
 	/**
+	 * @brief 4x4 행렬의 단위 행렬을 얻습니다.
+	 * 
+	 * @return 4x4 행렬의 단위 행렬를 반환합니다.
+	 */
+	static Matrix4x4<T> GetIdentity()
+	{
+		return Matrix4x4(
+			static_cast<T>(1), static_cast<T>(0), static_cast<T>(0), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(1), static_cast<T>(0), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(0), static_cast<T>(1), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
+		);
+	}
+
+
+	/**
 	 * @brief 4x4 행렬의 원소입니다.
 	 */
 	T m[4][4];
