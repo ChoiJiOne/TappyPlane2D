@@ -4,10 +4,12 @@
 
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
-#include "RenderManager.h"
 #include "FileManager.h"
 #include "IManager.h"
 #include "Macro.h"
+#include "RenderManager.h"
+#include "ResourceManager.h"
+#include "Shader.h"
 #include "SingletonMacro.h"
 #include "StringUtils.h"
 #include "Window.h"
