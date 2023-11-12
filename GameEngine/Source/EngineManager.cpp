@@ -26,6 +26,7 @@ void EngineManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
 
+	RenderManager::Get().Shutdown();
 	FileManager::Get().Shutdown();
 
 	window_->Destroy();
