@@ -7,6 +7,7 @@
 #include "FileManager.h"
 #include "IManager.h"
 #include "Macro.h"
+#include "MathUtils.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "Shader.h"
