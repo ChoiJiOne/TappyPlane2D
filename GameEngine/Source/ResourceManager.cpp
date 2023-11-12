@@ -24,6 +24,20 @@ void ResourceManager::Shutdown()
 	bIsStartup_ = false;
 }
 
+void ResourceManager::DestroyResource(const std::string& signature)
+{
+	if (VerifyResource(signature))
+	{
+		IResource* resource = resources_.at(signature).get();
+		if (resource && resource->IsInitialized())
+		{
+			resources_.at(signature).get()->Release();
+		}
+
+		resources_.erase(signature);
+	}
+}
+
 bool ResourceManager::VerifyResource(const std::string& signature)
 {
 	return resources_.find(signature) != resources_.end();
