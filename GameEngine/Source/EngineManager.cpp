@@ -18,6 +18,8 @@ void EngineManager::Startup()
 
 	CreateEngineWindow(properties);
 	StartupRenderManager(properties);
+
+	ResourceManager::Get().Startup();
 	
 	bIsStartup_ = true;
 }
@@ -26,6 +28,7 @@ void EngineManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
 
+	ResourceManager::Get().Shutdown();
 	RenderManager::Get().Shutdown();
 	FileManager::Get().Shutdown();
 
