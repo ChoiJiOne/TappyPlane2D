@@ -41,3 +41,52 @@ void RenderManager::PreStartup(Window* window, int32_t major, int32_t minor)
 	major_ = major;
 	minor_ = minor;
 }
+
+void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
+{
+	glClearColor(red, green, blue, alpha);
+	glClearDepth(depth);
+	glClearStencil(stencil);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+
+void RenderManager::EndFrame()
+{
+	glfwSwapBuffers(window_->GetWindowPtr());
+}
+
+void RenderManager::SetVsyncMode(bool bIsEnable)
+{
+	glfwSwapInterval(static_cast<int32_t>(bIsEnable));
+}
+
+void RenderManager::SetDepthMode(bool bIsEnable)
+{
+	if (bIsEnable)
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+	else
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+}
+
+void RenderManager::SetAlphaBlend(bool bIsEnable)
+{
+	if (bIsEnable)
+	{
+		glEnable(GL_BLEND);
+		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+	}
+	else
+	{
+		glDisable(GL_BLEND);
+	}
+}
+
+void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
+{
+	glViewport(x, y, width, height);
+}
