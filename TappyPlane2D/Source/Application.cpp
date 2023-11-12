@@ -16,9 +16,9 @@ int main(int argc, char* argv[])
 	shader->Initialize(shaderPath + "shader.vert", shaderPath + "shader.frag");
 
 	std::vector<Vector3f> vertices = {
-		Vector3f(-0.2f, -0.2f, +0.0f), // left  
-		Vector3f(+0.2f, -0.2f, +0.0f), // right 
-		Vector3f(+0.0f, +0.2f, +0.0f)  // top   
+		Vector3f(10.0f, 10.0f, +0.0f), // left  
+		Vector3f(300.0f, 200.0f, +0.0f), // right 
+		Vector3f(500.0f, 50.0f, +0.0f)  // top   
 	};
 
 	unsigned int VAO;
@@ -36,6 +36,8 @@ int main(int argc, char* argv[])
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	RenderManager::Get().SetDepthMode(false);
 	
 	while (!glfwWindowShouldClose(window))
 	{
@@ -51,17 +53,31 @@ int main(int argc, char* argv[])
 
 		shader->Bind();
 		{
-			float time = static_cast<float>(glfwGetTime());
-			Matrix4x4f m(
-				+std::cos(time), std::sin(time), 0.0f, 0.0f,
-				-std::sin(time), std::cos(time), 0.0f, 0.0f,
-				0.0f, 0.0f, 1.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, 1.0f
+			//float time = static_cast<float>(glfwGetTime());
+			//Matrix4x4f m(
+			//	+std::cos(time), std::sin(time), 0.0f, 0.0f,
+			//	-std::sin(time), std::cos(time), 0.0f, 0.0f,
+			//	0.0f, 0.0f, 1.0f, 0.0f,
+			//	0.0f, 0.0f, 0.0f, 1.0f
+			//);
+			//shader->SetMatrix4x4fParameter("transform", m);
+
+			float left = 0.0f;
+			float right = 1000.0f;
+			float bottom = 800.0f;
+			float top = 0.0f;
+			float zNear = -0.1f;
+			float zFar = 1.0f;
+
+			Matrix4x4f m( 
+				           2.0f / (right - left),                             0.0f,                             0.0f, 0.0f,
+				                            0.0f,            2.0f / (top - bottom),                             0.0f, 0.0f,
+			            	                0.0f,                             0.0f,           -2.0f / (zFar - zNear), 0.0f,
+				-(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), 1.0f
 			);
+			shader->SetMatrix4x4fParameter("transform", m);
 
 			Vector4f color(0.0f, 1.0f, 1.0f, 1.0f);
-
-			shader->SetMatrix4x4fParameter("transform", m);
 			shader->SetVector4fParameter("color", color);
 
 			glBindVertexArray(VAO);
