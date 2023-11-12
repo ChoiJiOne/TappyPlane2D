@@ -15,7 +15,9 @@ void EngineManager::Startup()
 	ASSERT(CommandLineArg::GetStringValue("properties", propertiesPath), "failed to load properties json file...");
 
 	Json::Value properties = FileManager::Get().ReadJsonFile(propertiesPath);
+
 	CreateEngineWindow(properties);
+	StartupRenderManager(properties);
 	
 	bIsStartup_ = true;
 }
@@ -53,4 +55,24 @@ void EngineManager::CreateEngineWindow(const Json::Value& properties)
 
 	window_ = std::make_unique<Window>();
 	window_->Create(windowParam);
+}
+
+void EngineManager::StartupRenderManager(const Json::Value& properties)
+{
+	ASSERT((properties["opengl"].isString() && !properties["opengl"].isNull()), "invalid properties json : %s...", "opengl");
+	ASSERT((properties["vsync"].isBool() && !properties["vsync"].isNull()), "invalid properties json : %s...", "vsync");
+
+	std::string glVersion = std::string(properties["opengl"].asCString());
+	std::vector<std::string> tokens = StringUtils::Split(glVersion, ".");
+
+	int32_t major = 0;
+	ASSERT(StringUtils::ToInt(tokens.front(), major), "OpenGL major is not integer : %s", tokens.front().c_str());
+
+	int32_t minor = 0;
+	ASSERT(StringUtils::ToInt(tokens.back(), minor), "OpenGL minor is not integer : %s", tokens.back().c_str());
+
+	RenderManager& renderManager = RenderManager::Get();
+
+	renderManager.PreStartup(window_.get(), major, minor);
+	renderManager.Startup();
 }

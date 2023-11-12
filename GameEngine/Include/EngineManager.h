@@ -4,6 +4,7 @@
 
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
+#include "RenderManager.h"
 #include "FileManager.h"
 #include "IManager.h"
 #include "Macro.h"
@@ -50,6 +51,14 @@ private:
 	 * @param properties 게임 설정이 포함된 Json 객체입니다. 
 	 */
 	void CreateEngineWindow(const Json::Value& properties);
+
+
+	/**
+	 * @brief 렌더 매니저를 초기화합니다.
+	 * 
+	 * @param properties 게임 설정이 포함된 Json 객체입니다. 
+	 */
+	void StartupRenderManager(const Json::Value& properties);
 	
 
 private:
