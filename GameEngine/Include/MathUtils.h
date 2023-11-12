@@ -208,4 +208,22 @@ namespace MathUtils
 
 		return distribution(generator);
 	}
+
+
+	/**
+	 * @brief 임의의 실수를 생성합니다.
+	 *
+	 * @param minValue 생성할 난수 범위의 최솟값입니다.
+	 * @param maxValue 생성할 난수 범위의 최댓값입니다.
+	 *
+	 * @return 생성된 임의의 실수를 반환합니다.
+	 */
+	inline float GenerateRandomFloat(float minValue, float maxValue)
+	{
+		std::random_device randomDevice;
+		std::mt19937 generator(randomDevice());
+		std::uniform_real_distribution<float> distribution(std::min<float>(minValue, maxValue), std::max<float>(minValue, maxValue));
+
+		return distribution(generator);
+	}
 }
