@@ -23,3 +23,8 @@ void ResourceManager::Shutdown()
 
 	bIsStartup_ = false;
 }
+
+bool ResourceManager::VerifyResource(const std::string& signature)
+{
+	return resources_.find(signature) != resources_.end();
+}
