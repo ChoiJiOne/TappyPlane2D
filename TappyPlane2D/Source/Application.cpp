@@ -3,6 +3,10 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
+
+//#include <DirectXMath.h>
+#include <iostream>
+
 int main(int argc, char* argv[])
 {
 	EngineManager::Get().Startup();
@@ -36,7 +40,7 @@ int main(int argc, char* argv[])
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-
+	
 	RenderManager::Get().SetDepthMode(false);
 	
 	while (!glfwWindowShouldClose(window))
@@ -53,28 +57,13 @@ int main(int argc, char* argv[])
 
 		shader->Bind();
 		{
-			//float time = static_cast<float>(glfwGetTime());
-			//Matrix4x4f m(
-			//	+std::cos(time), std::sin(time), 0.0f, 0.0f,
-			//	-std::sin(time), std::cos(time), 0.0f, 0.0f,
-			//	0.0f, 0.0f, 1.0f, 0.0f,
-			//	0.0f, 0.0f, 0.0f, 1.0f
-			//);
-			//shader->SetMatrix4x4fParameter("transform", m);
+			float time = static_cast<float>(glfwGetTime());
 
-			float left = 0.0f;
-			float right = 1000.0f;
-			float bottom = 800.0f;
-			float top = 0.0f;
-			float zNear = -0.1f;
-			float zFar = 1.0f;
-
-			Matrix4x4f m( 
-				           2.0f / (right - left),                             0.0f,                             0.0f, 0.0f,
-				                            0.0f,            2.0f / (top - bottom),                             0.0f, 0.0f,
-			            	                0.0f,                             0.0f,           -2.0f / (zFar - zNear), 0.0f,
-				-(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), 1.0f
-			);
+			Matrix4x4f a = MathUtils::CreateTranslation(200.0f, 200.0f, 0.0f);
+			Matrix4x4f b = MathUtils::CreateScale(Vector3f(0.5f));
+			Matrix4x4f c = MathUtils::CreateRotateZ(time);
+			Matrix4x4f m = a * MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
+			
 			shader->SetMatrix4x4fParameter("transform", m);
 
 			Vector4f color(0.0f, 1.0f, 1.0f, 1.0f);
