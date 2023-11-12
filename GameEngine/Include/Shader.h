@@ -3,6 +3,9 @@
 #include <string>
 
 #include "IResource.h"
+#include "Matrix2x2.h"
+#include "Matrix3x3.h"
+#include "Matrix4x4.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -222,6 +225,33 @@ public:
 	void SetVector4iParameter(const std::string& name, int32_t x, int32_t y, int32_t z, int32_t w);
 
 
+	/**
+	 * @brief 셰이더 내에 2x2 타입의 행렬 유니폼 변수를 설정합니다.
+	 *
+	 * @param name 유니폼 변수의 이름입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetMatrix2x2fParameter(const std::string& name, const Matrix2x2f& value);
+		
+
+	/**
+	 * @brief 셰이더 내에 3x3 타입의 행렬 유니폼 변수를 설정합니다.
+	 *
+	 * @param name 유니폼 변수의 이름입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetMatrix3x3fParameter(const std::string& name, const Matrix3x3f& value);
+
+
+	/**
+	 * @brief 셰이더 내에 4x4 타입의 행렬 유니폼 변수를 설정합니다.
+	 *
+	 * @param name 유니폼 변수의 이름입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetMatrix4x4fParameter(const std::string& name, const Matrix4x4f& value);
+
+
 private:
 	/**
 	 * @brief 셰이더 파일의 유효성을 검사합니다.
@@ -259,7 +289,7 @@ private:
 	int32_t GetUniformLocation(const std::string& uniformName);
 
 
-private:
+public:
 	/**
 	 * @brief 셰이더 관련 로그를 기록하기 위한 문자열 버퍼의 최대 크기입니다.
 	 */

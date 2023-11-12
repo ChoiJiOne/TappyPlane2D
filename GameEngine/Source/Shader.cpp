@@ -200,6 +200,30 @@ void Shader::SetVector4iParameter(const std::string& name, int32_t x, int32_t y,
 	glUniform4i(location, x, y, z, w);
 }
 
+void Shader::SetMatrix2x2fParameter(const std::string& name, const Matrix2x2f& value)
+{
+	int32_t location = GetUniformLocation(name);
+	ASSERT(location != -1, "failed to find %s uniform location in shader...", name.c_str());
+
+	glUniformMatrix2fv(location, 1, GL_FALSE, value.GetPtr());
+}
+
+void Shader::SetMatrix3x3fParameter(const std::string& name, const Matrix3x3f& value)
+{
+	int32_t location = GetUniformLocation(name);
+	ASSERT(location != -1, "failed to find %s uniform location in shader...", name.c_str());
+
+	glUniformMatrix3fv(location, 1, GL_FALSE, value.GetPtr());
+}
+
+void Shader::SetMatrix4x4fParameter(const std::string& name, const Matrix4x4f& value)
+{
+	int32_t location = GetUniformLocation(name);
+	ASSERT(location != -1, "failed to find %s uniform location in shader...", name.c_str());
+
+	glUniformMatrix4fv(location, 1, GL_FALSE, value.GetPtr());
+}
+
 bool Shader::CheckValidShaderFile(const std::string& vsPath, const std::string& fsPath)
 {
 	FileManager& fileManager = FileManager::Get();
