@@ -353,4 +353,67 @@ namespace MathUtils
 			   0.0f,    0.0f,    0.0f, 1.0f
 		);
 	}
+
+
+	/**
+	 * @brief X축으로 회전시키는 회전 행렬을 생성합니다.
+	 * 
+	 * @param radian 회전할 라디안 각도입니다.
+	 * 
+	 * @return 생성된 회전 행렬을 반환합니다.
+	 */
+	inline Matrix4x4f CreateRotateX(float radian)
+	{
+		float s = ScalarSin(radian);
+		float c = ScalarCos(radian);
+
+		return Matrix4x4f(
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f,    c,    s, 0.0f,
+			0.0f,   -s,    c, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+
+
+	/**
+	 * @brief Y축으로 회전시키는 회전 행렬을 생성합니다.
+	 *
+	 * @param radian 회전할 라디안 각도입니다.
+	 *
+	 * @return 생성된 회전 행렬을 반환합니다.
+	 */
+	inline Matrix4x4f CreateRotateY(float radian)
+	{
+		float s = ScalarSin(radian);
+		float c = ScalarCos(radian);
+
+		return Matrix4x4f(
+			   c, 0.0f,   -s, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			   s, 0.0f,    c, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+
+
+	/**
+	 * @brief Z축으로 회전시키는 회전 행렬을 생성합니다.
+	 *
+	 * @param radian 회전할 라디안 각도입니다.
+	 *
+	 * @return 생성된 회전 행렬을 반환합니다.
+	 */
+	inline Matrix4x4f CreateRotateZ(float radian)
+	{
+		float s = ScalarSin(radian);
+		float c = ScalarCos(radian);
+
+		return Matrix4x4f(
+			   c,    s, 0.0f, 0.0f,
+			  -s,    c, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
 }
