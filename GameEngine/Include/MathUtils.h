@@ -226,4 +226,24 @@ namespace MathUtils
 
 		return distribution(generator);
 	}
+
+
+	/**
+	 * @brief 이동 변환 행렬을 생성합니다.
+	 * 
+	 * @param x 이동할 x 좌표값입니다.
+	 * @param y 이동할 y 좌표값입니다.
+	 * @param z 이동할 z 좌표값입니다.
+	 * 
+	 * @return 생성된 이동 변환 행렬을 반환합니다.
+	 */
+	inline Matrix4x4f CreateTranslation(float x, float y, float z)
+	{
+		return Matrix4x4f(
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 
+			   x,    y,    z, 1.0f
+		);
+	}
 }
