@@ -5,6 +5,8 @@
 
 #include <glad/glad.h>
 
+char Shader::buffer_[MAX_BUFFER_SIZE];
+
 Shader::~Shader()
 {
 	if (bIsInitialized_)
@@ -215,13 +217,13 @@ bool Shader::CheckValidShaderFile(const std::string& vsPath, const std::string& 
 
 	// 파일 확장자 검사
 	std::string vsExtension = fileManager.GetFileExtension(vsPath);
-	if (vsExtension != "vert" || vsExtension != "vs" || vsExtension != "glsl")
+	if (vsExtension != "vert" && vsExtension != "vs" && vsExtension != "glsl")
 	{
 		return false;
 	}
 
 	std::string fsExtension = fileManager.GetFileExtension(fsPath);
-	if (fsExtension != "frag" || fsExtension != "fs" || fsExtension != "glsl")
+	if (fsExtension != "frag" && fsExtension != "fs" && fsExtension != "glsl")
 	{
 		return false;
 	}
