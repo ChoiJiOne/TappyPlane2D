@@ -69,52 +69,52 @@ namespace MathUtils
 	/**
 	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
 	 *
-	 * @param Radian 변환할 라디안 각입니다.
+	 * @param radian 변환할 라디안 각입니다.
 	 *
 	 * @return 변환된 육십분법 각입니다.
 	 */
-	inline float ToDegree(float Radian)
+	inline float ToDegree(float radian)
 	{
-		return (Radian * 180.0f) / PI_F;
+		return (radian * 180.0f) / PI_F;
 	}
 
 
 	/**
 	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
 	 *
-	 * @param Radian 변환할 라디안 각입니다.
+	 * @param radian 변환할 라디안 각입니다.
 	 *
 	 * @return 변환된 육십분법 각입니다.
 	 */
-	inline double ToDegree(double Radian)
+	inline double ToDegree(double radian)
 	{
-		return (Radian * 180.0) / PI_D;
+		return (radian * 180.0) / PI_D;
 	}
 
 
 	/**
 	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
 	 *
-	 * @param Degree 변환할 육십분법 각입니다.
+	 * @param degree 변환할 육십분법 각입니다.
 	 *
 	 * @return 변환된 라디안 각입니다.
 	 */
-	inline float ToRadian(float Degree)
+	inline float ToRadian(float degree)
 	{
-		return (Degree * PI_F) / 180.0f;
+		return (degree * PI_F) / 180.0f;
 	}
 
 
 	/**
 	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
 	 *
-	 * @param Degree 변환할 육십분법 각입니다.
+	 * @param degree 변환할 육십분법 각입니다.
 	 *
 	 * @return 변환된 라디안 각입니다.
 	 */
-	inline double ToRadian(double Degree)
+	inline double ToRadian(double degree)
 	{
-		return (Degree * PI_D) / 180.0;
+		return (degree * PI_D) / 180.0;
 	}
 
 
