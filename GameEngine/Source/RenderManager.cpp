@@ -11,6 +11,15 @@ void RenderManager::Startup()
 {
 	ASSERT(!bIsStartup_, "already startup render manager...");
 
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major_);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	GLFWwindow* windowPtr = window_->GetWindowPtr();
+	glfwMakeContextCurrent(windowPtr);
+
+	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
+	
 	bIsStartup_ = true;
 }
 
