@@ -16,9 +16,9 @@ int main(int argc, char* argv[])
 	shader->Initialize(shaderPath + "shader.vert", shaderPath + "shader.frag");
 
 	std::vector<Vector3f> vertices = {
-		Vector3f(-0.5f, -0.5f, +0.0f), // left  
-		Vector3f(+0.5f, -0.5f, +0.0f), // right 
-		Vector3f(+0.0f, +0.5f, +0.0f)  // top   
+		Vector3f(-0.2f, -0.2f, +0.0f), // left  
+		Vector3f(+0.2f, -0.2f, +0.0f), // right 
+		Vector3f(+0.0f, +0.2f, +0.0f)  // top   
 	};
 
 	unsigned int VAO;
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -51,6 +51,17 @@ int main(int argc, char* argv[])
 
 		shader->Bind();
 		{
+			float time = static_cast<float>(glfwGetTime());
+			Matrix4x4f m(
+				+std::cos(time),  std::sin(time), 0.0f, 0.0f,
+				-std::sin(time),  std::cos(time), 0.0f, 0.0f,
+				           0.0f,           0.0f,  1.0f, 0.0f,
+				           0.0f,           0.0f,  0.0f, 1.0f
+			);
+
+			uint32_t location = glGetUniformLocation(shader->programID_, "transform");
+			glUniformMatrix4fv(location, 1, GL_FALSE, m.GetPtr());
+			
 			Vector4f color(0.0f, 1.0f, 1.0f, 1.0f);
 			shader->SetVector4fParameter("color", color);
 
