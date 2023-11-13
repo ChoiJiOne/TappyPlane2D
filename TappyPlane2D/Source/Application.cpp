@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
-		shader->DrawLine2D(ortho, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(300.0f, 150.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		shader->DrawLine2D(ortho, Vector2f(0.0f, 0.0f), Vector2f(300.0f, 150.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 		//shader->DrawPoints2D(ortho, positions, Vector4f(0.0f, 1.0f, 0.0f, 1.0f), 3.0f);
 		
 		RenderManager::Get().EndFrame();

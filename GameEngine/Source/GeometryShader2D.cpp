@@ -44,7 +44,7 @@ void GeometryShader2D::Release()
 	glDeleteVertexArrays(1, &vertexArrayObject_);
 }
 
-void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<Vector3f>& positions, const Vector4f& color, float pointSize)
+void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<Vector2f>& positions, const Vector4f& color, float pointSize)
 {
 	ASSERT(positions.size() <= MAX_VERTEX_SIZE, "overflow 2d point count : %d", static_cast<int32_t>(positions.size()));
 	ASSERT(pointSize >= 0.0f, "invalid 2d point size : %d", pointSize);
@@ -67,7 +67,7 @@ void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<V
 	Shader::Unbind();
 }
 
-void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector3f& fromPosition, const Vector3f& toPosition, const Vector4f& color)
+void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& toPosition, const Vector4f& color)
 {
 	vertices_[0] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 	vertices_[1] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);

@@ -66,7 +66,7 @@ public:
 	 * @param color 점들의 RGB 색상입니다.
 	 * @param pointSize 점의 크기입니다. 기본 값은 1.0f입니다.
 	 */
-	void DrawPoints2D(const Matrix4x4f& ortho, const std::vector<Vector3f>& positions, const Vector4f& color, float pointSize = 1.0f);
+	void DrawPoints2D(const Matrix4x4f& ortho, const std::vector<Vector2f>& positions, const Vector4f& color, float pointSize = 1.0f);
 
 
 	/**
@@ -77,8 +77,8 @@ public:
 	 * @param toPosition 선의 끝점입니다.
 	 * @param color 선의 RGBA색상입니다.
 	 */
-	void DrawLine2D(const Matrix4x4f& ortho, const Vector3f& fromPosition, const Vector3f& toPosition, const Vector4f& color);
-
+	void DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& toPosition, const Vector4f& color);
+	
 
 private:
 	/**
