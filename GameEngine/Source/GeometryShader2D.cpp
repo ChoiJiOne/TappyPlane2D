@@ -89,7 +89,7 @@ void GeometryShader2D::UpdateVertexBuffer()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
 
 	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
+	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionColor::GetStride() * vertices_.size());
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
