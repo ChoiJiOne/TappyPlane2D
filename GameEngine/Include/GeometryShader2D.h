@@ -81,6 +81,24 @@ public:
 
 
 	/**
+	 * @brief 화면에 2D 선을 그립니다.
+	 * 
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param fromPosition 선의 시작점입니다.
+	 * @param fromColor 선의 시작점 색상입니다.
+	 * @param toPosition 선의 끝점입니다.
+	 * @param toColor 선의 끝점 색상입니다.
+	 */
+	void DrawLine2D(
+		const Matrix4x4f& ortho,
+		const Vector2f& fromPosition,
+		const Vector4f& fromColor,
+		const Vector2f& toPosition,
+		const Vector4f& toColor
+	);
+
+
+	/**
 	 * @brief 화면에 2D 삼각형을 그립니다.
 	 *
 	 * @param ortho 직교 투영 행렬입니다.
