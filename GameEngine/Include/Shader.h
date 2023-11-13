@@ -289,7 +289,7 @@ private:
 	int32_t GetUniformLocation(const std::string& uniformName);
 
 
-public:
+private:
 	/**
 	 * @brief 셰이더 관련 로그를 기록하기 위한 문자열 버퍼의 최대 크기입니다.
 	 */
