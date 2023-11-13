@@ -57,7 +57,7 @@ public:
 	 * @param fsFile 프레그먼트 셰이더의 확장자(.frag)를 포함한 경로입니다.
 	 * @param bCheckValid 셰이더 파일의 유효성 검사 여부입니다. 기본 값은 true입니다.
 	 */
-	void Initialize(const std::string& vsPath, const std::string& fsPath, bool bCheckValid = true);
+	virtual void Initialize(const std::string& vsPath, const std::string& fsPath, bool bCheckValid = true);
 
 
 	/**
