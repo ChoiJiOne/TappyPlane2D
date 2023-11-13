@@ -5,6 +5,6 @@
   "width": 1000,
   "height": 800,
   "resize": false,
-  "vsync": true,
+  "vsync": false,
   "opengl": "4.6"
 }
