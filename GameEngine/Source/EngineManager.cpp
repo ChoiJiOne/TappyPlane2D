@@ -79,4 +79,7 @@ void EngineManager::StartupRenderManager(const Json::Value& properties)
 
 	renderManager.PreStartup(window_.get(), major, minor);
 	renderManager.Startup();
+
+	bool bIsEnableVsync = properties["vsync"].asBool();
+	renderManager.SetVsyncMode(bIsEnableVsync);
 }
