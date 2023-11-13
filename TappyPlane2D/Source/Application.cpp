@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	CommandLineArg::GetStringValue("glsl", shaderPath);
 
 	Shader* shader = ResourceManager::Get().CreateResource<Shader>("Shader");
-	shader->Initialize(shaderPath + "shader.vert", shaderPath + "shader.frag");
+	shader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
 
 	std::vector<Vector3f> vertices = {
 		Vector3f(10.0f, 10.0f, +0.0f), // left  
