@@ -224,6 +224,11 @@ void Shader::SetMatrix4x4fParameter(const std::string& name, const Matrix4x4f& v
 	glUniformMatrix4fv(location, 1, GL_FALSE, value.GetPtr());
 }
 
+int32_t Shader::GetUniformLocation(const std::string& uniformName)
+{
+	return glGetUniformLocation(programID_, uniformName.c_str());
+}
+
 bool Shader::CheckValidShaderFile(const std::string& vsPath, const std::string& fsPath)
 {
 	FileManager& fileManager = FileManager::Get();
@@ -287,9 +292,4 @@ uint32_t Shader::CreateAndCompileShader(const EType& type, const std::string& so
 	}
 
 	return shaderID;
-}
-
-int32_t Shader::GetUniformLocation(const std::string& uniformName)
-{
-	return glGetUniformLocation(programID_, uniformName.c_str());
 }

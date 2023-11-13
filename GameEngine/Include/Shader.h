@@ -252,6 +252,19 @@ public:
 	void SetMatrix4x4fParameter(const std::string& name, const Matrix4x4f& value);
 
 
+protected:
+	/**
+	 * @brief 셰이더 내 유니폼 객체의 위치를 얻습니다.
+	 *
+	 * @param uniformName 위치를 찾을 셰이더 내 유니폼 이름입니다.
+	 *
+	 * @return 셰이더 내 유니폼 객체의 위치를 반환합니다. 찾지 못하면 -1을 반환합니다.
+	 *
+	 * @see https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetUniformLocation.xhtml
+	 */
+	int32_t GetUniformLocation(const std::string& uniformName);
+
+
 private:
 	/**
 	 * @brief 셰이더 파일의 유효성을 검사합니다.
@@ -275,18 +288,6 @@ private:
 	 * @return 컴파일된 셰이더 객체의 아이디를 반환합니다.
 	 */
 	uint32_t CreateAndCompileShader(const EType& type, const std::string& source);
-
-
-	/**
-	 * @brief 셰이더 내 유니폼 객체의 위치를 얻습니다.
-	 *
-	 * @param uniformName 위치를 찾을 셰이더 내 유니폼 이름입니다.
-	 *
-	 * @return 셰이더 내 유니폼 객체의 위치를 반환합니다. 찾지 못하면 -1을 반환합니다.
-	 *
-	 * @see https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetUniformLocation.xhtml
-	 */
-	int32_t GetUniformLocation(const std::string& uniformName);
 
 
 private:
