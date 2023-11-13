@@ -20,6 +20,8 @@ void RenderManager::Startup()
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 	
+	glEnable(GL_PROGRAM_POINT_SIZE);
+
 	bIsStartup_ = true;
 }
 
