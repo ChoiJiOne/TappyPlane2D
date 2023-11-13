@@ -5,6 +5,7 @@
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
 #include "FileManager.h"
+#include "GeometryShader2D.h"
 #include "IManager.h"
 #include "Macro.h"
 #include "MathUtils.h"
