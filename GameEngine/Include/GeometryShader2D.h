@@ -137,6 +137,46 @@ public:
 		const Vector4f& toColor
 	);
 
+
+	/**
+	 * @brief 화면에 2D 와이어 프레임 삼각형을 그립니다.
+	 *
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param fromPosition 삼각형 시작 점입니다.
+	 * @param byPosition 삼각형 중간 점입니다.
+	 * @param toPosition 삼각형 끝 점입니다.
+	 * @param color 삼각형의 RGBA색상입니다.
+	 */
+	void DrawWireframeTriangle2D(
+		const Matrix4x4f& ortho,
+		const Vector2f& fromPosition,
+		const Vector2f& byPosition,
+		const Vector2f& toPosition,
+		const Vector4f& color
+	);
+
+
+	/**
+	 * @brief 화면에 2D 와이어 프레임 삼각형을 그립니다.
+	 *
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param fromPosition 삼각형 시작 점입니다.
+	 * @param fromColor 삼각형 시작 점의 색상입니다.
+	 * @param byPosition 삼각형 중간 점입니다.
+	 * @param byColor 삼각형 중간 점의 색상입니다.
+	 * @param toPosition 삼각형 끝 점입니다.
+	 * @param toColor 삼각형 끝 점의 색상입니다.
+	 */
+	void DrawWireframeTriangle2D(
+		const Matrix4x4f& ortho,
+		const Vector2f& fromPosition,
+		const Vector4f& fromColor,
+		const Vector2f& byPosition,
+		const Vector4f& byColor,
+		const Vector2f& toPosition,
+		const Vector4f& toColor
+	);
+
 	
 private:
 	/**

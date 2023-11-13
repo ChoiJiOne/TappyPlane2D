@@ -137,6 +137,44 @@ void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& f
 	Shader::Unbind();
 }
 
+void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	vertices_[0] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
+	vertices_[1] = VertexPositionColor(Vector3f(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f), color);
+	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
+	vertices_[3] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
+
+	UpdateVertexBuffer();
+
+	Shader::Bind();
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_LINE_STRIP, 0, 4);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}
+
+void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
+{
+	vertices_[0] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
+	vertices_[1] = VertexPositionColor(Vector3f(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f),   byColor);
+	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
+	vertices_[3] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
+
+	UpdateVertexBuffer();
+
+	Shader::Bind();
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_LINE_STRIP, 0, 4);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}
+
 void GeometryShader2D::UpdateVertexBuffer()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
