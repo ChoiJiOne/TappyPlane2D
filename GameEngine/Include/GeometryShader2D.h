@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 
 #include "Shader.h"
 #include "Vertex.h"
@@ -56,6 +57,19 @@ public:
 
 
 	/**
+	 * @brief 화면에 2D 점들을 그립니다.
+	 * 
+	 * @note 2D 점들의 개수는 MAX_VERTEX_SIZE(10000)의 크기를 넘을 수 없습니다.
+	 * 
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param positions 화면 상의 2D 점들입니다.
+	 * @param color 점들의 RGB 색상입니다.
+	 * @param pointSize 점의 크기입니다. 기본 값은 1.0f입니다.
+	 */
+	void DrawPoints2D(const Matrix4x4f& ortho, const std::vector<Vector3f>& positions, const Vector4f& color, float pointSize = 1.0f);
+
+
+	/**
 	 * @brief 화면에 2D 선을 그립니다.
 	 * 
 	 * @param ortho 직교 투영 행렬입니다.
@@ -68,9 +82,16 @@ public:
 
 private:
 	/**
+	 * @brief 버텍스 버퍼를 업데이트합니다.
+	 */
+	void UpdateVertexBuffer();
+
+
+private:
+	/**
 	 * @brief 도형 정점 목록의 최대 크기입니다.
 	 */
-	static const int32_t MAX_VERTEX_SIZE = 1000;
+	static const int32_t MAX_VERTEX_SIZE = 10000;
 
 
 	/**
