@@ -285,6 +285,18 @@ public:
 	
 private:
 	/**
+	 * @brief 기본 도형의 그리기 타입입니다.
+	 */
+	enum class EDrawType : int32_t
+	{
+		None = 0x0000,
+		LineStrip = 0x0003,
+		Triangles = 0x0004,
+		TriangleFan = 0x0006,
+	};
+	
+
+	/**
 	 * @brief 버텍스 버퍼를 업데이트합니다.
 	 */
 	void UpdateVertexBuffer();
