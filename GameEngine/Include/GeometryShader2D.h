@@ -253,6 +253,21 @@ public:
 		const Vector4f& color
 	);
 
+
+	/**
+	 * @brief 화면에 2D 격자를 그립니다.
+	 * 
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param minX X좌표의 최소값입니다.
+	 * @param maxX X좌표의 최댓값입니다.
+	 * @param strideX 격차의 X축 방향으로의 간격입니다.
+	 * @param minY Y좌표의 최소값입니다.
+	 * @param maxY Y좌표의 최댓값입니다.
+	 * @param strideY 격차의 Y축 방향으로의 간격입니다.
+	 * @param color 격자의 색상입니다.
+	 */
+	void DrawGrid2D(const Matrix4x4f& ortho, float minX, float maxX, float strideX, float minY, float maxY, float strideY, const Vector4f& color);
+
 	
 private:
 	/**

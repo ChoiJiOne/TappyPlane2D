@@ -212,9 +212,9 @@ void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& 
 
 void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, float rotate, const Vector4f& color)
 {
-	Vector2f center = leftTopPosition + rightBottomPosition;
-	center.x /= 2.0f;
-	center.y /= 2.0f;
+	Vector2f center;
+	center.x = (leftTopPosition.x + rightBottomPosition.x + 0.5f) / 2.0f;
+	center.y = (leftTopPosition.y + rightBottomPosition.y + 0.5f) / 2.0f;
 	
 	vertices_[0] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
 	vertices_[1] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
@@ -268,9 +268,9 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 
 void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, float rotate, const Vector4f& color)
 {
-	Vector2f center = leftTopPosition + rightBottomPosition;
-	center.x /= 2.0f;
-	center.y /= 2.0f;
+	Vector2f center;
+	center.x = (leftTopPosition.x + rightBottomPosition.x + 0.5f) / 2.0f;
+	center.y = (leftTopPosition.y + rightBottomPosition.y + 0.5f) / 2.0f;
 
 	vertices_[0] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
 	vertices_[1] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
@@ -290,6 +290,38 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 
 	glBindVertexArray(vertexArrayObject_);
 	glDrawArrays(GL_LINE_STRIP, 0, 5);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}
+
+void GeometryShader2D::DrawGrid2D(const Matrix4x4f& ortho, float minX, float maxX, float strideX, float minY, float maxY, float strideY, const Vector4f& color)
+{
+	ASSERT((strideX >= 1.0f && strideY >= 1.0f), "The values of strideX and strideY are too small : %f, %f", strideX, strideY);
+
+	uint32_t vertexIndex = 0;
+	for (float x = minX; x <= maxX; x += strideX)
+	{
+		ASSERT(vertexIndex < MAX_VERTEX_SIZE, "overflow grid vertex count : %d", vertexIndex + 1);
+		vertices_[vertexIndex++] = VertexPositionColor(Vector3f(x + 0.5f, minY + 0.5f, 0.0f), color);
+		vertices_[vertexIndex++] = VertexPositionColor(Vector3f(x + 0.5f, maxY + 0.5f, 0.0f), color);
+	}
+
+	for (float y = minY; y <= maxY; y += strideY)
+	{
+		ASSERT(vertexIndex < MAX_VERTEX_SIZE, "overflow grid vertex count : %d", vertexIndex + 1);
+		vertices_[vertexIndex++] = VertexPositionColor(Vector3f(minX + 0.5f, y + 0.5f, 0.0f), color);
+		vertices_[vertexIndex++] = VertexPositionColor(Vector3f(maxX + 0.5f, y + 0.5f, 0.0f), color);
+	}
+
+	UpdateVertexBuffer();
+	
+	Shader::Bind();
+	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_LINES, 0, vertexIndex + 1);
 	glBindVertexArray(0);
 
 	Shader::Unbind();
