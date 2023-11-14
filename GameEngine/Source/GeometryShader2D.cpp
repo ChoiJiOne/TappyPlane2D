@@ -295,6 +295,36 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 	Shader::Unbind();
 }
 
+void GeometryShader2D::DrawWireframeCircle2D(const Matrix4x4f& ortho, const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
+{
+	ASSERT(radius >= 0.0f, "invalid circle radius : %f", radius);
+	ASSERT(sliceCount <= MAX_VERTEX_SIZE, "overflow circle slice count : %d", sliceCount);
+
+	for (int32_t index = 0; index < sliceCount; ++index)
+	{
+		float radian = (static_cast<float>(index) * MathUtils::TwoPi) / static_cast<float>(sliceCount);
+		float x = radius * MathUtils::ScalarCos(radian);
+		float y = radius * MathUtils::ScalarSin(radian);
+
+		vertices_[index] = VertexPositionColor(Vector3f(center.x + x + 0.5f, center.y + y + 0.5f , 0.0f), color);
+	}
+
+	vertices_[sliceCount] = vertices_[0];
+	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 1);
+
+	UpdateVertexBuffer();
+
+	Shader::Bind();
+	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_LINE_STRIP, 0, vertexCount);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}
+
 void GeometryShader2D::DrawGrid2D(const Matrix4x4f& ortho, float minX, float maxX, float strideX, float minY, float maxY, float strideY, const Vector4f& color)
 {
 	ASSERT((strideX >= 1.0f && strideY >= 1.0f), "The values of strideX and strideY are too small : %f, %f", strideX, strideY);
