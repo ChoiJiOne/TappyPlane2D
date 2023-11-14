@@ -16,16 +16,6 @@ int main(int argc, char* argv[])
 	GeometryShader2D* shader = ResourceManager::Get().CreateResource<GeometryShader2D>("Shader");
 	shader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
 
-	std::vector<Vector3f> positions;
-	for (int32_t count = 0; count < 10000; ++count)
-	{
-		positions.push_back(Vector3f(
-			MathUtils::GenerateRandomFloat(0.0f, 1000.0f),
-			MathUtils::GenerateRandomFloat(0.0f, 800.0f),
-			0.0f
-		));
-	}
-	
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -39,6 +29,9 @@ int main(int argc, char* argv[])
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
+		shader->DrawGrid2D(ortho, 0.0f, 1000.0f, 10.0f, 0.0f, 800.0f, 10.0f, Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+		shader->DrawCircle2D(ortho, Vector2f(500.0f, 400.0f), 100.0f, Vector4f(0.0f, 1.0f, 1.0f, 1.0f), 10);
+		shader->DrawWireframeCircle2D(ortho, Vector2f(500.0f, 400.0f), 100.0f, Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
 		
 		RenderManager::Get().EndFrame();
 	}
