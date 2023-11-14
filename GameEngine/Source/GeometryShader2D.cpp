@@ -210,37 +210,6 @@ void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& 
 	Shader::Unbind();
 }
 
-void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, float rotate, const Vector4f& color)
-{
-	Vector2f center;
-	center.x = (leftTopPosition.x + rightBottomPosition.x + 0.5f) / 2.0f;
-	center.y = (leftTopPosition.y + rightBottomPosition.y + 0.5f) / 2.0f;
-	
-	vertices_[0] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
-	vertices_[1] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
-	vertices_[2] = VertexPositionColor(Vector3f(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
-
-	vertices_[3] = VertexPositionColor(Vector3f(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
-	vertices_[4] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
-	vertices_[5] = VertexPositionColor(Vector3f(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
-
-	UpdateVertexBuffer();
-
-	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
-		* MathUtils::CreateRotateZ(rotate)
-		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
-}
-
 void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
 {
 	vertices_[0] = VertexPositionColor(Vector3f(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
@@ -249,35 +218,6 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 	vertices_[3] = VertexPositionColor(Vector3f(center.x + width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 	vertices_[4] = VertexPositionColor(Vector3f(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 
-	UpdateVertexBuffer();
-
-	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
-		* MathUtils::CreateRotateZ(rotate)
-		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 5);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
-}
-
-void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, float rotate, const Vector4f& color)
-{
-	Vector2f center;
-	center.x = (leftTopPosition.x + rightBottomPosition.x + 0.5f) / 2.0f;
-	center.y = (leftTopPosition.y + rightBottomPosition.y + 0.5f) / 2.0f;
-
-	vertices_[0] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
-	vertices_[1] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
-	vertices_[2] = VertexPositionColor(Vector3f(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
-	vertices_[3] = VertexPositionColor(Vector3f(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
-	vertices_[4] = VertexPositionColor(Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
-	
 	UpdateVertexBuffer();
 
 	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))

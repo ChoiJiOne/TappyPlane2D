@@ -199,24 +199,6 @@ public:
 
 
 	/**
-	 * @brief 화면에 2D 직사각형을 그립니다.
-	 *
-	 * @param ortho 직교 투영 행렬입니다.
-	 * @param leftTopPosition 직사각형의 왼쪽 상단 좌표입니다.
-	 * @param rightBottomPosition 직사각형의 오른쪽 하단 좌표입니다.
-	 * @param rotate 직사각형의 라디안 회전 각도입니다.
-	 * @param color 직사각형의 색상입니다.
-	 */
-	void DrawRectangle2D(
-		const Matrix4x4f& ortho,
-		const Vector2f& leftTopPosition,
-		const Vector2f& rightBottomPosition,
-		float rotate,
-		const Vector4f& color
-	);
-
-
-	/**
 	 * @brief 화면에 2D 와이어 프레임 직사각형을 그립니다.
 	 *
 	 * @param ortho 직교 투영 행렬입니다.
@@ -231,24 +213,6 @@ public:
 		const Vector2f& center,
 		float width,
 		float height,
-		float rotate,
-		const Vector4f& color
-	);
-
-
-	/**
-	 * @brief 화면에 2D 와이어 프레임 직사각형을 그립니다.
-	 *
-	 * @param ortho 직교 투영 행렬입니다.
-	 * @param leftTopPosition 직사각형의 왼쪽 상단 좌표입니다.
-	 * @param rightBottomPosition 직사각형의 오른쪽 하단 좌표입니다.
-	 * @param rotate 직사각형의 라디안 회전 각도입니다.
-	 * @param color 직사각형의 색상입니다.
-	 */
-	void DrawWireframeRectangle2D(
-		const Matrix4x4f& ortho,
-		const Vector2f& leftTopPosition,
-		const Vector2f& rightBottomPosition,
 		float rotate,
 		const Vector4f& color
 	);
