@@ -57,16 +57,8 @@ void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<V
 
 	UpdateVertexBuffer();
 
-	Shader::Bind();
-	Shader::SetFloatParameter("pointSize", pointSize);
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-	
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_POINTS, 0, static_cast<uint32_t>(positions.size()));
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	pointSize_ = pointSize;
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Points, static_cast<uint32_t>(positions.size()));
 }
 
 void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& toPosition, const Vector4f& color)
@@ -75,16 +67,7 @@ void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromP
 	vertices_[1] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 	
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 2);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 2);
 }
 
 void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& toPosition, const Vector4f& toColor)
@@ -93,16 +76,7 @@ void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromP
 	vertices_[1] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), toColor);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 2);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 2);
 }
 
 void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
@@ -112,16 +86,7 @@ void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& f
 	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Triangles, 3);
 }
 
 void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
@@ -131,16 +96,7 @@ void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& f
 	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Triangles, 3);
 }
 
 void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
@@ -151,16 +107,7 @@ void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Ve
 	vertices_[3] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 4);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 4);
 }
 
 void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
@@ -171,16 +118,7 @@ void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Ve
 	vertices_[3] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 4);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 4);
 }
 
 void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
@@ -193,21 +131,12 @@ void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& 
 	vertices_[4] = VertexPositionColor(Vector3f(center.x - width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), color);
 	vertices_[5] = VertexPositionColor(Vector3f(center.x + width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), color);
 	
-	UpdateVertexBuffer();
-
-	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f)) 
-		* MathUtils::CreateRotateZ(rotate) 
+	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
+		* MathUtils::CreateRotateZ(rotate)
 		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
 
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	UpdateVertexBuffer();
+	DrawGeometry2D(transform, ortho, EDrawType::Triangles, 6);
 }
 
 void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
@@ -218,21 +147,13 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 	vertices_[3] = VertexPositionColor(Vector3f(center.x + width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 	vertices_[4] = VertexPositionColor(Vector3f(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 
-	UpdateVertexBuffer();
-
 	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
 		* MathUtils::CreateRotateZ(rotate)
 		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
 
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
 
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 5);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	UpdateVertexBuffer();
+	DrawGeometry2D(transform, ortho, EDrawType::LineStrip, 5);
 }
 
 void GeometryShader2D::DrawCircle2D(const Matrix4x4f& ortho, const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
@@ -254,16 +175,7 @@ void GeometryShader2D::DrawCircle2D(const Matrix4x4f& ortho, const Vector2f& cen
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 2);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::TriangleFan, vertexCount);
 }
 
 void GeometryShader2D::DrawWireframeCircle2D(const Matrix4x4f& ortho, const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
@@ -284,16 +196,7 @@ void GeometryShader2D::DrawWireframeCircle2D(const Matrix4x4f& ortho, const Vect
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 1);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, vertexCount);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, vertexCount);
 }
 
 void GeometryShader2D::DrawEllipse2D(const Matrix4x4f& ortho, const Vector2f& center, float xAxis, float yAxis, const Vector4f& color, int32_t sliceCount)
@@ -319,16 +222,7 @@ void GeometryShader2D::DrawEllipse2D(const Matrix4x4f& ortho, const Vector2f& ce
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 2);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::TriangleFan, vertexCount);
 }
 
 void GeometryShader2D::DrawWireframeEllipse2D(const Matrix4x4f& ortho, const Vector2f& center, float xAxis, float yAxis, const Vector4f& color, int32_t sliceCount)
@@ -353,16 +247,7 @@ void GeometryShader2D::DrawWireframeEllipse2D(const Matrix4x4f& ortho, const Vec
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 1);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, vertexCount);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, vertexCount);
 }
 
 void GeometryShader2D::DrawGrid2D(const Matrix4x4f& ortho, float minX, float maxX, float strideX, float minY, float maxY, float strideY, const Vector4f& color)
@@ -384,17 +269,10 @@ void GeometryShader2D::DrawGrid2D(const Matrix4x4f& ortho, float minX, float max
 		vertices_[vertexIndex++] = VertexPositionColor(Vector3f(maxX + 0.5f, y + 0.5f, 0.0f), color);
 	}
 
+	uint32_t vertexCount = vertexIndex + 1;
+
 	UpdateVertexBuffer();
-	
-	Shader::Bind();
-	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINES, 0, vertexIndex + 1);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Lines, vertexCount);
 }
 
 void GeometryShader2D::UpdateVertexBuffer()
@@ -406,4 +284,24 @@ void GeometryShader2D::UpdateVertexBuffer()
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GeometryShader2D::DrawGeometry2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, const EDrawType& drawType, uint32_t vertexCount)
+{
+	ASSERT(drawType != EDrawType::None, "invalid draw type...");
+
+	Shader::Bind();
+	if (drawType == EDrawType::Points)
+	{
+		Shader::SetFloatParameter("pointSize", pointSize_);
+	}
+
+	Shader::SetMatrix4x4fParameter("transform", transform);
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(static_cast<GLenum>(drawType), 0, vertexCount);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
 }

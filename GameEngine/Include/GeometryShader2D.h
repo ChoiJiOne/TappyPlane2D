@@ -289,10 +289,12 @@ private:
 	 */
 	enum class EDrawType : int32_t
 	{
-		None = 0x0000,
+		Points = 0x0000,
+		Lines = 0x0001,
 		LineStrip = 0x0003,
 		Triangles = 0x0004,
 		TriangleFan = 0x0006,
+		None = 0xFFFF,
 	};
 	
 
@@ -300,6 +302,17 @@ private:
 	 * @brief 버텍스 버퍼를 업데이트합니다.
 	 */
 	void UpdateVertexBuffer();
+
+
+	/**
+	 * @brief 기본 도형 그리기를 수행합니다.
+	 * 
+	 * @param transform 변환 행렬입니다.
+	 * @param ortho 투영 행렬입니다.
+	 * @param drawType 그리기 타입입니다.
+	 * @param vertexCount 정점 수입니다.
+	 */
+	void DrawGeometry2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, const EDrawType& drawType, uint32_t vertexCount);
 
 
 private:
@@ -325,4 +338,10 @@ private:
 	 * @brief 정점 버퍼 목록의 오브젝트입니다.
 	 */
 	uint32_t vertexArrayObject_ = 0;
+
+
+	/**
+	 * @brief 포인트 크기입니다.
+	 */
+	float pointSize_ = 1.0f;
 };
