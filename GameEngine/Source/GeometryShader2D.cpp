@@ -295,6 +295,37 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 	Shader::Unbind();
 }
 
+void GeometryShader2D::DrawCircle2D(const Matrix4x4f& ortho, const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
+{
+	ASSERT(radius >= 0.0f, "invalid circle radius : %f", radius);
+	ASSERT(sliceCount <= MAX_VERTEX_SIZE - 2, "overflow circle slice count : %d", sliceCount);
+
+	for (int32_t slice = 1; slice <= sliceCount; ++slice)
+	{
+		float radian = (static_cast<float>(slice - 1) * MathUtils::TwoPi) / static_cast<float>(sliceCount);
+		float x = radius * MathUtils::ScalarCos(radian);
+		float y = radius * MathUtils::ScalarSin(radian);
+
+		vertices_[slice] = VertexPositionColor(Vector3f(center.x + x + 0.5f, center.y + y + 0.5f, 0.0f), color);
+	}
+
+	vertices_[0] = VertexPositionColor(Vector3f(center.x + 0.5f, center.y + 0.5f, 0.0f), color);
+	vertices_[sliceCount + 1] = vertices_[1];
+	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 2);
+
+	UpdateVertexBuffer();
+
+	Shader::Bind();
+	Shader::SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}
+
 void GeometryShader2D::DrawWireframeCircle2D(const Matrix4x4f& ortho, const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
 {
 	ASSERT(radius >= 0.0f, "invalid circle radius : %f", radius);

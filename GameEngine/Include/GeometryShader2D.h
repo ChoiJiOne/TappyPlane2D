@@ -255,6 +255,18 @@ public:
 
 
 	/**
+	 * @brief 화면에 2D 원을 그립니다.
+	 * 
+	 * @param ortho 직교 투영 행렬입니다.
+	 * @param center 원의 중심 좌표입니다.
+	 * @param radius 원의 반지름 길이입니다.
+	 * @param color 원의 색상입니다.
+	 * @param sliceCount 원의 둘레 절단 횟수입니다. 기본 값은 300입니다.
+	 */
+	void DrawCircle2D(const Matrix4x4f& ortho, const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount = 300);
+
+
+	/**
 	 * @brief 화면에 2D 와이어 프레임 원을 그립니다.
 	 * 
 	 * @param ortho 직교 투영 행렬입니다.
