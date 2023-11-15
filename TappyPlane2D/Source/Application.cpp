@@ -6,6 +6,48 @@
 
 #include "GLAssertionMacro.h"
 
+struct ASTCHeader
+{
+	uint8_t magic[4];
+	uint8_t blockdim_x;
+	uint8_t blockdim_y;
+	uint8_t blockdim_z;
+	uint8_t xsize[3];
+	uint8_t ysize[3];
+	uint8_t zsize[3];
+};
+
+uint32_t LoadTextureNoCompression(const std::string& filename)
+{
+	std::string resourcePath;
+	CommandLineArg::GetStringValue("resource", resourcePath);
+
+	int32_t width;
+	int32_t height;
+	int32_t nrChannels;
+	unsigned char* data = stbi_load((resourcePath + filename).c_str(), &width, &height, &nrChannels, 0);
+
+	uint32_t texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	stbi_image_free(data);
+	data = nullptr;
+
+	return texture;
+}
+
+uint32_t LoadTextureCompression(const std::string& filename)
+{
+	return 0;
+}
+
 int main(int argc, char* argv[])
 {
 	EngineManager::Get().Startup();
@@ -24,10 +66,10 @@ int main(int argc, char* argv[])
 	
 	std::vector<float> vertices = {
 		// positions          // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
-		 0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
+		 1.0f,  1.0f, 0.0f,   1.0f, 1.0f, // top right
+		 1.0f, -1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+		-1.0f, -1.0f, 0.0f,   0.0f, 0.0f, // bottom left
+		-1.0f,  1.0f, 0.0f,   0.0f, 1.0f  // top left 
 	};
 
 	std::vector<uint32_t> indices = {
@@ -58,30 +100,9 @@ int main(int argc, char* argv[])
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	std::string resourcePath;
-	CommandLineArg::GetStringValue("resource", resourcePath);
-
-	int32_t width;
-	int32_t height;
-	int32_t nrChannels;
-
-	unsigned char* data = stbi_load((resourcePath + "awesomeface.png").c_str(), &width, &height, &nrChannels, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(data);
-	data = nullptr;
-
+	uint32_t texture = LoadTextureNoCompression("awesomeface.png");
+		
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -92,7 +113,7 @@ int main(int argc, char* argv[])
 		}
 
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
-		RenderManager::Get().BeginFrame(1.0f, 0.0f, 0.0f, 1.0f);
+		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		shader->Bind();
 		{
