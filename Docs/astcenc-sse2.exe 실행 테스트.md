@@ -5,6 +5,7 @@
 |Source|Color profile|Dimensions|Components|
 |---|---|---|---|
 |awesomeface.png|LDR|2D, 476x476|4|
+
 ![[Pasted image 20231115104242.png]]
 ## 테스트 진행
 > 참고
