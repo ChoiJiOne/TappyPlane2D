@@ -8,6 +8,22 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
+/**
+ * @brief ASTC 파일의 헤더입니다.
+ * 
+ * @note astcenc.exe를 이용해서 생성한 파일 기준입니다.
+ */
+struct ASTCFileHeader
+{
+	uint8_t magic[4];
+	uint8_t blockdimX;
+	uint8_t blockdimY;
+	uint8_t blockdimZ;
+	uint8_t xsize[3];
+	uint8_t ysize[3];
+	uint8_t zsize[3];
+};
+
 const int32_t COUNT_SUPPORT_EXTENSIONS = 6;
 std::array<std::string, COUNT_SUPPORT_EXTENSIONS> SUPPORT_EXTENSIONS = {
 	"jpeg",
