@@ -2,6 +2,7 @@
 
 #include "AssertionMacro.h"
 #include "FileManager.h"
+#include "GLAssertionMacro.h"
 
 #include <glad/glad.h>
 
@@ -34,6 +35,8 @@ void Shader::Initialize(const std::string& vsPath, const std::string& fsPath, bo
 	ASSERT(fsID != 0, "failed to create and compile fragment shader : %s", fsPath.c_str());
 
 	programID_ = glCreateProgram();
+	ASSERT(programID_ != 0, "failed to create shader program...");
+
 	glAttachShader(programID_, vsID);
 	glAttachShader(programID_, fsID);
 	glLinkProgram(programID_);
