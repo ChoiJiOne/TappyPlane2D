@@ -4,6 +4,7 @@
 #include "StringUtils.h"
 
 #include <array>
+#include <unordered_map>
 
 #include <glad/glad.h>
 #include <stb_image.h>
@@ -46,6 +47,23 @@ enum class EASTCBlockSize
 	ASTC_12x10 = 0x93BC,
 	ASTC_12x12 = 0x93BD,
 	None = 0xFFFF,
+};
+
+std::unordered_map<EASTCBlockSize, std::string> blockSizeMaps = {
+	{ EASTCBlockSize::ASTC_4x4,   "4x4"   },
+	{ EASTCBlockSize::ASTC_5x4,   "5x4"   },
+	{ EASTCBlockSize::ASTC_5x5,   "5x5"   },
+	{ EASTCBlockSize::ASTC_6x5,   "6x5"   },
+	{ EASTCBlockSize::ASTC_6x6,   "6x6"   },
+	{ EASTCBlockSize::ASTC_8x5,   "8x5"   },
+	{ EASTCBlockSize::ASTC_8x6,   "8x6"   },
+	{ EASTCBlockSize::ASTC_8x8,   "8x8"   },
+	{ EASTCBlockSize::ASTC_10x5,  "10x5"  },
+	{ EASTCBlockSize::ASTC_10x6,  "10x6"  },
+	{ EASTCBlockSize::ASTC_10x8,  "10x8"  },
+	{ EASTCBlockSize::ASTC_10x10, "10x10" },
+	{ EASTCBlockSize::ASTC_12x10, "12x10" },
+	{ EASTCBlockSize::ASTC_12x12, "12x12" },
 };
 
 const int32_t COUNT_SUPPORT_EXTENSIONS = 6;
@@ -153,6 +171,7 @@ uint32_t Texture2D::CreateNonCompressionTexture(const std::string& path)
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR), "failed to set texture object mag filter...");
 	GL_ASSERT(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, buffer), "failed to allows elements of an image array to be read by shaders...");
 	GL_ASSERT(glGenerateMipmap(GL_TEXTURE_2D), "failed to generate texture mipmap...");
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, 0), "failed to unbind texture object...");
 
 	stbi_image_free(buffer);
 	buffer = nullptr;
@@ -162,5 +181,45 @@ uint32_t Texture2D::CreateNonCompressionTexture(const std::string& path)
 
 uint32_t Texture2D::CreateCompressionTexture(const std::string& path)
 {
-	return uint32_t(0);
+	FileManager& fileManager = FileManager::Get();
+	std::string filename = fileManager.RemoveBasePath(path);
+
+	bool bFoundBlockSize = false;
+	GLenum compressionFormat;
+
+	for (const auto& blockSizeMap : blockSizeMaps)
+	{
+		if (filename.find(blockSizeMap.second) != std::string::npos)
+		{
+			bFoundBlockSize = true;
+			compressionFormat = static_cast<GLenum>(blockSizeMap.first);
+			break;
+		}
+	}
+	ASSERT(bFoundBlockSize, "%s astc is not support astc format...", path.c_str());
+	
+	std::vector<uint8_t> astcData = FileManager::Get().ReadFileToBuffer(path);
+	ASTCFileHeader* astcDataPtr = reinterpret_cast<ASTCFileHeader*>(astcData.data());
+
+	int32_t xsize = astcDataPtr->xsize[0] + (astcDataPtr->xsize[1] << 8) + (astcDataPtr->xsize[2] << 16);
+	int32_t ysize = astcDataPtr->ysize[0] + (astcDataPtr->ysize[1] << 8) + (astcDataPtr->ysize[2] << 16);
+	int32_t zsize = astcDataPtr->zsize[0] + (astcDataPtr->zsize[1] << 8) + (astcDataPtr->zsize[2] << 16);
+	int32_t xblocks = (xsize + astcDataPtr->blockdimX - 1) / astcDataPtr->blockdimX;
+	int32_t yblocks = (ysize + astcDataPtr->blockdimY - 1) / astcDataPtr->blockdimY;
+	int32_t zblocks = (zsize + astcDataPtr->blockdimZ - 1) / astcDataPtr->blockdimZ;
+
+	uint32_t byteToRead = (xblocks * yblocks * zblocks) << 4;
+
+	uint32_t textureID;
+	GL_ASSERT(glGenTextures(1, &textureID), "failed to generate texture object...");
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, textureID), "failed to bind texture object...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT), "failed to set texture object warp s...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT), "failed to set texture object warp t...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR), "failed to set texture object min filter...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR), "failed to set texture object mag filter...");
+	GL_ASSERT(glCompressedTexImage2D(GL_TEXTURE_2D, 0, compressionFormat, xsize, ysize, 0, byteToRead, reinterpret_cast<const void*>(&astcDataPtr[1])), "failed to compress texture...");
+	GL_ASSERT(glGenerateMipmap(GL_TEXTURE_2D), "failed to generate texture mipmap...");
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, 0), "failed to unbind texture object...");
+
+	return textureID;
 }
