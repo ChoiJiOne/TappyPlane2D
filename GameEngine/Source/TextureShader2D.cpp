@@ -88,7 +88,7 @@ void TextureShader2D::UpdateVertexBuffer()
 	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
 
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionColor::GetStride() * vertices_.size());
+	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionTexture::GetStride() * vertices_.size());
 	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
 	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
 	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d texture vertex buffer...");
