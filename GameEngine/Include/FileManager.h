@@ -288,6 +288,16 @@ public:
 
 
 	/**
+	 * @brief 파일을 읽어 버퍼로 반환합니다.
+	 * 
+	 * @param path 파일의 경로입니다.
+	 * 
+	 * @return 파일의 이진 정보가 저장된 버퍼를 반환합니다.
+	 */
+	std::vector<uint8_t> ReadFileToBuffer(const std::string& path);
+
+
+	/**
 	 * @brief Json 파일을 읽어 Json 객체를 반환합니다.
 	 * 
 	 * @param path Json 파일의 경로입니다.

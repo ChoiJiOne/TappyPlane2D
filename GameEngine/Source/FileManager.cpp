@@ -215,6 +215,17 @@ std::wstring FileManager::ReadTextFileToString(const std::wstring& path)
 	return fileStringStream.str();
 }
 
+std::vector<uint8_t> FileManager::ReadFileToBuffer(const std::string& path)
+{
+	std::ifstream readFile(path, std::ios::binary);
+	ASSERT(readFile.is_open(), "failed to read file : %s", path.c_str());
+
+	std::vector<uint8_t> buffer(std::istreambuf_iterator<char>(readFile), {});
+	readFile.close();
+
+	return buffer;
+}
+
 Json::Value FileManager::ReadJsonFile(const std::string& path)
 {
 	ASSERT(IsValidPath(path), "invalid %s path...", path.c_str());
