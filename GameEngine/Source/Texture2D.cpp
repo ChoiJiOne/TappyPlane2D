@@ -128,7 +128,7 @@ void Texture2D::Release()
 	bIsInitialized_ = false;
 }
 
-void Texture2D::Active(uint32_t unit)
+void Texture2D::Active(uint32_t unit) const
 {
 	GL_ASSERT(glActiveTexture(GL_TEXTURE0 + unit), "failed to active texture unit : %d", (GL_TEXTURE0 + unit));
 	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, textureID_), "failed to bind texture...");
