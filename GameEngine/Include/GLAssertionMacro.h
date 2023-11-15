@@ -20,7 +20,7 @@ GLenum glError = glGetError();\
 if (glError != GL_NO_ERROR)\
 {\
 AssertPrintF("\nAssertion check point failed!\nFILE : %s\nLINE : %d\nAPI CALL : %s\nMESSAGE : ", __FILE__, __LINE__, #X);\
-AssertPrintF("\nglGetError() : %d (%#.8x)\n", glError, glError);\
+AssertPrintF("glGetError() : %d (%#.8x)\n", glError, glError);\
 AssertPrintF(__VA_ARGS__); \
 AssertPrintF("\n"); \
 __debugbreak(); \
@@ -37,7 +37,7 @@ GLenum glError = glGetError(); \
 if (glError != GL_NO_ERROR)\
 {\
 AssertPrintF("\nAssertion check point failed!\nFILE : %s\nLINE : %d\nAPI CALL : %s\nMESSAGE : ", __FILE__, __LINE__, #X); \
-AssertPrintF("\nglGetError() : %d (%#.8x)\n", glError, glError); \
+AssertPrintF("glGetError() : %d (%#.8x)\n", glError, glError); \
 AssertPrintF(__VA_ARGS__); \
 AssertPrintF("\n"); \
 __debugbreak(); \
