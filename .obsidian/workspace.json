@@ -26,9 +26,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f2f70afc06b357e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -155,10 +167,12 @@
       "command-palette:명령어 팔레트 열기": false
     }
   },
-  "active": "7b1d6e3c049c217a",
+  "active": "f2f70afc06b357e8",
   "lastOpenFiles": [
     "Docs/프로젝트의 저장소 복제본 얻기.md",
+    "Docs/astcenc-sse2.exe 실행 테스트.md",
     "Docs/프로젝트에서 사용한 라이브러리 & 툴.md",
+    "Resource/Pasted image 20231115104242.png",
     "Docs/GLFW에서 Windows 빌드에 필요한 소스 파일.md",
     "README.md",
     "Docs/Visual Studio 솔루션 하위 프로젝트 구성.md",
