@@ -3,29 +3,20 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <stb_image.h>
+#include <iostream>
 
 #include "GLAssertionMacro.h"
-
-struct ASTCHeader
-{
-	uint8_t magic[4];
-	uint8_t blockdim_x;
-	uint8_t blockdim_y;
-	uint8_t blockdim_z;
-	uint8_t xsize[3];
-	uint8_t ysize[3];
-	uint8_t zsize[3];
-};
 
 uint32_t LoadTextureNoCompression(const std::string& filename)
 {
 	std::string resourcePath;
 	CommandLineArg::GetStringValue("resource", resourcePath);
+	resourcePath += filename;
 
 	int32_t width;
 	int32_t height;
 	int32_t nrChannels;
-	unsigned char* data = stbi_load((resourcePath + filename).c_str(), &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load(resourcePath.c_str(), &width, &height, &nrChannels, 0);
 
 	uint32_t texture;
 	glGenTextures(1, &texture);
@@ -43,9 +34,60 @@ uint32_t LoadTextureNoCompression(const std::string& filename)
 	return texture;
 }
 
+struct ASTCHeader
+{
+	uint8_t magic[4];
+	uint8_t blockdim_x;
+	uint8_t blockdim_y;
+	uint8_t blockdim_z;
+	uint8_t xsize[3];
+	uint8_t ysize[3];
+	uint8_t zsize[3];
+};
+
 uint32_t LoadTextureCompression(const std::string& filename)
 {
-	return 0;
+	std::string resourcePath;
+	CommandLineArg::GetStringValue("resource", resourcePath);
+	resourcePath += filename;
+
+	unsigned int n_bytes_to_read = 0;
+	int xblocks = 0;
+	int yblocks = 0;
+	int zblocks = 0;
+
+	int xsize = 0;
+	int ysize = 0;
+	int zsize = 0;
+
+	std::vector<uint8_t> buffer = FileManager::Get().ReadFileToBuffer(resourcePath);
+	ASTCHeader* astc_data_ptr = (ASTCHeader*)(buffer.data());
+
+	xsize = astc_data_ptr->xsize[0] + (astc_data_ptr->xsize[1] << 8) + (astc_data_ptr->xsize[2] << 16);
+	ysize = astc_data_ptr->ysize[0] + (astc_data_ptr->ysize[1] << 8) + (astc_data_ptr->ysize[2] << 16);
+	zsize = astc_data_ptr->zsize[0] + (astc_data_ptr->zsize[1] << 8) + (astc_data_ptr->zsize[2] << 16);
+
+	xblocks = (xsize + astc_data_ptr->blockdim_x - 1) / astc_data_ptr->blockdim_x;
+	yblocks = (ysize + astc_data_ptr->blockdim_y - 1) / astc_data_ptr->blockdim_y;
+	zblocks = (zsize + astc_data_ptr->blockdim_z - 1) / astc_data_ptr->blockdim_z;
+
+	n_bytes_to_read = xblocks * yblocks * zblocks << 4;
+
+	uint32_t texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	GL_ASSERT(glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA_ASTC_4x4_KHR, xsize, ysize, 0, n_bytes_to_read, (const GLvoid*)&astc_data_ptr[1])
+	, "failed to compress texture...");
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return texture;
 }
 
 int main(int argc, char* argv[])
@@ -63,6 +105,12 @@ int main(int argc, char* argv[])
 
 	Shader* shader = ResourceManager::Get().CreateResource<Shader>("Shader");
 	shader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
+
+	std::string resourcePath;
+	CommandLineArg::GetStringValue("resource", resourcePath);
+
+	Texture2D* texture2d = ResourceManager::Get().CreateResource<Texture2D>("Texture");
+	texture2d->Initialize(resourcePath + "awesomeface.png");
 	
 	std::vector<float> vertices = {
 		// positions          // texture coords
@@ -101,8 +149,6 @@ int main(int argc, char* argv[])
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	uint32_t texture = LoadTextureNoCompression("awesomeface.png");
-		
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -117,8 +163,7 @@ int main(int argc, char* argv[])
 
 		shader->Bind();
 		{
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, texture);
+			texture2d->Active(0);
 
 			shader->SetMatrix4x4fParameter("transform", Matrix4x4f::GetIdentity());
 			shader->SetMatrix4x4fParameter("ortho", Matrix4x4f::GetIdentity());
@@ -129,13 +174,8 @@ int main(int argc, char* argv[])
 		}
 		shader->Unbind();
 
-		Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
-		shader2d->DrawLine2D(ortho, Vector2f(0.0f, 0.0f), Vector2f(1000.0f, 800.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
-
 		RenderManager::Get().EndFrame();
 	}
-
-	glDeleteTextures(1, &texture);
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
