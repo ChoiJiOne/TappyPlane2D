@@ -4,6 +4,8 @@
 #include <glfw/glfw3.h>
 #include <stb_image.h>
 
+#include "GLAssertionMacro.h"
+
 int main(int argc, char* argv[])
 {
 	EngineManager::Get().Startup();
@@ -14,8 +16,8 @@ int main(int argc, char* argv[])
 	std::string shaderPath;
 	CommandLineArg::GetStringValue("glsl", shaderPath);
 
-	//GeometryShader2D* shader = ResourceManager::Get().CreateResource<GeometryShader2D>("Shader");
-	//shader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
+	GeometryShader2D* shader2d = ResourceManager::Get().CreateResource<GeometryShader2D>("Shader2D");
+	shader2d->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
 
 	Shader* shader = ResourceManager::Get().CreateResource<Shader>("Shader");
 	shader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
@@ -92,8 +94,6 @@ int main(int argc, char* argv[])
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(1.0f, 0.0f, 0.0f, 1.0f);
 
-		//Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
-
 		shader->Bind();
 		{
 			glActiveTexture(GL_TEXTURE0);
@@ -107,6 +107,9 @@ int main(int argc, char* argv[])
 			glDrawElements(GL_TRIANGLES, static_cast<uint32_t>(indices.size()), GL_UNSIGNED_INT, 0);
 		}
 		shader->Unbind();
+
+		Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
+		shader2d->DrawLine2D(ortho, Vector2f(0.0f, 0.0f), Vector2f(1000.0f, 800.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
 		RenderManager::Get().EndFrame();
 	}
