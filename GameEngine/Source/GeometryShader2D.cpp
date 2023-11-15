@@ -1,6 +1,7 @@
 #include "GeometryShader2D.h"
 
 #include "AssertionMacro.h"
+#include "GLAssertionMacro.h"
 #include "MathUtils.h"
 
 #include <glad/glad.h>
@@ -19,20 +20,23 @@ void GeometryShader2D::Initialize(const std::string& vsPath, const std::string& 
 
 	Shader::Initialize(vsPath, fsPath, bCheckValid);
 
-	glGenVertexArrays(1, &vertexArrayObject_);
-	glGenBuffers(1, &vertexBufferObject_);
+	GL_ASSERT(glGenVertexArrays(1, &vertexArrayObject_), "failed to generate 2d geometry vertex array...");
+	GL_ASSERT(glGenBuffers(1, &vertexBufferObject_), "failed to generate 2d geometry vertex buffer...");
 
-	glBindVertexArray(vertexArrayObject_);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
-	glBufferData(GL_ARRAY_BUFFER, VertexPositionColor::GetStride() * vertices_.size(), reinterpret_cast<const void*>(vertices_.data()), GL_DYNAMIC_DRAW);
+	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d geometry vertex array...");
+	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d geometry vertex buffer...");
+	GL_ASSERT(glBufferData(GL_ARRAY_BUFFER, VertexPositionColor::GetStride() * vertices_.size(), reinterpret_cast<const void*>(vertices_.data()), GL_DYNAMIC_DRAW), 
+		"failed to create a new data store for a 2d geometry buffer object...");
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VertexPositionColor::GetStride(), (void*)(offsetof(VertexPositionColor, position_)));
-	glEnableVertexAttribArray(0);
+	GL_ASSERT(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VertexPositionColor::GetStride(), (void*)(offsetof(VertexPositionColor, position_))),
+		"failed to specify the location and data format of the array of generic vertex attributes at index...");
+	GL_ASSERT(glEnableVertexAttribArray(0), "failed to enable vertex attrib array...");
 
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, VertexPositionColor::GetStride(), (void*)(offsetof(VertexPositionColor, color_)));
-	glEnableVertexAttribArray(1);
+	GL_ASSERT(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, VertexPositionColor::GetStride(), (void*)(offsetof(VertexPositionColor, color_))), 
+		"failed to specify the location and data format of the array of generic vertex attributes at index...");
+	GL_ASSERT(glEnableVertexAttribArray(1), "failed to enable vertex attrib array...");
 
-	glBindVertexArray(0);
+	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d geometry vertex array...");
 }
 
 void GeometryShader2D::Release()
@@ -41,8 +45,8 @@ void GeometryShader2D::Release()
 
 	Shader::Release();
 
-	glDeleteBuffers(1, &vertexBufferObject_);
-	glDeleteVertexArrays(1, &vertexArrayObject_);
+	GL_ASSERT(glDeleteBuffers(1, &vertexBufferObject_), "failed to delete 2d geomety vertex buffer...");
+	GL_ASSERT(glDeleteVertexArrays(1, &vertexArrayObject_), "failed to delete 2d geometry vertex array object...");
 }
 
 void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<Vector2f>& positions, const Vector4f& color, float pointSize)
@@ -277,13 +281,16 @@ void GeometryShader2D::DrawGrid2D(const Matrix4x4f& ortho, float minX, float max
 
 void GeometryShader2D::UpdateVertexBuffer()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
+	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d geometry vertex buffer...");
 
 	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionColor::GetStride() * vertices_.size());
+	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
+	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...")
+	
+	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d geometry vertex buffer...");
 }
 
 void GeometryShader2D::DrawGeometry2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, const EDrawType& drawType, uint32_t vertexCount)
@@ -299,9 +306,9 @@ void GeometryShader2D::DrawGeometry2D(const Matrix4x4f& transform, const Matrix4
 	Shader::SetMatrix4x4fParameter("transform", transform);
 	Shader::SetMatrix4x4fParameter("ortho", ortho);
 
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(static_cast<GLenum>(drawType), 0, vertexCount);
-	glBindVertexArray(0);
+	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d geometry vertex array...");
+	GL_ASSERT(glDrawArrays(static_cast<GLenum>(drawType), 0, vertexCount), "failed to draw 2d geometry...");
+	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d geometry vertex array...");
 
 	Shader::Unbind();
 }
