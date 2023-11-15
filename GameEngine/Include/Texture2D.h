@@ -62,7 +62,7 @@ public:
 	 * 
 	 * @param unit 활성화 할 텍스처 유닛입니다.
 	 */
-	void Active(uint32_t unit) const;
+	void Active(uint32_t unit);
 
 
 private:
