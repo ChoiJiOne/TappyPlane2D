@@ -2,6 +2,7 @@
 
 #include "EngineManager.h"
 #include "AssertionMacro.h"
+#include "GLAssertionMacro.h"
 #include "Window.h"
 
 #include <glad/glad.h>
@@ -20,7 +21,7 @@ void RenderManager::Startup()
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 	
-	glEnable(GL_PROGRAM_POINT_SIZE);
+	GL_ASSERT(glEnable(GL_PROGRAM_POINT_SIZE), "failed to enable shader program point size...");
 
 	bIsStartup_ = true;
 }
@@ -50,7 +51,7 @@ void RenderManager::BeginFrame(float red, float green, float blue, float alpha, 
 	glClearDepth(depth);
 	glClearStencil(stencil);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	GL_ASSERT(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT), "failed to clear bitplane area of the window...");
 }
 
 void RenderManager::EndFrame()
@@ -67,11 +68,11 @@ void RenderManager::SetDepthMode(bool bIsEnable)
 {
 	if (bIsEnable)
 	{
-		glEnable(GL_DEPTH_TEST);
+		GL_ASSERT(glEnable(GL_DEPTH_TEST), "failed to enable depth test...");
 	}
 	else
 	{
-		glDisable(GL_DEPTH_TEST);
+		GL_ASSERT(glDisable(GL_DEPTH_TEST), "failed to disable depth test...");
 	}
 }
 
@@ -79,16 +80,16 @@ void RenderManager::SetAlphaBlend(bool bIsEnable)
 {
 	if (bIsEnable)
 	{
-		glEnable(GL_BLEND);
-		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+		GL_ASSERT(glEnable(GL_BLEND), "failed to enable alpha blend...");
+		GL_ASSERT(glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO), "failed to Separate blend func...");
 	}
 	else
 	{
-		glDisable(GL_BLEND);
+		GL_ASSERT(glDisable(GL_BLEND), "failedto disable alpha blend...");
 	}
 }
 
 void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
 {
-	glViewport(x, y, width, height);
+	GL_ASSERT(glViewport(x, y, width, height), "invalid viewport parameter : x=%d, y=%d, w=%d, h=%d", x, y, width, height);
 }
