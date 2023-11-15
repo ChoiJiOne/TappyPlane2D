@@ -14,6 +14,7 @@
 #include "Shader.h"
 #include "SingletonMacro.h"
 #include "StringUtils.h"
+#include "Texture2D.h"
 #include "Window.h"
 
 
