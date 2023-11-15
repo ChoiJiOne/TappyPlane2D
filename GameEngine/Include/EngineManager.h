@@ -15,6 +15,7 @@
 #include "SingletonMacro.h"
 #include "StringUtils.h"
 #include "Texture2D.h"
+#include "TextureShader2D.h"
 #include "Window.h"
 
 
