@@ -288,8 +288,8 @@ void GeometryShader2D::UpdateVertexBuffer()
 
 	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionColor::GetStride() * vertices_.size());
 	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
-	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...")
-	
+	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
+
 	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d geometry vertex buffer...");
 }
 
