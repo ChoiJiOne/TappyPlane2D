@@ -112,6 +112,39 @@ void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate,
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
+void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
+{
+	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
+
+	float x0 = center.x - width / 2.0f;
+	float y0 = center.y - height / 2.0f;
+	float x1 = center.x + width / 2.0f;
+	float y1 = center.y + height / 2.0f;
+
+	float x = x0 + (x1 - x0) * (1.0f - rate);
+
+	vertices_[0]  = VertexPositionTexture(Vector3f(x0 + 0.5f, y0 + 0.5f, 0.0f), Vector2f(rate, 0.0f));
+	vertices_[1]  = VertexPositionTexture(Vector3f(x0 + 0.5f, y1 + 0.5f, 0.0f), Vector2f(rate, 1.0f));
+	vertices_[2]  = VertexPositionTexture(Vector3f(+x + 0.5f, y0 + 0.5f, 0.0f), Vector2f(1.0f, 0.0f));
+
+	vertices_[3]  = VertexPositionTexture(Vector3f(+x + 0.5f, y0 + 0.5f, 0.0f), Vector2f(1.0f, 0.0f));
+	vertices_[4]  = VertexPositionTexture(Vector3f(x0 + 0.5f, y1 + 0.5f, 0.0f), Vector2f(rate, 1.0f));
+	vertices_[5]  = VertexPositionTexture(Vector3f(+x + 0.5f, y1 + 0.5f, 0.0f), Vector2f(1.0f, 1.0f));
+
+	vertices_[6]  = VertexPositionTexture(Vector3f(+x + 0.5f, y0 + 0.5f, 0.0f), Vector2f(0.0f, 0.0f));
+	vertices_[7]  = VertexPositionTexture(Vector3f(+x + 0.5f, y1 + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
+	vertices_[8]  = VertexPositionTexture(Vector3f(x1 + 0.5f, y0 + 0.5f, 0.0f), Vector2f(rate, 0.0f));
+
+	vertices_[9]  = VertexPositionTexture(Vector3f(x1 + 0.5f, y0 + 0.5f, 0.0f), Vector2f(rate, 0.0f));
+	vertices_[10] = VertexPositionTexture(Vector3f(+x + 0.5f, y1 + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
+	vertices_[11] = VertexPositionTexture(Vector3f(x1 + 0.5f, y1 + 0.5f, 0.0f), Vector2f(rate, 1.0f));
+
+	UpdateVertexBuffer();
+	
+	uint32_t vertexCount = 12;
+	DrawTexture2D(Matrix4x4f::GetIdentity(), ortho, vertexCount, texture, transparent);
+}
+
 void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
