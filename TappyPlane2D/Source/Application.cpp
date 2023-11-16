@@ -25,8 +25,11 @@ int main(int argc, char* argv[])
 	std::string resourcePath;
 	CommandLineArg::GetStringValue("resource", resourcePath);
 
-	Texture2D* texture2d = ResourceManager::Get().CreateResource<Texture2D>("Texture");
-	texture2d->Initialize(resourcePath + "Texture\\background.png");
+	Texture2D* background = ResourceManager::Get().CreateResource<Texture2D>("Background");
+	background->Initialize(resourcePath + "Texture\\background.png");
+
+	Texture2D* ground = ResourceManager::Get().CreateResource<Texture2D>("Ground");
+	ground->Initialize(resourcePath + "Texture\\groundGrass.png");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -41,13 +44,11 @@ int main(int argc, char* argv[])
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
-		float time = static_cast<float>(glfwGetTime());
+		float time = static_cast<float>(glfwGetTime() / 10.0f);
 		float value = time - static_cast<float>(static_cast<int32_t>(time));
-		textureShader->DrawVerticalScrollTexture2D(texture2d, value);
-		//textureShader->DrawTexture2D(ortho, texture2d, Vector2f(500.0f, 400.0f), 100.0f, 100.0f, 0.0f, 1.0f);
-		//textureShader->DrawTexture2D(texture2d);
-		//textureShader->DrawHorizonScrollTexture2D(texture2d, static_cast<float>(glfwGetTime()) / 10.0f);
-		//textureShader->DrawVerticalScrollTexture2D(texture2d, static_cast<float>(glfwGetTime()) / 10.0f);
+
+		textureShader->DrawHorizonScrollTexture2D(background, static_cast<float>(value));
+		textureShader->DrawHorizonScrollTexture2D(ortho, ground, Vector2f(500.0f, 770.0f), 1000.0f, 60.0f, value);
 
 		RenderManager::Get().EndFrame();
 	}
