@@ -49,7 +49,7 @@ enum class EASTCBlockSize
 	None = 0xFFFF,
 };
 
-std::unordered_map<EASTCBlockSize, std::string> blockSizeMaps = {
+const std::unordered_map<EASTCBlockSize, std::string> blockSizeMaps = {
 	{ EASTCBlockSize::ASTC_4x4,   "4x4"   },
 	{ EASTCBlockSize::ASTC_5x4,   "5x4"   },
 	{ EASTCBlockSize::ASTC_5x5,   "5x5"   },
@@ -67,7 +67,7 @@ std::unordered_map<EASTCBlockSize, std::string> blockSizeMaps = {
 };
 
 const int32_t COUNT_SUPPORT_EXTENSIONS = 6;
-std::array<std::string, COUNT_SUPPORT_EXTENSIONS> SUPPORT_EXTENSIONS = {
+const std::array<std::string, COUNT_SUPPORT_EXTENSIONS> supportExtensions = {
 	"jpeg",
 	"jpg",
 	"png",
@@ -97,7 +97,7 @@ void Texture2D::Initialize(const std::string& path, bool bCheckValid)
 	std::string extension = StringUtils::ToLower(fileManager.GetFileExtension(path));
 	bool bFoundExtension = false;
 
-	for (const auto& supportExtension : SUPPORT_EXTENSIONS)
+	for (const auto& supportExtension : supportExtensions)
 	{
 		if (extension == supportExtension)
 		{
