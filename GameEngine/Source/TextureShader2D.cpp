@@ -112,7 +112,7 @@ void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate,
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
+void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 

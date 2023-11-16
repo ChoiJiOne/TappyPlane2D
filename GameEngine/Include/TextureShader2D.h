@@ -130,7 +130,9 @@ public:
 	 * │            │                  │
 	 * └────────────┴──────────────────┘
 	 *
+	 * @param ortho 직교 투영 행렬입니다.
 	 * @param texture 텍스처 리소스입니다.
+	 * @param center 
 	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
@@ -140,7 +142,6 @@ public:
 		const Vector2f& center,
 		float width,
 		float height,
-		float rotate,
 		float rate, 
 		float transparent = 1.0f
 	);
@@ -169,7 +170,7 @@ public:
 	 */
 	void DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent = 1.0f);
 
-
+	
 private:
 	/**
 	 * @brief 버텍스 버퍼를 업데이트합니다.
