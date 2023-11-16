@@ -65,20 +65,24 @@ void TextureShader2D::DrawTexture2D(const Matrix4x4f& ortho, Texture2D* texture,
 		* MathUtils::CreateRotateZ(rotate)
 		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
 
-	Shader::Bind();
+	uint32_t vertexCount = 6;
+	DrawTexture2D(transform, ortho, vertexCount, texture, transparent);
+}
 
-	texture->Active(0);
+void TextureShader2D::DrawTexture2D(Texture2D* texture, float transparent)
+{
+	vertices_[0] = VertexPositionTexture(Vector3f(-1.0f, +1.0f, 0.0f), Vector2f(0.0f, 0.0f));
+	vertices_[1] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
+	vertices_[2] = VertexPositionTexture(Vector3f(+1.0f, +1.0f, 0.0f), Vector2f(1.0f, 0.0f));
 
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-	Shader::SetBoolParameter("bReverseTexCoord", false);
-	Shader::SetFloatParameter("transparent", transparent);
+	vertices_[3] = VertexPositionTexture(Vector3f(+1.0f, +1.0f, 0.0f), Vector2f(1.0f, 0.0f));
+	vertices_[4] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
+	vertices_[5] = VertexPositionTexture(Vector3f(+1.0f, -1.0f, 0.0f), Vector2f(1.0f, 1.0f));
 
-	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d geometry vertex array...");
-	GL_ASSERT(glDrawArrays(GL_TRIANGLES, 0, 6), "failed to draw 2d geometry...");
-	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d geometry vertex array...");
+	UpdateVertexBuffer();
 
-	Shader::Unbind();
+	uint32_t vertexCount = 6;
+	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
 void TextureShader2D::UpdateVertexBuffer()
@@ -92,4 +96,22 @@ void TextureShader2D::UpdateVertexBuffer()
 	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
 	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
 	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d texture vertex buffer...");
+}
+
+void TextureShader2D::DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, Texture2D* texture, float transparent)
+{
+	Shader::Bind();
+
+	texture->Active(0);
+
+	Shader::SetMatrix4x4fParameter("transform", transform);
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+	Shader::SetBoolParameter("bReverseTexCoord", false);
+	Shader::SetFloatParameter("transparent", transparent);
+
+	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d texture vertex array...");
+	GL_ASSERT(glDrawArrays(GL_TRIANGLES, 0, vertexCount), "failed to draw 2d texture...");
+	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d texture vertex array...");
+
+	Shader::Unbind();
 }

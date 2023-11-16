@@ -11,7 +11,9 @@ class Texture2D; // Texture2D를 사용하기 위한 전방 선언입니다.
 /**
  * @brief 2D 텍스처를 렌더링하는 셰이더입니다.
  * 
- * @note 2D 텍스처 렌더링 시 기준이 되는 좌표계는 윈도우 좌표계입니다.
+ * @note 
+ * - 2D 텍스처 렌더링 시 기준이 되는 좌표계는 윈도우 좌표계입니다.
+ * - 위치나 크기 관련 인자를 받지 않고 렌더링하는 메서드는 윈도우 화면 전체를 기준으로 합니다.
  */
 class TextureShader2D : public Shader
 {
@@ -76,6 +78,17 @@ public:
 	);
 
 
+	/**
+	 * @brief 2D 텍스처를 화면에 그립니다.
+	 * 
+	 * @note 2D 텍스처를 윈도우 전체에 채워지도록 그립니다.
+	 * 
+	 * @param texture 텍스처 리소스입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void DrawTexture2D(Texture2D* texture, float transparent = 1.0f);
+
+
 private:
 	/**
 	 * @brief 버텍스 버퍼를 업데이트합니다.
@@ -83,11 +96,23 @@ private:
 	void UpdateVertexBuffer();
 
 
+	/**
+	 * @brief 텍스처 그리기를 수행합니다.
+	 * 
+	 * @param transform 변환 행렬입니다.
+	 * @param ortho 투영 행렬입니다.
+	 * @param texture 텍스처 리소스입니다.
+	 * @param vertexCount 정점 수입니다.
+	 * @param transparent 텍스처의 투명도입니다.
+	 */
+	void DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, Texture2D* texture, float transparent);
+
+
 private:
 	/**
 	 * @brief 텍스처 정점 목록의 최대 크기입니다.
 	 */
-	static const int32_t MAX_VERTEX_SIZE = 6;
+	static const int32_t MAX_VERTEX_SIZE = 12;
 
 
 	/**
