@@ -85,6 +85,37 @@ void TextureShader2D::DrawTexture2D(Texture2D* texture, float transparent)
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
+void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent)
+{
+	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
+	float x = -1.0f + 2.0f * (1.0f - rate);
+
+	vertices_[0] = VertexPositionTexture(Vector3f(-1.0f, +1.0f, 0.0f), Vector2f(rate, 0.0f));
+	vertices_[1] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(rate, 1.0f));
+	vertices_[2] = VertexPositionTexture(Vector3f(+x, +1.0f, 0.0f), Vector2f(1.0f, 0.0f));
+
+	vertices_[3] = VertexPositionTexture(Vector3f(+x, +1.0f, 0.0f), Vector2f(1.0f, 0.0f));
+	vertices_[4] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(rate, 1.0f));
+	vertices_[5] = VertexPositionTexture(Vector3f(+x, -1.0f, 0.0f), Vector2f(1.0f, 1.0f));
+
+	vertices_[6] = VertexPositionTexture(Vector3f(+x, +1.0f, 0.0f), Vector2f(0.0f, 0.0f));
+	vertices_[7] = VertexPositionTexture(Vector3f(+x, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
+	vertices_[8] = VertexPositionTexture(Vector3f(+1.0f, +1.0f, 0.0f), Vector2f(rate, 0.0f));
+
+	vertices_[9] = VertexPositionTexture(Vector3f(+1.0f, +1.0f, 0.0f), Vector2f(rate, 0.0f));
+	vertices_[10] = VertexPositionTexture(Vector3f(+x, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
+	vertices_[11] = VertexPositionTexture(Vector3f(+1.0f, -1.0f, 0.0f), Vector2f(rate, 1.0f));
+
+	UpdateVertexBuffer();
+
+	uint32_t vertexCount = 12;
+	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
+}
+
+void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
+{
+}
+
 void TextureShader2D::UpdateVertexBuffer()
 {
 	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d texture vertex buffer...");

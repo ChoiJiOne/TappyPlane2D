@@ -89,6 +89,50 @@ public:
 	void DrawTexture2D(Texture2D* texture, float transparent = 1.0f);
 
 
+	/**
+	 * @brief 가로로 스크롤된 2D 텍스처를 그립니다.
+	 * 
+	 * @note 텍스처 분할 비율은 다음과 같습니다.
+	 * ┌────────────┬──────────────────┐
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * │ 1.0f - rate│       rate       │
+	 * │            │                  │
+	 * │            │                  │
+	 * │            │                  │
+	 * └────────────┴──────────────────┘
+	 * 
+	 * @param texture 텍스처 리소스입니다.
+	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent = 1.0f);
+
+
+	/**
+	 * @brief 세로로 스크롤된 2D 텍스처를 그립니다.
+	 * 
+	 * @note 텍스처 분할 비율은 다음과 같습니다.
+	 * ┌─────────────────────────────┐
+	 * │                             │
+	 * │                             │
+	 * │         1.0f - rate         │
+	 * │                             │
+	 * ├─────────────────────────────┤
+	 * │                             │
+	 * │            rate             │
+	 * │                             │
+	 * └─────────────────────────────┘
+	 * 
+	 * @param texture 텍스처 리소스입니다.
+	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
+	 */
+	void DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent = 1.0f);
+
+
 private:
 	/**
 	 * @brief 버텍스 버퍼를 업데이트합니다.
