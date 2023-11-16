@@ -21,12 +21,13 @@ int main(int argc, char* argv[])
 
 	TextureShader2D* textureShader = ResourceManager::Get().CreateResource<TextureShader2D>("TextureShader2D");
 	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
+
 	std::string resourcePath;
 	CommandLineArg::GetStringValue("resource", resourcePath);
+
 	Texture2D* texture2d = ResourceManager::Get().CreateResource<Texture2D>("Texture");
-	texture2d->Initialize(resourcePath + "awesomeface_4x4.astc");
-	//texture2d->Initialize(resourcePath + "awesomeface.png");
-	
+	texture2d->Initialize(resourcePath + "Texture\\background.png");
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -40,7 +41,13 @@ int main(int argc, char* argv[])
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		Matrix4x4f ortho = MathUtils::CreateOrtho(0.0f, 1000.0f, 800.0f, 0.0f, -1.0f, 1.0f);
-		textureShader->DrawTexture2D(ortho, texture2d, Vector2f(500.0f, 400.0f), 100.0f, 100.0f, 0.0f, 1.0f);
+		float time = static_cast<float>(glfwGetTime());
+		float value = time - static_cast<float>(static_cast<int32_t>(time));
+		textureShader->DrawVerticalScrollTexture2D(texture2d, value);
+		//textureShader->DrawTexture2D(ortho, texture2d, Vector2f(500.0f, 400.0f), 100.0f, 100.0f, 0.0f, 1.0f);
+		//textureShader->DrawTexture2D(texture2d);
+		//textureShader->DrawHorizonScrollTexture2D(texture2d, static_cast<float>(glfwGetTime()) / 10.0f);
+		//textureShader->DrawVerticalScrollTexture2D(texture2d, static_cast<float>(glfwGetTime()) / 10.0f);
 
 		RenderManager::Get().EndFrame();
 	}
