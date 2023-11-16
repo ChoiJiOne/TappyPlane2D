@@ -172,6 +172,39 @@ void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
+void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+{
+	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
+
+	float x0 = center.x - width / 2.0f;
+	float y0 = center.y - height / 2.0f;
+	float x1 = center.x + width / 2.0f;
+	float y1 = center.y + height / 2.0f;
+
+	float y = y0 + (y1 - y0) * rate;
+
+	vertices_[0]  = VertexPositionTexture(Vector3f(x1, y0, 0.0f), Vector2f(1.0f, 1.0f - rate));
+	vertices_[1]  = VertexPositionTexture(Vector3f(x0, y0, 0.0f), Vector2f(0.0f, 1.0f - rate));
+	vertices_[2]  = VertexPositionTexture(Vector3f(x0, +y, 0.0f), Vector2f(0.0f,        1.0f));
+
+	vertices_[3]  = VertexPositionTexture(Vector3f(x1, y0, 0.0f), Vector2f(1.0f, 1.0f - rate));
+	vertices_[4]  = VertexPositionTexture(Vector3f(x0, +y, 0.0f), Vector2f(0.0f,        1.0f));
+	vertices_[5]  = VertexPositionTexture(Vector3f(x1, +y, 0.0f), Vector2f(1.0f,        1.0f));
+
+	vertices_[6]  = VertexPositionTexture(Vector3f(x1, +y, 0.0f), Vector2f(1.0f,        0.0f));
+	vertices_[7]  = VertexPositionTexture(Vector3f(x0, +y, 0.0f), Vector2f(0.0f,        0.0f));
+	vertices_[8]  = VertexPositionTexture(Vector3f(x0, y1, 0.0f), Vector2f(0.0f, 1.0f - rate));
+
+	vertices_[9]  = VertexPositionTexture(Vector3f(x1, +y, 0.0f), Vector2f(1.0f,        0.0f));
+	vertices_[10] = VertexPositionTexture(Vector3f(x0, y1, 0.0f), Vector2f(0.0f, 1.0f - rate));
+	vertices_[11] = VertexPositionTexture(Vector3f(x1, y1, 0.0f), Vector2f(1.0f, 1.0f - rate));
+
+	UpdateVertexBuffer();
+
+	uint32_t vertexCount = 12;
+	DrawTexture2D(Matrix4x4f::GetIdentity(), ortho, vertexCount, texture, transparent);
+}
+
 void TextureShader2D::UpdateVertexBuffer()
 {
 	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d texture vertex buffer...");
