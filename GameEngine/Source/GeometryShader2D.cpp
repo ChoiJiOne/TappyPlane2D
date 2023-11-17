@@ -65,6 +65,19 @@ void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<V
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Points, static_cast<uint32_t>(positions.size()));
 }
 
+void GeometryShader2D::DrawConnectPoints2D(const Matrix4x4f& ortho, const std::vector<Vector2f>& positions, const Vector4f& color)
+{
+	ASSERT(positions.size() <= MAX_VERTEX_SIZE, "overflow 2d point count : %d", static_cast<int32_t>(positions.size()));
+
+	for (std::size_t index = 0; index < positions.size(); ++index)
+	{
+		vertices_[index] = VertexPositionColor(Vector3f(positions[index].x + 0.5f, positions[index].y + 0.5f, 0.0f), color);
+	}
+
+	UpdateVertexBuffer();
+	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, static_cast<uint32_t>(positions.size()));
+}
+
 void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromPosition, const Vector2f& toPosition, const Vector4f& color)
 {
 	vertices_[0] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
