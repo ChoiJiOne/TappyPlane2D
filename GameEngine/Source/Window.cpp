@@ -27,3 +27,23 @@ void Window::Destroy()
 		window_ = nullptr;
 	}
 }
+
+void Window::GetPosition(int32_t& outX, int32_t& outY)
+{
+	glfwGetWindowPos(window_, &outX, &outY);
+}
+
+void Window::SetPosition(const int32_t& x, const int32_t& y)
+{
+	glfwSetWindowPos(window_, x, y);
+}
+
+void Window::GetSize(int32_t& outWidth, int32_t& outHeight)
+{
+	glfwGetWindowSize(window_, &outWidth, &outHeight);
+}
+
+void Window::SetSize(const int32_t& width, const int32_t& height)
+{
+	glfwSetWindowSize(window_, width, height);
+}

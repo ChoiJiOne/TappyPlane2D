@@ -73,6 +73,42 @@ public:
 	GLFWwindow* GetWindowPtr() { return window_; }
 
 
+	/**
+	 * @brief 윈도우 창의 위치를 얻습니다.
+	 * 
+	 * @param outX 윈도우 창의 X좌표를 저장할 값입니다.
+	 * @param outY 윈도우 창의 Y좌표를 저장할 값입니다.
+	 */
+	void GetPosition(int32_t& outX, int32_t& outY);
+
+
+	/**
+	 * @brief 윈도우 창의 위치를 설정합니다.
+	 * 
+	 * @param x 설정할 위치의 X좌표입니다.
+	 * @param y 설정할 위치의 Y좌표입니다.
+	 */
+	void SetPosition(const int32_t& x, const int32_t& y);
+
+
+	/**
+	 * @brief 윈도우 창의 크기를 얻습니다.
+	 * 
+	 * @param outWidth 윈도우 창의 가로 크기를 저장할 값입니다.
+	 * @param outHeight 윈도우 창의 세로 크기를 저장할 값입니다.
+	 */
+	void GetSize(int32_t& outWidth, int32_t& outHeight);
+
+
+	/**
+	 * @brief 윈도우 창의 크기를 설정합니다.
+	 * 
+	 * @param width 설정할 가로 크기입니다.
+	 * @param height 설정할 세로 크기입니다.
+	 */
+	void SetSize(const int32_t& width, const int32_t& height);
+
+
 private:
 	/**
 	 * @brief GLFW 윈도우 포인터입니다.
