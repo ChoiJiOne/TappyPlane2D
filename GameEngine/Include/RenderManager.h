@@ -418,6 +418,17 @@ public:
 	void DrawVerticalScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent = 1.0f);
 
 
+	/**
+	 * @brief 2D 텍스트를 화면에 그립니다.
+	 * 
+	 * @param font 폰트 리소스입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param center 텍스트의 중심 좌표입니다.
+	 * @param color 텍스트의 RGBA 색상입니다.
+	 */
+	void DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
+
+	
 private:
 	/**
 	 * @brief 렌더링에 사용할 셰이더를 초기화합니다.
