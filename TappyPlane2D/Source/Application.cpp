@@ -40,11 +40,9 @@ int main(int argc, char* argv[])
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
-		RenderManager::Get().DrawLine2D(Vector2f(0.0f, 0.0f), Vector2f(1000.0f, 800.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
-		//RenderManager::Get().DrawHorizonScrollTexture2D(background, static_cast<float>(value));
-		//RenderManager::Get().DrawHorizonScrollTexture2D(ground, Vector2f(500.0f, 770.0f), 1000.0f, 60.0f, value);
-		//RenderManager::Get().DrawText2D(font, L"Hello, World!", Vector2f(500.0f, 400.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-		//RenderManager::Get().DrawGrid2D(0.0f, 1000.0f, 10.0f, 0.0f, 800.0f, 10.0f, Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
+		RenderManager::Get().DrawHorizonScrollTexture2D(background, static_cast<float>(value));
+		RenderManager::Get().DrawHorizonScrollTexture2D(ground, Vector2f(500.0f, 770.0f), 1000.0f, 60.0f, value);
+		RenderManager::Get().DrawText2D(font, L"Hello, World!", Vector2f(500.0f, 400.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
 		RenderManager::Get().EndFrame();
 	}
