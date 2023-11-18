@@ -22,6 +22,9 @@ int main(int argc, char* argv[])
 	TextureShader2D* textureShader = ResourceManager::Get().CreateResource<TextureShader2D>("TextureShader2D");
 	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
 
+	GlyphShader2D* glyphShader = ResourceManager::Get().CreateResource<GlyphShader2D>("GlyphShader2D");
+	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
+
 	std::string resourcePath;
 	CommandLineArg::GetStringValue("resource", resourcePath);
 
@@ -31,6 +34,9 @@ int main(int argc, char* argv[])
 	Texture2D* ground = ResourceManager::Get().CreateResource<Texture2D>("Ground");
 	ground->Initialize(resourcePath + "Texture\\groundGrass.png");
 
+	TTFont* font = ResourceManager::Get().CreateResource<TTFont>("Font");
+	font->Initialize(resourcePath + "Font\\kenvector_future.ttf", 32, 127, 32.0f);
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -49,6 +55,7 @@ int main(int argc, char* argv[])
 
 		textureShader->DrawHorizonScrollTexture2D(background, static_cast<float>(value));
 		textureShader->DrawHorizonScrollTexture2D(ortho, ground, Vector2f(500.0f, 770.0f), 1000.0f, 60.0f, value);
+		glyphShader->DrawText2D(ortho, font, L"Hello, World!", Vector2f(500.0f, 400.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
 		RenderManager::Get().EndFrame();
 	}
