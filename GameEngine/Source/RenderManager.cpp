@@ -204,6 +204,42 @@ void RenderManager::DrawGrid2D(float minX, float maxX, float strideX, float minY
 	shader->DrawGrid2D(screenOrtho_, minX, maxX, strideX, minY, maxY, strideY, color);
 }
 
+void RenderManager::DrawTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float transparent)
+{
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawTexture2D(screenOrtho_, texture, center, width, height, rotate, transparent);
+}
+
+void RenderManager::DrawTexture2D(Texture2D* texture, float transparent)
+{
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawTexture2D(texture, transparent);
+}
+
+void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent)
+{
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawHorizonScrollTexture2D(texture, rate, transparent);
+}
+
+void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+{
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawHorizonScrollTexture2D(screenOrtho_, texture, center, width, height, rate, transparent);
+}
+
+void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
+{
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawVerticalScrollTexture2D(texture, rate, transparent);
+}
+
+void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+{
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawVerticalScrollTexture2D(screenOrtho_, texture, center, width, height, rate, transparent);
+}
+
 void RenderManager::SetupShaders()
 {
 	std::string shaderPath;
