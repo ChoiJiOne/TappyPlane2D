@@ -38,7 +38,6 @@ void RenderManager::Startup()
 	float nearZ = -1.0f;
 	screenOrtho_ = MathUtils::CreateOrtho(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, nearZ, farZ);
 
-	SetupShaders();
 	bIsStartup_ = true;
 }
 
@@ -59,6 +58,26 @@ void RenderManager::PreStartup(Window* window, int32_t major, int32_t minor)
 	
 	major_ = major;
 	minor_ = minor;
+}
+
+void RenderManager::PostSetup()
+{
+	std::string shaderPath;
+	ASSERT(CommandLineArg::GetStringValue("glsl", shaderPath), "invalid GLSL path in commandline argument...");
+
+	shaderMaps_ = std::unordered_map<std::string, Shader*>();
+
+	GeometryShader2D* geometryShader = ResourceManager::Get().CreateResource<GeometryShader2D>("GeometryShader2D");
+	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
+	shaderMaps_.insert({ "GeometryShader2D" , geometryShader });
+
+	TextureShader2D* textureShader = ResourceManager::Get().CreateResource<TextureShader2D>("TextureShader2D");
+	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
+	shaderMaps_.insert({ "TextureShader2D", textureShader });
+
+	GlyphShader2D* glyphShader = ResourceManager::Get().CreateResource<GlyphShader2D>("GlyphShader2D");
+	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
+	shaderMaps_.insert({ "GlyphShader2D", glyphShader });
 }
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
@@ -244,24 +263,4 @@ void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vec
 {
 	GlyphShader2D* shader = reinterpret_cast<GlyphShader2D*>(shaderMaps_["GlyphShader2D"]);
 	shader->DrawText2D(screenOrtho_, font, text, center, color);
-}
-
-void RenderManager::SetupShaders()
-{
-	std::string shaderPath;
-	ASSERT(CommandLineArg::GetStringValue("glsl", shaderPath), "invalid GLSL path in commandline argument...");
-
-	shaderMaps_ = std::unordered_map<std::string, Shader*>();
-	
-	GeometryShader2D* geometryShader = ResourceManager::Get().CreateResource<GeometryShader2D>("GeometryShader2D");
-	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
-	shaderMaps_.insert({ "GeometryShader2D" , geometryShader });
-
-	TextureShader2D* textureShader = ResourceManager::Get().CreateResource<TextureShader2D>("TextureShader2D");
-	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
-	shaderMaps_.insert({ "TextureShader2D", textureShader });
-
-	GlyphShader2D* glyphShader = ResourceManager::Get().CreateResource<GlyphShader2D>("GlyphShader2D");
-	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
-	shaderMaps_.insert({ "GlyphShader2D", glyphShader });
 }
