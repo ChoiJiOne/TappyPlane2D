@@ -56,6 +56,14 @@ public:
 
 
 	/**
+	 * @brief 렌더링 처리를 수행하는 매니저의 초기화 후의 설정을 수행합니다.
+	 * 
+	 * @note 셰이더 관련 초기화가 수행됩니다.
+	 */
+	void PostSetup();
+
+
+	/**
 	 * @brief 프레임 렌더링을 시작합니다.
 	 *
 	 * @param red 색상 버퍼의 R 값입니다.
@@ -429,13 +437,6 @@ public:
 	void DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
 
 	
-private:
-	/**
-	 * @brief 렌더링에 사용할 셰이더를 초기화합니다.
-	 */
-	void SetupShaders();
-
-
 private:
 	/**
 	 * @brief 렌더링을 수행할 윈도우입니다.
