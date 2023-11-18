@@ -1,8 +1,15 @@
 #include "RenderManager.h"
 
+#include "CommandLineArg.h"
 #include "EngineManager.h"
 #include "AssertionMacro.h"
+#include "GeometryShader2D.h"
 #include "GLAssertionMacro.h"
+#include "GlyphShader2D.h"
+#include "ResourceManager.h"
+#include "Texture2D.h"
+#include "TextureShader2D.h"
+#include "TTFont.h"
 #include "Window.h"
 
 #include <glad/glad.h>
@@ -23,6 +30,15 @@ void RenderManager::Startup()
 	
 	GL_ASSERT(glEnable(GL_PROGRAM_POINT_SIZE), "failed to enable shader program point size...");
 
+	int32_t screenWidth = 0;
+	int32_t screenHeight = 0;
+	window_->GetSize(screenWidth, screenHeight);
+
+	float farZ = 1.0f;
+	float nearZ = -1.0f;
+	screenOrtho_ = MathUtils::CreateOrtho(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, nearZ, farZ);
+
+	SetupShaders();
 	bIsStartup_ = true;
 }
 
@@ -92,4 +108,118 @@ void RenderManager::SetAlphaBlend(bool bIsEnable)
 void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
 {
 	GL_ASSERT(glViewport(x, y, width, height), "invalid viewport parameter : x=%d, y=%d, w=%d, h=%d", x, y, width, height);
+}
+
+void RenderManager::DrawPoints2D(const std::vector<Vector2f>& positions, const Vector4f& color, float pointSize)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawPoints2D(screenOrtho_, positions, color, pointSize);
+}
+
+void RenderManager::DrawConnectPoints2D(const std::vector<Vector2f>& positions, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawConnectPoints2D(screenOrtho_, positions, color);
+}
+
+void RenderManager::DrawLine2D(const Vector2f& fromPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawLine2D(screenOrtho_, fromPosition, toPosition, color);
+}
+
+void RenderManager::DrawLine2D(const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& toPosition, const Vector4f& toColor)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawLine2D(screenOrtho_, fromPosition, fromColor, toPosition, toColor);
+}
+
+void RenderManager::DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawTriangle2D(screenOrtho_, fromPosition, byPosition, toPosition, color);
+}
+
+void RenderManager::DrawTriangle2D(const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawTriangle2D(screenOrtho_, 
+		fromPosition, fromColor, 
+		byPosition, byColor, 
+		toPosition, toColor
+	);
+}
+
+void RenderManager::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawWireframeTriangle2D(screenOrtho_, fromPosition, byPosition, toPosition, color);
+}
+
+void RenderManager::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawWireframeTriangle2D(screenOrtho_, fromPosition, fromColor, byPosition, byColor, toPosition, toColor);
+}
+
+void RenderManager::DrawRectangle2D(const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawRectangle2D(screenOrtho_, center, width, height, rotate, color);
+}
+
+void RenderManager::DrawWireframeRectangle2D(const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawWireframeRectangle2D(screenOrtho_, center, width, height, rotate, color);
+}
+
+void RenderManager::DrawCircle2D(const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawCircle2D(screenOrtho_, center, radius, color, sliceCount);
+}
+
+void RenderManager::DrawWireframeCircle2D(const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawWireframeCircle2D(screenOrtho_, center, radius, color, sliceCount);
+}
+
+void RenderManager::DrawEllipse2D(const Vector2f& center, float xAxis, float yAxis, const Vector4f& color, int32_t sliceCount)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
+}
+
+void RenderManager::DrawWireframeEllipse2D(const Vector2f& center, float xAxis, float yAxis, const Vector4f& color, int32_t sliceCount)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawWireframeEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
+}
+
+void RenderManager::DrawGrid2D(float minX, float maxX, float strideX, float minY, float maxY, float strideY, const Vector4f& color)
+{
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	shader->DrawGrid2D(screenOrtho_, minX, maxX, strideX, minY, maxY, strideY, color);
+}
+
+void RenderManager::SetupShaders()
+{
+	std::string shaderPath;
+	ASSERT(CommandLineArg::GetStringValue("glsl", shaderPath), "invalid GLSL path in commandline argument...");
+
+	shaderMaps_ = std::unordered_map<std::string, Shader*>();
+	
+	GeometryShader2D* geometryShader = ResourceManager::Get().CreateResource<GeometryShader2D>("GeometryShader2D");
+	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
+	shaderMaps_.insert({ "GeometryShader2D" , geometryShader });
+
+	TextureShader2D* textureShader = ResourceManager::Get().CreateResource<TextureShader2D>("TextureShader2D");
+	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
+	shaderMaps_.insert({ "TextureShader2D", textureShader });
+
+	GlyphShader2D* glyphShader = ResourceManager::Get().CreateResource<GlyphShader2D>("GlyphShader2D");
+	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
+	shaderMaps_.insert({ "GlyphShader2D", glyphShader });
 }
