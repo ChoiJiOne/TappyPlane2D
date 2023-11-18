@@ -6,6 +6,7 @@
 #include "CommandLineArg.h"
 #include "FileManager.h"
 #include "GeometryShader2D.h"
+#include "GlyphShader2D.h"
 #include "IManager.h"
 #include "Macro.h"
 #include "MathUtils.h"
@@ -16,6 +17,7 @@
 #include "StringUtils.h"
 #include "Texture2D.h"
 #include "TextureShader2D.h"
+#include "TTFont.h"
 #include "Window.h"
 
 
