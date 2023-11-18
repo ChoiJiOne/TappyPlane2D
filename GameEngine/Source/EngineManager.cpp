@@ -20,6 +20,7 @@ void EngineManager::Startup()
 	StartupRenderManager(properties);
 
 	ResourceManager::Get().Startup();
+	RenderManager::Get().PostSetup();
 	
 	bIsStartup_ = true;
 }
