@@ -7,6 +7,7 @@
 #include "GLAssertionMacro.h"
 #include "GlyphShader2D.h"
 #include "ResourceManager.h"
+#include "SilhouetteShader2D.h"
 #include "Texture2D.h"
 #include "TextureShader2D.h"
 #include "TTFont.h"
@@ -67,17 +68,23 @@ void RenderManager::PostSetup()
 
 	shaderMaps_ = std::unordered_map<std::string, Shader*>();
 
-	GeometryShader2D* geometryShader = ResourceManager::Get().CreateResource<GeometryShader2D>("GeometryShader2D");
+	ResourceManager& resourceManager = ResourceManager::Get();
+
+	GeometryShader2D* geometryShader = resourceManager.CreateResource<GeometryShader2D>("GeometryShader2D");
 	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
 	shaderMaps_.insert({ "GeometryShader2D" , geometryShader });
 
-	TextureShader2D* textureShader = ResourceManager::Get().CreateResource<TextureShader2D>("TextureShader2D");
+	TextureShader2D* textureShader = resourceManager.CreateResource<TextureShader2D>("TextureShader2D");
 	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
 	shaderMaps_.insert({ "TextureShader2D", textureShader });
 
-	GlyphShader2D* glyphShader = ResourceManager::Get().CreateResource<GlyphShader2D>("GlyphShader2D");
+	GlyphShader2D* glyphShader = resourceManager.CreateResource<GlyphShader2D>("GlyphShader2D");
 	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
 	shaderMaps_.insert({ "GlyphShader2D", glyphShader });
+
+	SilhouetteShader2D* silhouetteShader = resourceManager.CreateResource<SilhouetteShader2D>("SilhouetteShader2D");
+	silhouetteShader->Initialize(shaderPath + "Silhouette2D.vert", shaderPath + "Silhouette2D.frag");
+	shaderMaps_.insert({ "SilhouetteShader2D", silhouetteShader });
 }
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
@@ -275,4 +282,24 @@ void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vec
 {
 	GlyphShader2D* shader = reinterpret_cast<GlyphShader2D*>(shaderMaps_["GlyphShader2D"]);
 	shader->DrawText2D(screenOrtho_, font, text, center, color);
+}
+
+void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float outline, float transparent)
+{
+	float extensionWidth = width + 2 * outline;
+	float extensionHeight = height + 2 * outline;
+
+	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(shaderMaps_["SilhouetteShader2D"]);
+	silhouetteShader->DrawTextureSilhouette2D(
+		screenOrtho_,
+		texture,
+		center,
+		extensionWidth,
+		extensionHeight,
+		rotate, 
+		silhouetteRGB
+	);
+
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	shader->DrawTexture2D(screenOrtho_, texture, center, width, height, rotate, transparent);
 }
