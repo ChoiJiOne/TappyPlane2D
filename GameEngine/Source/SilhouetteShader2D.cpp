@@ -50,7 +50,7 @@ void SilhouetteShader2D::Release()
 	GL_ASSERT(glDeleteVertexArrays(1, &vertexArrayObject_), "failed to delete 2d texture vertex array object...");
 }
 
-void SilhouetteShader2D::DrawTextureSilhouette2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB)
+void SilhouetteShader2D::DrawTextureSilhouette2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float transparent)
 {
 	vertices_[0] = VertexPositionTexture(Vector3f(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), Vector2f(0.0f, 0.0f));
 	vertices_[1] = VertexPositionTexture(Vector3f(center.x - width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
@@ -75,6 +75,7 @@ void SilhouetteShader2D::DrawTextureSilhouette2D(const Matrix4x4f& ortho, Textur
 	Shader::SetMatrix4x4fParameter("transform", transform);
 	Shader::SetMatrix4x4fParameter("ortho", ortho);
 	Shader::SetBoolParameter("bReverseTexCoord", false);
+	Shader::SetFloatParameter("transparent", transparent);
 	Shader::SetVector3fParameter("silhouetteRGB", silhouetteRGB);
 
 	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d texture vertex array...");
