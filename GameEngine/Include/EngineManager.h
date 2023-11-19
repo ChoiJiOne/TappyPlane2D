@@ -5,6 +5,7 @@
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
 #include "FileManager.h"
+#include "GameTimer.h"
 #include "GeometryShader2D.h"
 #include "GlyphShader2D.h"
 #include "IManager.h"
