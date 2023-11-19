@@ -111,6 +111,18 @@ void RenderManager::SetDepthMode(bool bIsEnable)
 	}
 }
 
+void RenderManager::SetStencilMode(bool bIsEnable)
+{
+	if (bIsEnable)
+	{
+		GL_ASSERT(glEnable(GL_STENCIL_TEST), "failed to enable stencil test...");
+	}
+	else
+	{
+		GL_ASSERT(glDisable(GL_STENCIL_TEST), "failed to disable stencil test...");
+	}
+}
+
 void RenderManager::SetAlphaBlend(bool bIsEnable)
 {
 	if (bIsEnable)

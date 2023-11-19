@@ -99,6 +99,14 @@ public:
 
 
 	/**
+	 * @brief 스텐실 테스트 활성화 여부를 검사합니다.
+	 * 
+	 * @param bIsEnable 스텐실 테스트 활성화 여부입니다.
+	 */
+	void SetStencilMode(bool bIsEnable);
+
+
+	/**
 	 * @brief 알파 블랜딩을 활성화합니다.
 	 *
 	 * @param bIsEnable 알파 블랜딩 활성화 여부입니다.
