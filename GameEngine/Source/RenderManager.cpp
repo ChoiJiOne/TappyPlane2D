@@ -284,6 +284,21 @@ void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vec
 	shader->DrawText2D(screenOrtho_, font, text, center, color);
 }
 
+void RenderManager::DrawTextureSilhouette2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float transparent)
+{
+	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(shaderMaps_["SilhouetteShader2D"]);
+	silhouetteShader->DrawTextureSilhouette2D(
+		screenOrtho_,
+		texture,
+		center,
+		width,
+		height,
+		rotate,
+		silhouetteRGB,
+		transparent
+	);
+}
+
 void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float outline, float transparent)
 {
 	float extensionWidth = width + 2.0f * outline;
@@ -297,7 +312,8 @@ void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& cen
 		extensionWidth,
 		extensionHeight,
 		rotate, 
-		silhouetteRGB
+		silhouetteRGB,
+		transparent
 	);
 
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);

@@ -454,6 +454,28 @@ public:
 	 * @param height 텍스처의 세로 크기입니다.
 	 * @param rotate 텍스처의 라디안 회전 각도입니다.
 	 * @param silhouetteRGB 텍스처 실루엣의 색상입니다.
+	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f 입니다.
+	 */
+	void DrawTextureSilhouette2D(
+		Texture2D* texture,
+		const Vector2f& center,
+		float width,
+		float height,
+		float rotate,
+		const Vector3f& silhouetteRGB,
+		float transparent = 1.0f
+	);
+
+
+	/**
+	 * @brief 2D 텍스처를 아웃라인과 함께 화면에 그립니다.
+	 * 
+	 * @param texture 텍스처 리소스입니다.
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 라디안 회전 각도입니다.
+	 * @param silhouetteRGB 텍스처 실루엣의 색상입니다.
 	 * @param outline 텍스처 오브젝트 아웃라인의 크기입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
