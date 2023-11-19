@@ -31,14 +31,6 @@ void RenderManager::Startup()
 	
 	GL_ASSERT(glEnable(GL_PROGRAM_POINT_SIZE), "failed to enable shader program point size...");
 
-	int32_t screenWidth = 0;
-	int32_t screenHeight = 0;
-	window_->GetSize(screenWidth, screenHeight);
-
-	float farZ = 1.0f;
-	float nearZ = -1.0f;
-	screenOrtho_ = MathUtils::CreateOrtho(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, nearZ, farZ);
-
 	bIsStartup_ = true;
 }
 
@@ -59,6 +51,14 @@ void RenderManager::PreStartup(Window* window, int32_t major, int32_t minor)
 	
 	major_ = major;
 	minor_ = minor;
+
+	int32_t screenWidth = 0;
+	int32_t screenHeight = 0;
+	window_->GetSize(screenWidth, screenHeight);
+
+	float farZ = 1.0f;
+	float nearZ = -1.0f;
+	screenOrtho_ = MathUtils::CreateOrtho(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, nearZ, farZ);
 }
 
 void RenderManager::PostSetup()
@@ -286,8 +286,8 @@ void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vec
 
 void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float outline, float transparent)
 {
-	float extensionWidth = width + 2 * outline;
-	float extensionHeight = height + 2 * outline;
+	float extensionWidth = width + 2.0f * outline;
+	float extensionHeight = height + 2.0f * outline;
 
 	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(shaderMaps_["SilhouetteShader2D"]);
 	silhouetteShader->DrawTextureSilhouette2D(
