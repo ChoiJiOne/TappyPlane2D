@@ -9,8 +9,10 @@
 int main(int argc, char* argv[])
 {
 	EngineManager::Get().Startup();
+
+	RenderManager::Get().SetAlphaBlend(true);
 	RenderManager::Get().SetDepthMode(false);
-	
+
 	GLFWwindow* window = EngineManager::Get().GetWindowPtr()->GetWindowPtr();
 
 	std::string resourcePath;

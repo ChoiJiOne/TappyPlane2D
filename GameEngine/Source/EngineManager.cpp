@@ -83,5 +83,4 @@ void EngineManager::StartupRenderManager(const Json::Value& properties)
 
 	bool bIsEnableVsync = properties["vsync"].asBool();
 	renderManager.SetVsyncMode(bIsEnableVsync);
-	renderManager.SetAlphaBlend(true);
 }
