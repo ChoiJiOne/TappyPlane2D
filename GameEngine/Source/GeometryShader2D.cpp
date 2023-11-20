@@ -58,9 +58,7 @@ void GeometryShader2D::DrawPoints2D(const Matrix4x4f& ortho, const std::vector<V
 	{
 		vertices_[index] = VertexPositionColor(Vector3f(positions[index].x + 0.5f, positions[index].y + 0.5f, 0.0f), color);
 	}
-
-	UpdateVertexBuffer();
-
+	
 	pointSize_ = pointSize;
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Points, static_cast<uint32_t>(positions.size()));
 }
@@ -74,7 +72,6 @@ void GeometryShader2D::DrawConnectPoints2D(const Matrix4x4f& ortho, const std::v
 		vertices_[index] = VertexPositionColor(Vector3f(positions[index].x + 0.5f, positions[index].y + 0.5f, 0.0f), color);
 	}
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, static_cast<uint32_t>(positions.size()));
 }
 
@@ -83,7 +80,6 @@ void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromP
 	vertices_[0] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 	vertices_[1] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 	
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 2);
 }
 
@@ -92,7 +88,6 @@ void GeometryShader2D::DrawLine2D(const Matrix4x4f& ortho, const Vector2f& fromP
 	vertices_[0] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
 	vertices_[1] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), toColor);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 2);
 }
 
@@ -102,7 +97,6 @@ void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& f
 	vertices_[1] = VertexPositionColor(Vector3f(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f), color);
 	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Triangles, 3);
 }
 
@@ -112,7 +106,6 @@ void GeometryShader2D::DrawTriangle2D(const Matrix4x4f& ortho, const Vector2f& f
 	vertices_[1] = VertexPositionColor(Vector3f(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f),   byColor);
 	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Triangles, 3);
 }
 
@@ -123,7 +116,6 @@ void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Ve
 	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 	vertices_[3] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 4);
 }
 
@@ -134,7 +126,6 @@ void GeometryShader2D::DrawWireframeTriangle2D(const Matrix4x4f& ortho, const Ve
 	vertices_[2] = VertexPositionColor(Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
 	vertices_[3] = VertexPositionColor(Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, 4);
 }
 
@@ -152,7 +143,6 @@ void GeometryShader2D::DrawRectangle2D(const Matrix4x4f& ortho, const Vector2f& 
 		* MathUtils::CreateRotateZ(rotate)
 		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(transform, ortho, EDrawType::Triangles, 6);
 }
 
@@ -168,8 +158,6 @@ void GeometryShader2D::DrawWireframeRectangle2D(const Matrix4x4f& ortho, const V
 		* MathUtils::CreateRotateZ(rotate)
 		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
 
-
-	UpdateVertexBuffer();
 	DrawGeometry2D(transform, ortho, EDrawType::LineStrip, 5);
 }
 
@@ -191,7 +179,6 @@ void GeometryShader2D::DrawCircle2D(const Matrix4x4f& ortho, const Vector2f& cen
 	vertices_[sliceCount + 1] = vertices_[1];
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 2);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::TriangleFan, vertexCount);
 }
 
@@ -212,7 +199,6 @@ void GeometryShader2D::DrawWireframeCircle2D(const Matrix4x4f& ortho, const Vect
 	vertices_[sliceCount] = vertices_[0];
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 1);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, vertexCount);
 }
 
@@ -238,7 +224,6 @@ void GeometryShader2D::DrawEllipse2D(const Matrix4x4f& ortho, const Vector2f& ce
 	vertices_[sliceCount + 1] = vertices_[1];
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 2);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::TriangleFan, vertexCount);
 }
 
@@ -263,7 +248,6 @@ void GeometryShader2D::DrawWireframeEllipse2D(const Matrix4x4f& ortho, const Vec
 	vertices_[sliceCount] = vertices_[0];
 	uint32_t vertexCount = static_cast<uint32_t>(sliceCount + 1);
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::LineStrip, vertexCount);
 }
 
@@ -288,27 +272,16 @@ void GeometryShader2D::DrawGrid2D(const Matrix4x4f& ortho, float minX, float max
 
 	uint32_t vertexCount = vertexIndex + 1;
 
-	UpdateVertexBuffer();
 	DrawGeometry2D(Matrix4x4f::GetIdentity(), ortho, EDrawType::Lines, vertexCount);
-}
-
-void GeometryShader2D::UpdateVertexBuffer()
-{
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d geometry vertex buffer...");
-
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
-
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionColor::GetStride() * vertices_.size());
-	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
-	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
-
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d geometry vertex buffer...");
 }
 
 void GeometryShader2D::DrawGeometry2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, const EDrawType& drawType, uint32_t vertexCount)
 {
 	ASSERT(drawType != EDrawType::None, "invalid draw type...");
+
+	const void* bufferPtr = reinterpret_cast<const void*>(vertices_.data());
+	uint32_t bufferByteSize = static_cast<uint32_t>(VertexPositionColor::GetStride() * vertices_.size());
+	UpdateDynamicVertexBuffer(vertexBufferObject_, bufferPtr, bufferByteSize);
 
 	Shader::Bind();
 	if (drawType == EDrawType::Points)
