@@ -84,13 +84,6 @@ public:
 
 private:
 	/**
-	 * @brief 버텍스 버퍼를 업데이트합니다.
-	 */
-	void UpdateVertexBuffer();
-
-
-private:
-	/**
 	 * @brief 텍스처 정점 목록의 최대 크기입니다.
 	 */
 	static const int32_t MAX_VERTEX_SIZE = 6;
