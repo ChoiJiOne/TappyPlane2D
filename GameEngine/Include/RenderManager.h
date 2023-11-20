@@ -510,9 +510,23 @@ public:
 	 * 
 	 * @param blurBias 블러 효과 바이어스 값입니다. 이때, 값은 0.0f 보다 커야 합니다.
 	 * 
-	 * @note 값이 커질 수록 선명해집니다.
+	 * @note 
+	 * - 값이 0에 가까워질 수록 흐려집니다.
+	 * - 값이 커질 수록 선명해집니다.
 	 */
 	void PostEffectNormalBlur(float blurBias);
+
+
+	/**
+	 * @brief 가우시안 블러 효과를 적용합니다.
+	 * 
+	 * @param blurBias 블러 효과 바이어스 값입니다. 이때, 값은 0.0f ~ 1.0 이여야 합니다.
+	 * 
+	 * @note
+	 * - 값이 0.0f에 가까워질수록 선명해집니다.
+	 * - 값이 1.0f에 가까워질수록 흐리기가 심해집니다.
+	 */
+	void PostEffectGaussianBlur(float blurBias);
 
 
 private:
