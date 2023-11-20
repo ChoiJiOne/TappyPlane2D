@@ -67,29 +67,29 @@ void RenderManager::PostSetup()
 	std::string shaderPath;
 	ASSERT(CommandLineArg::GetStringValue("glsl", shaderPath), "invalid GLSL path in commandline argument...");
 
-	shaderMaps_ = std::unordered_map<std::string, Shader*>();
+	resourceMaps_ = std::unordered_map<std::string, IResource*>();
 
 	ResourceManager& resourceManager = ResourceManager::Get();
 
 	GeometryShader2D* geometryShader = resourceManager.CreateResource<GeometryShader2D>("GeometryShader2D");
 	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
-	shaderMaps_.insert({ "GeometryShader2D" , geometryShader });
+	resourceMaps_.insert({ "GeometryShader2D" , geometryShader });
 
 	TextureShader2D* textureShader = resourceManager.CreateResource<TextureShader2D>("TextureShader2D");
 	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
-	shaderMaps_.insert({ "TextureShader2D", textureShader });
+	resourceMaps_.insert({ "TextureShader2D", textureShader });
 
 	GlyphShader2D* glyphShader = resourceManager.CreateResource<GlyphShader2D>("GlyphShader2D");
 	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
-	shaderMaps_.insert({ "GlyphShader2D", glyphShader });
+	resourceMaps_.insert({ "GlyphShader2D", glyphShader });
 
 	SilhouetteShader2D* silhouetteShader = resourceManager.CreateResource<SilhouetteShader2D>("SilhouetteShader2D");
 	silhouetteShader->Initialize(shaderPath + "Silhouette2D.vert", shaderPath + "Silhouette2D.frag");
-	shaderMaps_.insert({ "SilhouetteShader2D", silhouetteShader });
+	resourceMaps_.insert({ "SilhouetteShader2D", silhouetteShader });
 
 	OutlineShader2D* outlineShader = resourceManager.CreateResource<OutlineShader2D>("OutlineShader2D");
 	outlineShader->Initialize(shaderPath + "Outline2D.vert", shaderPath + "Outline2D.frag");
-	shaderMaps_.insert({ "OutlineShader2D", outlineShader });
+	resourceMaps_.insert({ "OutlineShader2D", outlineShader });
 }
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
@@ -155,37 +155,37 @@ void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t hei
 
 void RenderManager::DrawPoints2D(const std::vector<Vector2f>& positions, const Vector4f& color, float pointSize)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawPoints2D(screenOrtho_, positions, color, pointSize);
 }
 
 void RenderManager::DrawConnectPoints2D(const std::vector<Vector2f>& positions, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawConnectPoints2D(screenOrtho_, positions, color);
 }
 
 void RenderManager::DrawLine2D(const Vector2f& fromPosition, const Vector2f& toPosition, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawLine2D(screenOrtho_, fromPosition, toPosition, color);
 }
 
 void RenderManager::DrawLine2D(const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& toPosition, const Vector4f& toColor)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawLine2D(screenOrtho_, fromPosition, fromColor, toPosition, toColor);
 }
 
 void RenderManager::DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawTriangle2D(screenOrtho_, fromPosition, byPosition, toPosition, color);
 }
 
 void RenderManager::DrawTriangle2D(const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawTriangle2D(screenOrtho_, 
 		fromPosition, fromColor, 
 		byPosition, byColor, 
@@ -195,103 +195,103 @@ void RenderManager::DrawTriangle2D(const Vector2f& fromPosition, const Vector4f&
 
 void RenderManager::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawWireframeTriangle2D(screenOrtho_, fromPosition, byPosition, toPosition, color);
 }
 
 void RenderManager::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector4f& fromColor, const Vector2f& byPosition, const Vector4f& byColor, const Vector2f& toPosition, const Vector4f& toColor)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawWireframeTriangle2D(screenOrtho_, fromPosition, fromColor, byPosition, byColor, toPosition, toColor);
 }
 
 void RenderManager::DrawRectangle2D(const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawRectangle2D(screenOrtho_, center, width, height, rotate, color);
 }
 
 void RenderManager::DrawWireframeRectangle2D(const Vector2f& center, float width, float height, float rotate, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawWireframeRectangle2D(screenOrtho_, center, width, height, rotate, color);
 }
 
 void RenderManager::DrawCircle2D(const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawCircle2D(screenOrtho_, center, radius, color, sliceCount);
 }
 
 void RenderManager::DrawWireframeCircle2D(const Vector2f& center, float radius, const Vector4f& color, int32_t sliceCount)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawWireframeCircle2D(screenOrtho_, center, radius, color, sliceCount);
 }
 
 void RenderManager::DrawEllipse2D(const Vector2f& center, float xAxis, float yAxis, const Vector4f& color, int32_t sliceCount)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
 }
 
 void RenderManager::DrawWireframeEllipse2D(const Vector2f& center, float xAxis, float yAxis, const Vector4f& color, int32_t sliceCount)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawWireframeEllipse2D(screenOrtho_, center, xAxis, yAxis, color, sliceCount);
 }
 
 void RenderManager::DrawGrid2D(float minX, float maxX, float strideX, float minY, float maxY, float strideY, const Vector4f& color)
 {
-	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(shaderMaps_["GeometryShader2D"]);
+	GeometryShader2D* shader = reinterpret_cast<GeometryShader2D*>(resourceMaps_["GeometryShader2D"]);
 	shader->DrawGrid2D(screenOrtho_, minX, maxX, strideX, minY, maxY, strideY, color);
 }
 
 void RenderManager::DrawTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float transparent)
 {
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["TextureShader2D"]);
 	shader->DrawTexture2D(screenOrtho_, texture, center, width, height, rotate, transparent);
 }
 
 void RenderManager::DrawTexture2D(Texture2D* texture, float transparent)
 {
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["TextureShader2D"]);
 	shader->DrawTexture2D(texture, transparent);
 }
 
 void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent)
 {
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["TextureShader2D"]);
 	shader->DrawHorizonScrollTexture2D(texture, rate, transparent);
 }
 
 void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
 {
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["TextureShader2D"]);
 	shader->DrawHorizonScrollTexture2D(screenOrtho_, texture, center, width, height, rate, transparent);
 }
 
 void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
 {
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["TextureShader2D"]);
 	shader->DrawVerticalScrollTexture2D(texture, rate, transparent);
 }
 
 void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
 {
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
+	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["TextureShader2D"]);
 	shader->DrawVerticalScrollTexture2D(screenOrtho_, texture, center, width, height, rate, transparent);
 }
 
 void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
 {
-	GlyphShader2D* shader = reinterpret_cast<GlyphShader2D*>(shaderMaps_["GlyphShader2D"]);
+	GlyphShader2D* shader = reinterpret_cast<GlyphShader2D*>(resourceMaps_["GlyphShader2D"]);
 	shader->DrawText2D(screenOrtho_, font, text, center, color);
 }
 
 void RenderManager::DrawTextureSilhouette2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float transparent)
 {
-	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(shaderMaps_["SilhouetteShader2D"]);
+	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(resourceMaps_["SilhouetteShader2D"]);
 	silhouetteShader->DrawTextureSilhouette2D(
 		screenOrtho_,
 		texture,
@@ -306,6 +306,6 @@ void RenderManager::DrawTextureSilhouette2D(Texture2D* texture, const Vector2f& 
 
 void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector4f& outline, float transparent)
 {
-	OutlineShader2D* shader = reinterpret_cast<OutlineShader2D*>(shaderMaps_["OutlineShader2D"]);
+	OutlineShader2D* shader = reinterpret_cast<OutlineShader2D*>(resourceMaps_["OutlineShader2D"]);
 	shader->DrawTextureOutline2D(screenOrtho_, texture, center, width, height, rotate, outline, transparent);
 }

@@ -6,13 +6,13 @@
 #include <unordered_map>
 
 #include "IManager.h"
+#include "IResource.h"
 #include "SingletonMacro.h"
 #include "Matrix4x4.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 
-class Shader;    // 셰이더를 사용하기 위한 전방선언입니다.
 class Texture2D; // 텍스처를 사용하기 위한 전방 선언입니다.
 class TTFont;    // 트루 타입 폰트를 사용하기 위한 전방 선언입니다.
 class Window;    // 윈도우 클래스를 사용하기 위한 전방 선언입니다.
@@ -515,7 +515,7 @@ private:
 
 
 	/**
-	 * @brief 렌더링에 사용할 셰이더입니다.
+	 * @brief 렌더링에 사용할 리소스입니다.
 	 */
-	std::unordered_map<std::string, Shader*> shaderMaps_;
+	std::unordered_map<std::string, IResource*> resourceMaps_;
 };
