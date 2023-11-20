@@ -77,7 +77,10 @@ int main(int argc, char* argv[])
 			73.0f,
 			0.0f
 		);
-		RenderManager::Get().PostEffectWeightGrayscale();
+
+		//RenderManager::Get().PostEffectNormalBlur(500.0f);
+		//RenderManager::Get().PostEffectGaussianBlur(0.5f);
+		RenderManager::Get().PostEffectFadeEffect(1.0f - value);
 
 		RenderManager::Get().EndFrame();
 	}
