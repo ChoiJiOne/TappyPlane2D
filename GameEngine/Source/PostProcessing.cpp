@@ -31,8 +31,8 @@ void PostProcessing::Initialize(const std::string& vsPath, const std::string& fs
 	GL_ASSERT(glGenVertexArrays(1, &vertexArrayObject_), "failed to generate frame buffer vertex array...");
 	GL_ASSERT(glGenBuffers(1, &vertexBufferObject_), "failed to generate frame buffer vertex buffer...");
 
-	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d texture vertex array...");
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d texture vertex buffer...");
+	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind frame buffer vertex array...");
+	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind frame buffer vertex buffer...");
 	GL_ASSERT(glBufferData(GL_ARRAY_BUFFER, VertexPositionTexture::GetStride() * vertices_.size(), reinterpret_cast<const void*>(vertices_.data()), GL_STATIC_DRAW),
 		"failed to create a new data store for vertex buffer object...");
 
