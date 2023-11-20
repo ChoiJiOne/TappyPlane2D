@@ -505,6 +505,16 @@ public:
 	void PostEffectWeightGrayscale();
 
 
+	/**
+	 * @brief 블러 효과를 적용합니다.
+	 * 
+	 * @param blurBias 블러 효과 바이어스 값입니다. 이때, 값은 0.0f 보다 커야 합니다.
+	 * 
+	 * @note 값이 커질 수록 선명해집니다.
+	 */
+	void PostEffectNormalBlur(float blurBias);
+
+
 private:
 	/**
 	 * @brief 셰이더를 사용하기 위한 초기화를 수행합니다.

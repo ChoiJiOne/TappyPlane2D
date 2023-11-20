@@ -25,6 +25,7 @@ public:
 		Inversion = 0x01,
 		AverageGrayscale = 0x02,
 		WeightGrayscale = 0x03,
+		NormalBlur = 0x04,
 	};
 
 
@@ -91,6 +92,14 @@ public:
 	 * @see https://github.com/przemyslawzaworski/Unity3D-CG-programming/blob/master/grayscale.shader
 	 */
 	void PostEffectWeightGrayscale(Framebuffer* framebuffer);
+
+
+	/**
+	 * @brief 블러 효과를 적용합니다.
+	 * 
+	 * @param blurBias 블러 효과 바이어스 값입니다. 이때, 값은 0.0f 보다 커야 합니다.
+	 */
+	void PostEffectNormalBlur(Framebuffer* framebuffer, float blurBias);
 
 
 	/**

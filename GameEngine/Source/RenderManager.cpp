@@ -354,6 +354,23 @@ void RenderManager::PostEffectWeightGrayscale()
 	}
 }
 
+void RenderManager::PostEffectNormalBlur(float blurBias)
+{
+	if (!bIsBlit_)
+	{
+		Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
+		framebuffer->Unbind();
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		GL_ASSERT(glClear(GL_COLOR_BUFFER_BIT), "failed to clear bitplane area of the window...");
+
+		PostProcessing* postProcessing = reinterpret_cast<PostProcessing*>(resourceMaps_["PostProcessing"]);
+		postProcessing->PostEffectNormalBlur(framebuffer, blurBias);
+
+		bIsBlit_ = true;
+	}
+}
+
 void RenderManager::StartupShaders()
 {
 	std::string shaderPath;
