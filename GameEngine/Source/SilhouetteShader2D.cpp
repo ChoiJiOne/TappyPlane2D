@@ -59,8 +59,10 @@ void SilhouetteShader2D::DrawTextureSilhouette2D(const Matrix4x4f& ortho, Textur
 	vertices_[3] = VertexPositionTexture(Vector3f(center.x + width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), Vector2f(1.0f, 0.0f));
 	vertices_[4] = VertexPositionTexture(Vector3f(center.x - width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
 	vertices_[5] = VertexPositionTexture(Vector3f(center.x + width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), Vector2f(1.0f, 1.0f));
-
-	UpdateVertexBuffer();
+	
+	const void* bufferPtr = reinterpret_cast<const void*>(vertices_.data());
+	uint32_t bufferByteSize = static_cast<uint32_t>(VertexPositionTexture::GetStride() * vertices_.size());
+	UpdateDynamicVertexBuffer(vertexBufferObject_, bufferPtr, bufferByteSize);
 
 	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
 		* MathUtils::CreateRotateZ(rotate)
@@ -83,17 +85,4 @@ void SilhouetteShader2D::DrawTextureSilhouette2D(const Matrix4x4f& ortho, Textur
 	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d texture vertex array...");
 
 	Shader::Unbind();
-}
-
-void SilhouetteShader2D::UpdateVertexBuffer()
-{
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d texture vertex buffer...");
-
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
-
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionTexture::GetStride() * vertices_.size());
-	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
-	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d texture vertex buffer...");
 }
