@@ -7,6 +7,6 @@ layout(location = 0) out vec2 outTexCoords;
 
 void main()
 {
-	outTexCoords = inTexCoords;
+	outTexCoords = vec2(inTexCoords.x, 1.0f - inTexCoords.y);
 	gl_Position = vec4(inPosition, 1.0f);
 }

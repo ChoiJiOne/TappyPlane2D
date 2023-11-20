@@ -8,6 +8,6 @@ layout(binding = 0) uniform sampler2D framebuffer;
 
 void main()
 {
-	vec4 colorRGBA = texture(framebuffer, inTexCoords);
-	outColor = colorRGBA;
+	vec3 colorRGBA = texture(framebuffer, inTexCoords).rgb;
+	outColor = vec4(colorRGBA, 1.0f);
 }
