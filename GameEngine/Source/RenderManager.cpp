@@ -92,6 +92,8 @@ void RenderManager::EndFrame()
 
 		PostProcessing* postProcessing = reinterpret_cast<PostProcessing*>(resourceMaps_["PostProcessing"]);
 		postProcessing->Blit(framebuffer);
+
+		bIsBlit_ = true;
 	}
 
 	glfwSwapBuffers(window_->GetWindowPtr());
@@ -299,6 +301,40 @@ void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& cen
 {
 	OutlineShader2D* shader = reinterpret_cast<OutlineShader2D*>(resourceMaps_["Outline2D"]);
 	shader->DrawTextureOutline2D(screenOrtho_, texture, center, width, height, rotate, outline, transparent);
+}
+
+void RenderManager::PostEffectInversion()
+{
+	if (!bIsBlit_)
+	{
+		Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
+		framebuffer->Unbind();
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		GL_ASSERT(glClear(GL_COLOR_BUFFER_BIT), "failed to clear bitplane area of the window...");
+
+		PostProcessing* postProcessing = reinterpret_cast<PostProcessing*>(resourceMaps_["PostProcessing"]);
+		postProcessing->PostEffectInversion(framebuffer);
+		
+		bIsBlit_ = true;
+	}
+}
+
+void RenderManager::PostEffectAverageGrayscale()
+{
+	if (!bIsBlit_)
+	{
+		Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
+		framebuffer->Unbind();
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		GL_ASSERT(glClear(GL_COLOR_BUFFER_BIT), "failed to clear bitplane area of the window...");
+
+		PostProcessing* postProcessing = reinterpret_cast<PostProcessing*>(resourceMaps_["PostProcessing"]);
+		postProcessing->PostEffectAverageGrayscale(framebuffer);
+
+		bIsBlit_ = true;
+	}
 }
 
 void RenderManager::StartupShaders()

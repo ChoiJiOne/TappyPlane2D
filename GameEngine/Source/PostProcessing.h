@@ -17,6 +17,18 @@ class PostProcessing : public Shader
 {
 public:
 	/**
+	 * @brief 후처리 효과의 종류입니다.
+	 */
+	enum class EPostEffectType
+	{
+		None = 0x00,
+		Inversion = 0x01,
+		AverageGrayscale = 0x02,
+	};
+
+
+public:
+	/**
 	 * @brief 후처리 셰이더의 디폴트 생성자입니다.
 	 *
 	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
@@ -52,6 +64,22 @@ public:
 	 * @brief 셰이더의 내부 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
+
+
+	/**
+	 * @brief Inversion 후처리 효과를 적용합니다.
+	 * 
+	 * @param framebuffer 백버퍼에 전송할 프레임 버퍼입니다.
+	 */
+	void PostEffectInversion(Framebuffer* framebuffer);
+
+
+	/**
+	 * @brief RGB값의 평균으로 그레이 스케일 효과를 적용합니다.
+	 * 
+	 * @param framebuffer 백버퍼에 전송할 프레임 버퍼입니다.
+	 */
+	void PostEffectAverageGrayscale(Framebuffer* framebuffer);
 
 
 	/**

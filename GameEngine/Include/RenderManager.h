@@ -481,6 +481,20 @@ public:
 	);
 
 
+	/**
+	 * @brief Inversion 후처리 효과를 적용합니다.
+	 * 
+	 * @note 한 프레임에 한 가지 효과만 적용할 수 있습니다.
+	 */
+	void PostEffectInversion();
+
+
+	/**
+	 * @brief RGB값의 평균으로 그레이 스케일 효과를 적용합니다.
+	 */
+	void PostEffectAverageGrayscale();
+
+
 private:
 	/**
 	 * @brief 셰이더를 사용하기 위한 초기화를 수행합니다.
