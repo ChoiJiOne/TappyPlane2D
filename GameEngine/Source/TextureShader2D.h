@@ -205,12 +205,6 @@ public:
 	
 private:
 	/**
-	 * @brief 버텍스 버퍼를 업데이트합니다.
-	 */
-	void UpdateVertexBuffer();
-
-
-	/**
 	 * @brief 텍스처 그리기를 수행합니다.
 	 * 
 	 * @param transform 변환 행렬입니다.

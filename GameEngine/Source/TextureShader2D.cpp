@@ -59,8 +59,6 @@ void TextureShader2D::DrawTexture2D(const Matrix4x4f& ortho, Texture2D* texture,
 	vertices_[4] = VertexPositionTexture(Vector3f(center.x - width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
 	vertices_[5] = VertexPositionTexture(Vector3f(center.x + width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), Vector2f(1.0f, 1.0f));
 
-	UpdateVertexBuffer();
-
 	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
 		* MathUtils::CreateRotateZ(rotate)
 		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
@@ -78,8 +76,6 @@ void TextureShader2D::DrawTexture2D(Texture2D* texture, float transparent)
 	vertices_[3] = VertexPositionTexture(Vector3f(+1.0f, +1.0f, 0.0f), Vector2f(1.0f, 0.0f));
 	vertices_[4] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
 	vertices_[5] = VertexPositionTexture(Vector3f(+1.0f, -1.0f, 0.0f), Vector2f(1.0f, 1.0f));
-
-	UpdateVertexBuffer();
 
 	uint32_t vertexCount = 6;
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
@@ -105,8 +101,6 @@ void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate,
 	vertices_[9]  = VertexPositionTexture(Vector3f(+1.0f, +1.0f, 0.0f), Vector2f(rate, 0.0f));
 	vertices_[10] = VertexPositionTexture(Vector3f(   +x, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
 	vertices_[11] = VertexPositionTexture(Vector3f(+1.0f, -1.0f, 0.0f), Vector2f(rate, 1.0f));
-
-	UpdateVertexBuffer();
 
 	uint32_t vertexCount = 12;
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
@@ -139,8 +133,6 @@ void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Textur
 	vertices_[10] = VertexPositionTexture(Vector3f(+x + 0.5f, y1 + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
 	vertices_[11] = VertexPositionTexture(Vector3f(x1 + 0.5f, y1 + 0.5f, 0.0f), Vector2f(rate, 1.0f));
 
-	UpdateVertexBuffer();
-	
 	uint32_t vertexCount = 12;
 	DrawTexture2D(Matrix4x4f::GetIdentity(), ortho, vertexCount, texture, transparent);
 }
@@ -165,8 +157,6 @@ void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate
 	vertices_[9]  = VertexPositionTexture(Vector3f(+1.0f,    +y, 0.0f), Vector2f(1.0f,        0.0f));
 	vertices_[10] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(0.0f, 1.0f - rate));
 	vertices_[11] = VertexPositionTexture(Vector3f(+1.0f, -1.0f, 0.0f), Vector2f(1.0f, 1.0f - rate));
-
-	UpdateVertexBuffer();
 
 	uint32_t vertexCount = 12;
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
@@ -199,27 +189,16 @@ void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Textu
 	vertices_[10] = VertexPositionTexture(Vector3f(x0, y1, 0.0f), Vector2f(0.0f, 1.0f - rate));
 	vertices_[11] = VertexPositionTexture(Vector3f(x1, y1, 0.0f), Vector2f(1.0f, 1.0f - rate));
 
-	UpdateVertexBuffer();
-
 	uint32_t vertexCount = 12;
 	DrawTexture2D(Matrix4x4f::GetIdentity(), ortho, vertexCount, texture, transparent);
 }
 
-void TextureShader2D::UpdateVertexBuffer()
-{
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind 2d texture vertex buffer...");
-
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
-
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionTexture::GetStride() * vertices_.size());
-	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
-	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d texture vertex buffer...");
-}
-
 void TextureShader2D::DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, Texture2D* texture, float transparent)
 {
+	const void* bufferPtr = reinterpret_cast<const void*>(vertices_.data());
+	uint32_t bufferByteSize = static_cast<uint32_t>(VertexPositionTexture::GetStride() * vertices_.size());
+	UpdateDynamicVertexBuffer(vertexBufferObject_, bufferPtr, bufferByteSize);
+
 	Shader::Bind();
 
 	texture->Active(0);
