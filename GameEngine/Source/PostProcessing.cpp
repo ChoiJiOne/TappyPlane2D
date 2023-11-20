@@ -65,7 +65,7 @@ void PostProcessing::Blit(Framebuffer* framebuffer)
 
 	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind frame buffer vertex array...");
 	GL_ASSERT(glDrawArrays(GL_TRIANGLES, 0, MAX_VERTEX_SIZE), "failed to blit frame buffer...");
-	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d texture vertex array...");
+	GL_ASSERT(glBindVertexArray(0), "failed to unbind frame buffer vertex array...");
 	
 	Shader::Unbind();
 }
