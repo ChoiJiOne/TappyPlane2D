@@ -64,13 +64,23 @@ int main(int argc, char* argv[])
 		RenderManager::Get().DrawHorizonScrollTexture2D(background, static_cast<float>(value));
 		RenderManager::Get().DrawHorizonScrollTexture2D(ground, Vector2f(500.0f, 770.0f), 1000.0f, 60.0f, value);
 
+		//RenderManager::Get().DrawLine2D(Vector2f(0.0f, 0.0f), Vector2f(1000.0f, 800.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		//RenderManager::Get().DrawText2D(font, L"Hello World!", Vector2f(500.0f, 400.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+
 		accumulateTime += timer.GetDeltaSeconds();
 		if (accumulateTime >= 0.1f)
 		{
 			accumulateTime = 0.0f;
 			currentPlaneIndex = (currentPlaneIndex + 1) % (planes.size());
 		}
-		RenderManager::Get().DrawTexture2D(planes[currentPlaneIndex], Vector2f(500.0f, 400.0f), 88.0f, 73.0f, 0.0f);
+		RenderManager::Get().DrawTextureOutline2D(
+			planes[currentPlaneIndex], 
+			Vector2f(500.0f, 400.0f),
+			88.0f, 
+			73.0f, 
+			0.0f, 
+			Vector4f(1.0f, 0.0f, 0.0f, 1.0f)
+		);
 		
 		RenderManager::Get().EndFrame();
 	}
