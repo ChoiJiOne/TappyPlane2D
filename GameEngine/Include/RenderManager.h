@@ -480,6 +480,13 @@ public:
 		float transparent = 1.0f
 	);
 
+
+private:
+	/**
+	 * @brief 셰이더를 사용하기 위한 초기화를 수행합니다.
+	 */
+	void StartupShaders();
+
 	
 private:
 	/**
@@ -498,6 +505,18 @@ private:
 	 * @brief OpenGL의 부 버전입니다.
 	 */
 	int32_t minor_ = 0;
+
+
+	/**
+	 * @brief 현재 스크린의 가로 크기입니다.
+	 */
+	int32_t screenWidth_ = 0;
+
+
+	/**
+	 * @brief 현재 스크린의 세로 크기입니다.
+	 */
+	int32_t screenHeight_ = 0;
 
 
 	/**
