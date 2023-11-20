@@ -88,12 +88,30 @@ public:
 
 
 	/**
+	 * @brief 셰이더 내에 boolean 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetBoolParameter(const int32_t& location, bool value);
+
+
+	/**
 	 * @brief 셰이더 내에 int 타입의 유니폼 변수를 설정합니다.
 	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetIntParameter(const std::string& name, int32_t value);
+	
+	
+	/**
+	 * @brief 셰이더 내에 int 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetIntParameter(const int32_t& location, int32_t value);
 
 
 	/**
@@ -106,12 +124,30 @@ public:
 
 
 	/**
+	 * @brief 셰이더 내에 float 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetFloatParameter(const int32_t& location, float value);
+
+
+	/**
 	 * @brief 셰이더 내에 2차원 벡터 타입의 유니폼 변수를 설정합니다.
 	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetVector2fParameter(const std::string& name, const Vector2f& value);
+
+
+	/**
+	 * @brief 셰이더 내에 2차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetVector2fParameter(const int32_t& location, const Vector2f& value);
 
 
 	/**
@@ -122,6 +158,16 @@ public:
 	 * @param y 유니폼 변수의 y 값입니다.
 	 */
 	void SetVector2fParameter(const std::string& name, float x, float y);
+
+
+	/**
+	 * @brief 셰이더 내에 2차원 벡턴 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param x 유니폼 변수의 x 값입니다.
+	 * @param y 유니폼 변수의 y 값입니다.
+	 */
+	void SetVector2fParameter(const int32_t& location, float x, float y);
 
 
 	/**
@@ -136,11 +182,30 @@ public:
 	/**
 	 * @brief 셰이더 내에 2차원 벡터 타입의 유니폼 변수를 설정합니다.
 	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetVector2iParameter(const int32_t& location, const Vector2i& value);
+
+
+	/**
+	 * @brief 셰이더 내에 2차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param x 유니폼 변수의 x 값입니다.
 	 * @param y 유니폼 변수의 y 값입니다.
 	 */
 	void SetVector2iParameter(const std::string& name, int32_t x, int32_t y);
+
+
+	/**
+	 * @brief 셰이더 내에 2차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param x 유니폼 변수의 x 값입니다.
+	 * @param y 유니폼 변수의 y 값입니다.
+	 */
+	void SetVector2iParameter(const int32_t& location, int32_t x, int32_t y);
 
 
 	/**
@@ -150,6 +215,15 @@ public:
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetVector3fParameter(const std::string& name, const Vector3f& value);
+
+
+	/**
+	 * @brief 셰이더 내에 3차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetVector3fParameter(const int32_t& location, const Vector3f& value);
 
 
 	/**
@@ -166,10 +240,30 @@ public:
 	/**
 	 * @brief 셰이더 내에 3차원 벡터 타입의 유니폼 변수를 설정합니다.
 	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param x 유니폼 변수의 x 값입니다.
+	 * @param y 유니폼 변수의 y 값입니다.
+	 * @param z 유니폼 변수의 z 값입니다.
+	 */
+	void SetVector3fParameter(const int32_t& location, float x, float y, float z);
+
+
+	/**
+	 * @brief 셰이더 내에 3차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetVector3iParameter(const std::string& name, const Vector3i& value);
+
+
+	/**
+	 * @brief 셰이더 내에 3차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetVector3iParameter(const int32_t& location, const Vector3i& value);
 
 
 	/**
@@ -184,12 +278,32 @@ public:
 
 
 	/**
+	 * @brief 셰이더 내에 3차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param x 유니폼 변수의 x 값입니다.
+	 * @param y 유니폼 변수의 y 값입니다.
+	 * @param z 유니폼 변수의 z 값입니다.
+	 */
+	void SetVector3iParameter(const int32_t& location, int32_t x, int32_t y, int32_t z);
+
+
+	/**
 	 * @brief 셰이더 내에 4차원 벡터 타입의 유니폼 변수를 설정합니다.
 	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetVector4fParameter(const std::string& name, const Vector4f& value);
+
+
+	/**
+	 * @brief 셰이더 내에 4차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetVector4fParameter(const int32_t& location, const Vector4f& value);
 
 
 	/**
@@ -207,10 +321,31 @@ public:
 	/**
 	 * @brief 셰이더 내에 4차원 벡터 타입의 유니폼 변수를 설정합니다.
 	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param x 유니폼 변수의 x 값입니다.
+	 * @param y 유니폼 변수의 y 값입니다.
+	 * @param z 유니폼 변수의 z 값입니다.
+	 * @param w 유니폼 변수의 w 값입니다.
+	 */
+	void SetVector4fParameter(const int32_t& location, float x, float y, float z, float w);
+
+
+	/**
+	 * @brief 셰이더 내에 4차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetVector4iParameter(const std::string& name, const Vector4i& value);
+
+
+	/**
+	 * @brief 셰이더 내에 4차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetVector4iParameter(const int32_t& location, const Vector4i& value);
 
 
 	/**
@@ -226,12 +361,33 @@ public:
 
 
 	/**
+	 * @brief 셰이더 내에 4차원 벡터 타입의 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param x 유니폼 변수의 x 값입니다.
+	 * @param y 유니폼 변수의 y 값입니다.
+	 * @param z 유니폼 변수의 z 값입니다.
+	 * @param w 유니폼 변수의 w 값입니다.
+	 */
+	void SetVector4iParameter(const int32_t& location, int32_t x, int32_t y, int32_t z, int32_t w);
+
+
+	/**
 	 * @brief 셰이더 내에 2x2 타입의 행렬 유니폼 변수를 설정합니다.
 	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetMatrix2x2fParameter(const std::string& name, const Matrix2x2f& value);
+
+
+	/**
+	 * @brief 셰이더 내에 2x2 타입의 행렬 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetMatrix2x2fParameter(const int32_t& location, const Matrix2x2f& value);
 		
 
 	/**
@@ -244,12 +400,30 @@ public:
 
 
 	/**
+	 * @brief 셰이더 내에 3x3 타입의 행렬 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetMatrix3x3fParameter(const int32_t& location, const Matrix3x3f& value);
+
+
+	/**
 	 * @brief 셰이더 내에 4x4 타입의 행렬 유니폼 변수를 설정합니다.
 	 *
 	 * @param name 유니폼 변수의 이름입니다.
 	 * @param value 유니폼 변수의 설정 값입니다.
 	 */
 	void SetMatrix4x4fParameter(const std::string& name, const Matrix4x4f& value);
+
+
+	/**
+	 * @brief 셰이더 내에 4x4 타입의 행렬 유니폼 변수를 설정합니다.
+	 *
+	 * @param location 셰이더 내의 유니폼 변수의 위치입니다.
+	 * @param value 유니폼 변수의 설정 값입니다.
+	 */
+	void SetMatrix4x4fParameter(const int32_t& location, const Matrix4x4f& value);
 
 
 protected:
