@@ -73,26 +73,26 @@ void RenderManager::PreStartup(Window* window, int32_t major, int32_t minor)
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
 {
-	Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
+	bIsBlit_ = false;
 
+	Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
 	framebuffer->Bind();
-	SetAlphaBlend(true);
 	framebuffer->Clear(red, green, blue, alpha, depth, stencil);
 }
 
 void RenderManager::EndFrame()
 {
-	Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
+	if (!bIsBlit_)
+	{
+		Framebuffer* framebuffer = reinterpret_cast<Framebuffer*>(resourceMaps_["Framebuffer"]);
+		framebuffer->Unbind();
 
-	framebuffer->Unbind();
-	SetAlphaBlend(true);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClearDepth(0.0f);
-	glClearStencil(0x00);
-	GL_ASSERT(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT), "failed to clear bitplane area of the window...");
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		GL_ASSERT(glClear(GL_COLOR_BUFFER_BIT), "failed to clear bitplane area of the window...");
 
-	PostProcessing* postProcessing = reinterpret_cast<PostProcessing*>(resourceMaps_["PostProcessing"]);
-	postProcessing->Blit(framebuffer);
+		PostProcessing* postProcessing = reinterpret_cast<PostProcessing*>(resourceMaps_["PostProcessing"]);
+		postProcessing->Blit(framebuffer);
+	}
 
 	glfwSwapBuffers(window_->GetWindowPtr());
 }

@@ -526,6 +526,12 @@ private:
 
 
 	/**
+	 * @brief 프레임 버퍼에서 백버퍼로 전송했는지 확인합니다.
+	 */
+	bool bIsBlit_ = false;
+
+
+	/**
 	 * @brief 렌더링에 사용할 리소스입니다.
 	 */
 	std::unordered_map<std::string, IResource*> resourceMaps_;
