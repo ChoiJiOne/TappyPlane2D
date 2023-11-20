@@ -9,6 +9,7 @@ layout(binding = 0) uniform sampler2D framebuffer;
 const int NONE_EFFECT = 0;
 const int INVERSION_EFFECT = 1;
 const int AVERAGE_GRAYSCALE = 2;
+const int WEIGHT_GRAYSCALE = 3;
 
 uniform int effectOption;
 
@@ -18,6 +19,12 @@ void main()
 
 	switch(effectOption)
 	{
+	case WEIGHT_GRAYSCALE:
+		colorRGB = texture(framebuffer, inTexCoords).rgb;
+		float weight = 0.2126 * colorRGB.r + 0.7152 * colorRGB.g + 0.0722 * colorRGB.b;
+		colorRGB = vec3(weight, weight, weight);
+		break;
+
 	case AVERAGE_GRAYSCALE:
 		colorRGB = texture(framebuffer, inTexCoords).rgb;
 		float average = (colorRGB.r + colorRGB.g, colorRGB.b) / 3.0f;
