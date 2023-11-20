@@ -21,7 +21,7 @@ uniform float blurBias;
 
 float Gaussian(float x);
 vec3 CalculateNormalBlur(float bias);
-vec3 CalculateGaussianBlur();
+vec3 CalculateGaussianBlur(float bias);
 
 void main()
 {
@@ -30,7 +30,7 @@ void main()
 	switch(effectOption)
 	{
 	case GAUSSIAN_BLUR:
-		colorRGB = CalculateGaussianBlur();
+		colorRGB = CalculateGaussianBlur(blurBias);
 		break;
 
 	case NORMAL_BLUR:
@@ -107,15 +107,16 @@ vec3 CalculateNormalBlur(float bias)
 }
 
 // https://github.com/gdquest-demos/godot-shaders/blob/master/godot/Shaders/gaussian_blur.shader
-vec3 CalculateGaussianBlur()
+vec3 CalculateGaussianBlur(float bias)
 {
 	vec2 size = 1.0f / textureSize(framebuffer, 0);
-	vec2 scale = size * vec2(1.0f, 0.0f);
-	float totalWeight = 0.0;
+	vec2 scale = size * vec2(bias, bias);
 
+	float totalWeight = 0.0;
 	vec3 colorRGB = vec3(0.0);
 	
-	for (int i = -SAMPLES / 2; i < SAMPLES / 2; ++i) {
+	for (int i = -SAMPLES / 2; i < SAMPLES / 2; ++i) 
+	{
 		float weight = Gaussian(float(i));
 		colorRGB += texture(framebuffer, inTexCoords.st + scale * vec2(float(i))).rgb * weight;
 		totalWeight += weight;
