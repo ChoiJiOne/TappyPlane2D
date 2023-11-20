@@ -265,6 +265,16 @@ protected:
 	int32_t GetUniformLocation(const std::string& uniformName);
 
 
+	/**
+	 * @brief 다이나믹 버텍스 버퍼를 업데이트합니다.
+	 * 
+	 * @param vertexBufferID 업데이트할 버텍스 버퍼의 ID입니다.
+	 * @param vertexPtr 업데이트할 버텍스 버퍼의 포인터입니다.
+	 * @param bufferByteSize 버텍스 버퍼의 바이트 크기입니다.
+	 */
+	void UpdateDynamicVertexBuffer(uint32_t vertexBufferID, const void* vertexPtr, uint32_t bufferByteSize);
+
+
 private:
 	/**
 	 * @brief 셰이더 파일의 유효성을 검사합니다.

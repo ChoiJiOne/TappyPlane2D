@@ -232,6 +232,21 @@ int32_t Shader::GetUniformLocation(const std::string& uniformName)
 	return glGetUniformLocation(programID_, uniformName.c_str());
 }
 
+void Shader::UpdateDynamicVertexBuffer(uint32_t vertexBufferID, const void* vertexPtr, uint32_t bufferByteSize)
+{
+	ASSERT(vertexPtr != nullptr, "invalid vertex buffer pointer...");
+
+	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID), "failed to dynamic vertex buffer...");
+	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
+	
+	std::memcpy(bufferPtr, vertexPtr, bufferByteSize);
+	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
+	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
+
+	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind dynamic vertex buffer...");
+}
+
 bool Shader::CheckValidShaderFile(const std::string& vsPath, const std::string& fsPath)
 {
 	FileManager& fileManager = FileManager::Get();
