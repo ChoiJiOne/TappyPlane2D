@@ -12,12 +12,14 @@ const int AVERAGE_GRAYSCALE = 2;
 const int WEIGHT_GRAYSCALE = 3;
 const int NORMAL_BLUR = 4;
 const int GAUSSIAN_BLUR = 5;
+const int FADE_EFFECT = 6;
 
 const int SAMPLES = 72;
 const float TAU = 6.283185307179586476925286766559;
 
 uniform int effectOption;
 uniform float blurBias;
+uniform float fadeBias;
 
 float Gaussian(float x);
 vec3 CalculateNormalBlur(float bias);
@@ -26,9 +28,15 @@ vec3 CalculateGaussianBlur(float bias);
 void main()
 {
 	vec3 colorRGB = vec3(0.0f);
+	float alpha = 1.0f;
 
 	switch(effectOption)
 	{
+	case FADE_EFFECT:
+		colorRGB = texture(framebuffer, inTexCoords).rgb;
+		alpha = fadeBias;
+		break;
+
 	case GAUSSIAN_BLUR:
 		colorRGB = CalculateGaussianBlur(blurBias);
 		break;
@@ -58,7 +66,7 @@ void main()
 		break;
 	}
 
-	outColor = vec4(colorRGB, 1.0f);
+	outColor = vec4(colorRGB, alpha);
 }
 
 float Gaussian(float x) 
