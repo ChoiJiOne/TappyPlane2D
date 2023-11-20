@@ -529,6 +529,18 @@ public:
 	void PostEffectGaussianBlur(float blurBias);
 
 
+	/**
+	 * @brief 페이드 효과를 적용합니다.
+	 * 
+	 * @param fadeBias 페이드 효과 바이어스 값입니다. 이 값의 범위는 0.0f ~ 1.0f 입니다.
+	 * 
+	 * @note
+	 * - 값이 0.0f에 가까워질수록 페이드 효과가 강해집니다.
+	 * - 값이 1.0f에 가까워질수록 페이드 효과가 약해집니다.
+	 */
+	void PostEffectFadeEffect(float fadeBias);
+
+
 private:
 	/**
 	 * @brief 셰이더를 사용하기 위한 초기화를 수행합니다.

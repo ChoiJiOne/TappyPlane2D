@@ -27,6 +27,7 @@ public:
 		WeightGrayscale = 0x03,
 		NormalBlur = 0x04,
 		GaussianBlur = 0x05,
+		Fade = 0x06,
 	};
 
 
@@ -111,6 +112,15 @@ public:
 	 * @param blurBias 블러 효과 바이어스 값입니다. 이 값의 범위는 0.0f ~ 1.0f 입니다.
 	 */
 	void PostEffectGaussianBlur(Framebuffer* framebuffer, float blurBias);
+
+
+	/**
+	 * @brief 페이드 효과를 적용합니다.
+	 * 
+	 * @param framebuffer 백버퍼에 전송할 프레임 버퍼입니다.
+	 * @param fadeBias 페이드 효과 바이어스 값입니다. 이 값의 범위는 0.0f ~ 1.0f 입니다.
+	 */
+	void PostEffectFadeEffect(Framebuffer* framebuffer, float fadeBias);
 
 
 	/**

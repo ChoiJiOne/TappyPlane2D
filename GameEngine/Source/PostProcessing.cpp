@@ -133,6 +133,23 @@ void PostProcessing::PostEffectGaussianBlur(Framebuffer* framebuffer, float blur
 	Shader::Unbind();
 }
 
+void PostProcessing::PostEffectFadeEffect(Framebuffer* framebuffer, float fadeBias)
+{
+	ASSERT((fadeBias >= 0.0f && fadeBias <= 1.0f), "invalid post processing fade effect bias : %f", fadeBias);
+
+	framebuffer->Active(0);
+		
+	Shader::Bind();
+	Shader::SetIntParameter("effectOption", static_cast<int32_t>(EPostEffectType::Fade));
+	Shader::SetFloatParameter("fadeBias", fadeBias);
+
+	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind frame buffer vertex array...");
+	GL_ASSERT(glDrawArrays(GL_TRIANGLES, 0, MAX_VERTEX_SIZE), "failed to blit frame buffer...");
+	GL_ASSERT(glBindVertexArray(0), "failed to unbind frame buffer vertex array...");
+
+	Shader::Unbind();
+}
+
 void PostProcessing::Blit(Framebuffer* framebuffer)
 {
 	Shader::Bind();
