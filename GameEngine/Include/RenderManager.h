@@ -495,6 +495,16 @@ public:
 	void PostEffectAverageGrayscale();
 
 
+	/**
+	 * @brief RGB값의 가중치로 그레이 스케일 효과를 적용합니다.
+	 *
+	 * @param framebuffer 백버퍼에 전송할 프레임 버퍼입니다.
+	 *
+	 * @see https://github.com/przemyslawzaworski/Unity3D-CG-programming/blob/master/grayscale.shader
+	 */
+	void PostEffectWeightGrayscale();
+
+
 private:
 	/**
 	 * @brief 셰이더를 사용하기 위한 초기화를 수행합니다.
