@@ -37,6 +37,13 @@ void TextureShader2D::Initialize(const std::string& vsPath, const std::string& f
 	GL_ASSERT(glEnableVertexAttribArray(1), "failed to enable vertex attrib array...");
 
 	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d texture vertex array...");
+
+	Shader::Bind();
+	transformLocation_ = GetUniformLocation("transform");
+	orthoLocation_ = GetUniformLocation("ortho");
+	reverseTexCoordLocation_ = GetUniformLocation("bReverseTexCoord");
+	transparentLocation_ = GetUniformLocation("transparent");
+	Shader::Unbind();
 }
 
 void TextureShader2D::Release()
@@ -203,10 +210,10 @@ void TextureShader2D::DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4
 
 	texture->Active(0);
 
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-	Shader::SetBoolParameter("bReverseTexCoord", false);
-	Shader::SetFloatParameter("transparent", transparent);
+	Shader::SetMatrix4x4fParameter(transformLocation_, transform);
+	Shader::SetMatrix4x4fParameter(orthoLocation_, ortho);
+	Shader::SetBoolParameter(reverseTexCoordLocation_, false);
+	Shader::SetFloatParameter(transparentLocation_, transparent);
 
 	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d texture vertex array...");
 	GL_ASSERT(glDrawArrays(GL_TRIANGLES, 0, vertexCount), "failed to draw 2d texture...");

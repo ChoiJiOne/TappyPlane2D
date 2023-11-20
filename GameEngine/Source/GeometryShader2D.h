@@ -347,6 +347,24 @@ private:
 
 
 	/**
+	 * @brief 포인트 크기를 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t pointSizeLocation_ = -1;
+
+
+	/**
+	 * @brief 변환 행렬을 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t transformLocation_ = -1;
+
+
+	/**
+	 * @brief 스크린 직교 투영 행렬을 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t orthoLocation_ = -1;
+
+
+	/**
 	 * @brief 포인트 크기입니다.
 	 */
 	float pointSize_ = 1.0f;

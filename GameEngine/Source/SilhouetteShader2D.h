@@ -101,4 +101,34 @@ private:
 	 * @brief 정점 버퍼 목록의 오브젝트입니다.
 	 */
 	uint32_t vertexArrayObject_ = 0;
+
+
+	/**
+	 * @brief 변환 행렬을 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t transformLocation_ = -1;
+
+
+	/**
+	 * @brief 스크린 직교 투영 행렬을 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t orthoLocation_ = -1;
+
+
+	/**
+	 * @brief 텍스처 좌표를 뒤집을지 확인하는 유니폼 변수의 위치입니다.
+	 */
+	int32_t reverseTexCoordLocation_ = -1;
+
+
+	/**
+	 * @brief 텍스처 외곽선을 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t silhouetteRGBLocation_ = -1;
+
+
+	/**
+	 * @brief 텍스처의 투명도를 나타내는 유니폼 변수의 위치입니다.
+	 */
+	int32_t transparentLocation_ = -1;
 };

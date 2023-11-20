@@ -37,6 +37,12 @@ void GeometryShader2D::Initialize(const std::string& vsPath, const std::string& 
 	GL_ASSERT(glEnableVertexAttribArray(1), "failed to enable vertex attrib array...");
 
 	GL_ASSERT(glBindVertexArray(0), "failed to unbind 2d geometry vertex array...");
+
+	Shader::Bind();
+	pointSizeLocation_ = GetUniformLocation("pointSize");
+	transformLocation_ = GetUniformLocation("transform");
+	orthoLocation_ = GetUniformLocation("ortho");
+	Shader::Unbind();
 }
 
 void GeometryShader2D::Release()
@@ -286,11 +292,11 @@ void GeometryShader2D::DrawGeometry2D(const Matrix4x4f& transform, const Matrix4
 	Shader::Bind();
 	if (drawType == EDrawType::Points)
 	{
-		Shader::SetFloatParameter("pointSize", pointSize_);
+		Shader::SetFloatParameter(pointSizeLocation_, pointSize_);
 	}
 
-	Shader::SetMatrix4x4fParameter("transform", transform);
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
+	Shader::SetMatrix4x4fParameter(transformLocation_, transform);
+	Shader::SetMatrix4x4fParameter(orthoLocation_, ortho);
 
 	GL_ASSERT(glBindVertexArray(vertexArrayObject_), "failed to bind 2d geometry vertex array...");
 	GL_ASSERT(glDrawArrays(static_cast<GLenum>(drawType), 0, vertexCount), "failed to draw 2d geometry...");

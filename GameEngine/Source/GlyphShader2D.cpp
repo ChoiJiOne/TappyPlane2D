@@ -36,6 +36,11 @@ void GlyphShader2D::Initialize(const std::string& vsPath, const std::string& fsP
 	GL_ASSERT(glEnableVertexAttribArray(1), "failed to enable vertex attrib array...");
 
 	GL_ASSERT(glBindVertexArray(0), "failed to unbind glyph vertex array...");
+
+	Shader::Bind();
+	orthoLocation_ = GetUniformLocation("ortho");
+	glyphColorLocation_ = GetUniformLocation("glyphColor");
+	Shader::Unbind();
 }
 
 void GlyphShader2D::Release()
@@ -64,8 +69,8 @@ void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std:
 	GL_ASSERT(glActiveTexture(GL_TEXTURE0), "failed to active glyph texture atlas...");
 	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, font->GetGlyphAtlasID()), "failed to bind glyph texture atlas...");
 
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-	Shader::SetVector4fParameter("glyphColor", color);
+	Shader::SetMatrix4x4fParameter(orthoLocation_, ortho);
+	Shader::SetVector4fParameter(glyphColorLocation_, color);
 
 	glBindVertexArray(vertexArrayObject_);
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
