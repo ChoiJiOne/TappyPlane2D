@@ -32,6 +32,33 @@ void RenderManager::Startup()
 	
 	GL_ASSERT(glEnable(GL_PROGRAM_POINT_SIZE), "failed to enable shader program point size...");
 
+	std::string shaderPath;
+	ASSERT(CommandLineArg::GetStringValue("glsl", shaderPath), "invalid GLSL path in commandline argument...");
+
+	resourceMaps_ = std::unordered_map<std::string, IResource*>();
+
+	ResourceManager& resourceManager = ResourceManager::Get();
+
+	GeometryShader2D* geometryShader = resourceManager.CreateResource<GeometryShader2D>("GeometryShader2D");
+	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
+	resourceMaps_.insert({ "GeometryShader2D" , geometryShader });
+
+	TextureShader2D* textureShader = resourceManager.CreateResource<TextureShader2D>("TextureShader2D");
+	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
+	resourceMaps_.insert({ "TextureShader2D", textureShader });
+
+	GlyphShader2D* glyphShader = resourceManager.CreateResource<GlyphShader2D>("GlyphShader2D");
+	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
+	resourceMaps_.insert({ "GlyphShader2D", glyphShader });
+
+	SilhouetteShader2D* silhouetteShader = resourceManager.CreateResource<SilhouetteShader2D>("SilhouetteShader2D");
+	silhouetteShader->Initialize(shaderPath + "Silhouette2D.vert", shaderPath + "Silhouette2D.frag");
+	resourceMaps_.insert({ "SilhouetteShader2D", silhouetteShader });
+
+	OutlineShader2D* outlineShader = resourceManager.CreateResource<OutlineShader2D>("OutlineShader2D");
+	outlineShader->Initialize(shaderPath + "Outline2D.vert", shaderPath + "Outline2D.frag");
+	resourceMaps_.insert({ "OutlineShader2D", outlineShader });
+
 	bIsStartup_ = true;
 }
 
@@ -60,36 +87,6 @@ void RenderManager::PreStartup(Window* window, int32_t major, int32_t minor)
 	float farZ = 1.0f;
 	float nearZ = -1.0f;
 	screenOrtho_ = MathUtils::CreateOrtho(0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight), 0.0f, nearZ, farZ);
-}
-
-void RenderManager::PostSetup()
-{
-	std::string shaderPath;
-	ASSERT(CommandLineArg::GetStringValue("glsl", shaderPath), "invalid GLSL path in commandline argument...");
-
-	resourceMaps_ = std::unordered_map<std::string, IResource*>();
-
-	ResourceManager& resourceManager = ResourceManager::Get();
-
-	GeometryShader2D* geometryShader = resourceManager.CreateResource<GeometryShader2D>("GeometryShader2D");
-	geometryShader->Initialize(shaderPath + "Geometry2D.vert", shaderPath + "Geometry2D.frag");
-	resourceMaps_.insert({ "GeometryShader2D" , geometryShader });
-
-	TextureShader2D* textureShader = resourceManager.CreateResource<TextureShader2D>("TextureShader2D");
-	textureShader->Initialize(shaderPath + "Texture2D.vert", shaderPath + "Texture2D.frag");
-	resourceMaps_.insert({ "TextureShader2D", textureShader });
-
-	GlyphShader2D* glyphShader = resourceManager.CreateResource<GlyphShader2D>("GlyphShader2D");
-	glyphShader->Initialize(shaderPath + "Glyph2D.vert", shaderPath + "Glyph2D.frag");
-	resourceMaps_.insert({ "GlyphShader2D", glyphShader });
-
-	SilhouetteShader2D* silhouetteShader = resourceManager.CreateResource<SilhouetteShader2D>("SilhouetteShader2D");
-	silhouetteShader->Initialize(shaderPath + "Silhouette2D.vert", shaderPath + "Silhouette2D.frag");
-	resourceMaps_.insert({ "SilhouetteShader2D", silhouetteShader });
-
-	OutlineShader2D* outlineShader = resourceManager.CreateResource<OutlineShader2D>("OutlineShader2D");
-	outlineShader->Initialize(shaderPath + "Outline2D.vert", shaderPath + "Outline2D.frag");
-	resourceMaps_.insert({ "OutlineShader2D", outlineShader });
 }
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
