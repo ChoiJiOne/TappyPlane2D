@@ -69,9 +69,15 @@ public:
 
 private:
 	/**
-	 * @brief 버텍스 버퍼를 업데이트합니다.
+	 * @brief 텍스트에 맞게 버텍스 버퍼를 업데이트합니다.
+	 * 
+	 * @param font 폰트 리소스입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param center 텍스트의 중심 좌표입니다.
+	 * 
+	 * @return 텍스트에 맞는 버텍스의 수를 반환합니다.
 	 */
-	void UpdateVertexBuffer();
+	uint32_t UpdateGlyphVertexBuffer(TTFont* font, const std::wstring& text, const Vector2f& center);
 
 
 private:
@@ -90,7 +96,7 @@ private:
 	 * - 즉, 이 글리프 셰이더가 지원하는 최대 문자열의 길이는 1000이다.
 	 */
 	static const int32_t MAX_VERTEX_SIZE = MAX_STRING_LEN * 6;
-
+	
 
 	/**
 	 * @brief 정점 목록입니다.

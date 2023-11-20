@@ -52,7 +52,30 @@ void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std:
 {
 	ASSERT(text.length() <= MAX_STRING_LEN, L"overflow text length for draw : %d", text.length());
 	ASSERT(font != nullptr, "invalid font resource...");
+	
+	int32_t vertexCount = UpdateGlyphVertexBuffer(font, text, center);
 
+	const void* bufferPtr = reinterpret_cast<const void*>(vertices_.data());
+	uint32_t bufferByteSize = static_cast<uint32_t>(VertexPositionTexture::GetStride() * vertices_.size());
+	UpdateDynamicVertexBuffer(vertexBufferObject_, bufferPtr, bufferByteSize);
+
+	Shader::Bind();
+
+	GL_ASSERT(glActiveTexture(GL_TEXTURE0), "failed to active glyph texture atlas...");
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, font->GetGlyphAtlasID()), "failed to bind glyph texture atlas...");
+
+	Shader::SetMatrix4x4fParameter("ortho", ortho);
+	Shader::SetVector4fParameter("glyphColor", color);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}
+
+uint32_t GlyphShader2D::UpdateGlyphVertexBuffer(TTFont* font, const std::wstring& text, const Vector2f& center)
+{
 	float glyphAtlasSize = static_cast<float>(font->GetGlyphAtlasSize());
 
 	float textWidth = 0.0f;
@@ -65,13 +88,13 @@ void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std:
 	for (const auto& unicode : text)
 	{
 		const Glyph& glyph = font->GetGlyph(static_cast<int32_t>(unicode));
-		
+
 		float unicodeWidth = static_cast<float>(glyph.position1.x - glyph.position0.x);
 		float unicodeHeight = static_cast<float>(glyph.position1.y - glyph.position0.y);
 
 		vertices_[vertexCount + 0].position_ = Vector3f(position.x + glyph.xoffset, position.y + glyph.yoffset, 0.0f);
 		vertices_[vertexCount + 0].st_ = Vector2f(static_cast<float>(glyph.position0.x) / glyphAtlasSize, static_cast<float>(glyph.position0.y) / glyphAtlasSize);
-		
+
 		vertices_[vertexCount + 1].position_ = Vector3f(position.x + glyph.xoffset, position.y + unicodeHeight + glyph.yoffset, 0.0f);
 		vertices_[vertexCount + 1].st_ = Vector2f(static_cast<float>(glyph.position0.x) / glyphAtlasSize, static_cast<float>(glyph.position1.y) / glyphAtlasSize);
 
@@ -88,37 +111,10 @@ void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std:
 
 		vertices_[vertexCount + 5].position_ = Vector3f(position.x + glyph.xoffset + unicodeWidth, position.y + unicodeHeight + glyph.yoffset, 0.0f);
 		vertices_[vertexCount + 5].st_ = Vector2f(static_cast<float>(glyph.position1.x) / glyphAtlasSize, static_cast<float>(glyph.position1.y) / glyphAtlasSize);
-		
+
 		position.x += glyph.xadvance;
 		vertexCount += 6;
 	}
 
-	UpdateVertexBuffer();
-	
-	Shader::Bind();
-
-	GL_ASSERT(glActiveTexture(GL_TEXTURE0), "failed to active glyph texture atlas...");
-	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, font->GetGlyphAtlasID()), "failed to bind glyph texture atlas...");
-
-	Shader::SetMatrix4x4fParameter("ortho", ortho);
-	Shader::SetVector4fParameter("glyphColor", color);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
-}
-
-void GlyphShader2D::UpdateVertexBuffer()
-{
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_), "failed to bind glyph vertex buffer...");
-
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	ASSERT(bufferPtr != nullptr, "failed to map the entire data store of a specified buffer object into the client's address space...");
-
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(vertices_.data()), VertexPositionTexture::GetStride() * vertices_.size());
-	GLboolean bSuccssed = glUnmapBuffer(GL_ARRAY_BUFFER);
-	ASSERT(bSuccssed, "failed to unmap the entire data store of a specified buffer object into the client's address space...");
-	GL_ASSERT(glBindBuffer(GL_ARRAY_BUFFER, 0), "failed to unbind 2d glyph vertex buffer...");
+	return vertexCount;
 }
