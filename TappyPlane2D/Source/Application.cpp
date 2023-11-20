@@ -64,12 +64,6 @@ int main(int argc, char* argv[])
 		RenderManager::Get().DrawHorizonScrollTexture2D(background, static_cast<float>(value));
 		RenderManager::Get().DrawHorizonScrollTexture2D(ground, Vector2f(500.0f, 770.0f), 1000.0f, 60.0f, value);
 
-		//float textWidth = 0.0f;
-		//float textHeight = 0.0f;
-		//font->MeasureText(L"Hello, World!", textWidth, textHeight);
-		//RenderManager::Get().DrawWireframeRectangle2D(Vector2f(500.0f, 400.0f), textWidth, textHeight, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0));
-		//RenderManager::Get().DrawText2D(font, L"Hello, World!", Vector2f(500.0f, 400.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-
 		accumulateTime += timer.GetDeltaSeconds();
 		if (accumulateTime >= 0.1f)
 		{
@@ -83,6 +77,7 @@ int main(int argc, char* argv[])
 			73.0f,
 			0.0f
 		);
+		RenderManager::Get().PostEffectWeightGrayscale();
 
 		RenderManager::Get().EndFrame();
 	}
