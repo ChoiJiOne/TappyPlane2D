@@ -6,6 +6,7 @@
 #include "GeometryShader2D.h"
 #include "GLAssertionMacro.h"
 #include "GlyphShader2D.h"
+#include "OutlineShader2D.h"
 #include "ResourceManager.h"
 #include "SilhouetteShader2D.h"
 #include "Texture2D.h"
@@ -85,6 +86,10 @@ void RenderManager::PostSetup()
 	SilhouetteShader2D* silhouetteShader = resourceManager.CreateResource<SilhouetteShader2D>("SilhouetteShader2D");
 	silhouetteShader->Initialize(shaderPath + "Silhouette2D.vert", shaderPath + "Silhouette2D.frag");
 	shaderMaps_.insert({ "SilhouetteShader2D", silhouetteShader });
+
+	OutlineShader2D* outlineShader = resourceManager.CreateResource<OutlineShader2D>("OutlineShader2D");
+	outlineShader->Initialize(shaderPath + "Outline2D.vert", shaderPath + "Outline2D.frag");
+	shaderMaps_.insert({ "OutlineShader2D", outlineShader });
 }
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
@@ -299,23 +304,8 @@ void RenderManager::DrawTextureSilhouette2D(Texture2D* texture, const Vector2f& 
 	);
 }
 
-void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float outline, float transparent)
+void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector4f& outline, float transparent)
 {
-	float extensionWidth = width + 2.0f * outline;
-	float extensionHeight = height + 2.0f * outline;
-
-	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(shaderMaps_["SilhouetteShader2D"]);
-	silhouetteShader->DrawTextureSilhouette2D(
-		screenOrtho_,
-		texture,
-		center,
-		extensionWidth,
-		extensionHeight,
-		rotate, 
-		silhouetteRGB,
-		transparent
-	);
-
-	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(shaderMaps_["TextureShader2D"]);
-	shader->DrawTexture2D(screenOrtho_, texture, center, width, height, rotate, transparent);
+	OutlineShader2D* shader = reinterpret_cast<OutlineShader2D*>(shaderMaps_["OutlineShader2D"]);
+	shader->DrawTextureOutline2D(screenOrtho_, texture, center, width, height, rotate, outline, transparent);
 }
