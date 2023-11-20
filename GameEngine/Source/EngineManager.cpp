@@ -17,10 +17,9 @@ void EngineManager::Startup()
 	Json::Value properties = FileManager::Get().ReadJsonFile(propertiesPath);
 
 	CreateEngineWindow(properties);
-	StartupRenderManager(properties);
 
 	ResourceManager::Get().Startup();
-	RenderManager::Get().PostSetup();
+	StartupRenderManager(properties);
 	
 	bIsStartup_ = true;
 }
