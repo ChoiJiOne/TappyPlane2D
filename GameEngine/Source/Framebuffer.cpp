@@ -35,7 +35,7 @@ void Framebuffer::Initialize(int32_t bufferWidth, int32_t bufferHeight)
 	GL_ASSERT(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthStencilBufferID_), "failed to set framebuffer depth stencil buffer...");
 
 	GLenum state = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	GL_ASSERT(state == GL_FRAMEBUFFER_COMPLETE, "not complete framebuffer state : %x...", static_cast<int32_t>(state));
+	ASSERT(state == GL_FRAMEBUFFER_COMPLETE, "not complete framebuffer state : %x...", static_cast<int32_t>(state));
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	bIsInitialized_ = true;
