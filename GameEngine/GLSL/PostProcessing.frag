@@ -11,11 +11,17 @@ const int INVERSION_EFFECT = 1;
 const int AVERAGE_GRAYSCALE = 2;
 const int WEIGHT_GRAYSCALE = 3;
 const int NORMAL_BLUR = 4;
+const int GAUSSIAN_BLUR = 5;
+
+const int SAMPLES = 72;
+const float TAU = 6.283185307179586476925286766559;
 
 uniform int effectOption;
 uniform float blurBias;
 
+float Gaussian(float x);
 vec3 CalculateNormalBlur(float bias);
+vec3 CalculateGaussianBlur();
 
 void main()
 {
@@ -23,6 +29,10 @@ void main()
 
 	switch(effectOption)
 	{
+	case GAUSSIAN_BLUR:
+		colorRGB = CalculateGaussianBlur();
+		break;
+
 	case NORMAL_BLUR:
 		colorRGB = CalculateNormalBlur(blurBias);
 		break;
@@ -49,6 +59,14 @@ void main()
 	}
 
 	outColor = vec4(colorRGB, 1.0f);
+}
+
+float Gaussian(float x) 
+{
+	float x2 = x * x;
+	float width = 1.0f / sqrt(TAU * SAMPLES);
+
+	return width * exp((x2 / (2.0f * SAMPLES)) * -1.0f);
 }
 
 vec3 CalculateNormalBlur(float bias)
@@ -86,4 +104,22 @@ vec3 CalculateNormalBlur(float bias)
     }
 
 	return colorRGB;
+}
+
+// https://github.com/gdquest-demos/godot-shaders/blob/master/godot/Shaders/gaussian_blur.shader
+vec3 CalculateGaussianBlur()
+{
+	vec2 size = 1.0f / textureSize(framebuffer, 0);
+	vec2 scale = size * vec2(1.0f, 0.0f);
+	float totalWeight = 0.0;
+
+	vec3 colorRGB = vec3(0.0);
+	
+	for (int i = -SAMPLES / 2; i < SAMPLES / 2; ++i) {
+		float weight = Gaussian(float(i));
+		colorRGB += texture(framebuffer, inTexCoords.st + scale * vec2(float(i))).rgb * weight;
+		totalWeight += weight;
+	}
+	
+	return colorRGB / totalWeight;
 }
