@@ -27,7 +27,7 @@ void Framebuffer::Initialize(int32_t bufferWidth, int32_t bufferHeight)
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE), "failed to set texture object warp t...");	
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR), "failed to set texture object min filter...");
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR), "failed to set texture object mag filter...");
-	GL_ASSERT(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferID_, 0), "");
+	GL_ASSERT(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferID_, 0), "failed to set framebuffer color buffer...");
 
 	GL_ASSERT(glGenRenderbuffers(1, &depthStencilBufferID_), "failed to generate depth stencil buffer object...");
 	GL_ASSERT(glBindRenderbuffer(GL_RENDERBUFFER, depthStencilBufferID_), "failed to bind depth stencil buffer object...");
