@@ -86,6 +86,10 @@ private:
 	 * @brief DXT 압축 텍스처 리소스를 생성합니다.
 	 * 
 	 * @param path 이미지 파일의 경로입니다.
+	 * 
+	 * @see 
+	 * - https://gist.github.com/tilkinsc/13191c0c1e5d6b25fbe79bbd2288a673
+	 * - https://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#compressed-textures
 	 */
 	uint32_t CreateDXTCompressionTexture(const std::string& path);
 
