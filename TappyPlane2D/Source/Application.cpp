@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	CommandLineArg::GetStringValue("resource", resourcePath);
 	
 	Texture2D* texture = ResourceManager::Get().CreateResource<Texture2D>("Test");
-	texture->Initialize(resourcePath + "Test\\awesomeface_dxt1.dds");
+	texture->Initialize(resourcePath + "Test\\awesomeface.png");
 
 	while (!glfwWindowShouldClose(window))
 	{
