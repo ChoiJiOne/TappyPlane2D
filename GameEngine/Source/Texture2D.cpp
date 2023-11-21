@@ -36,6 +36,7 @@ struct ASTCFileHeader
  */
 struct DDSFileHeader
 {
+	uint8_t  magic[4];
 	uint32_t dwSize;
 	uint32_t dwFlags;
 	uint32_t dwHeight;
@@ -267,18 +268,22 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 {
 	FileManager& fileManager = FileManager::Get();
 	std::vector<uint8_t> dxtData = fileManager.ReadFileToBuffer(path);
-
-	std::string ddsFileCode(dxtData.begin(), dxtData.begin() + 4);
+	DDSFileHeader* dxtDataPtr = reinterpret_cast<DDSFileHeader*>(dxtData.data());
+	
+	std::string ddsFileCode;
+	for (std::size_t index = 0; index < 4; ++index)
+	{
+		ddsFileCode += dxtDataPtr->magic[index];
+	}
 	ASSERT(ddsFileCode == "DDS ", "invalid dds file code : %s", path.c_str());
 	
-	uint8_t* dxtDataPtr = dxtData.data();
-	uint32_t height = *reinterpret_cast<uint32_t*>(&dxtDataPtr[12]);
-	uint32_t width = *reinterpret_cast<uint32_t*>(&dxtDataPtr[16]);
-	uint32_t linearSize = *reinterpret_cast<uint32_t*>(&dxtDataPtr[20]);
-	uint32_t mipMapCount = *reinterpret_cast<uint32_t*>(&dxtDataPtr[28]);
-	uint32_t fourCC = *reinterpret_cast<uint32_t*>(&dxtDataPtr[84]);
+	uint32_t width = dxtDataPtr->dwWidth;
+	uint32_t height = dxtDataPtr->dwHeight;
+	uint32_t linearSize = dxtDataPtr->dwPitchOrLinearSize;
+	uint32_t mipMapCount = dxtDataPtr->dwMipMapCount;
+	uint32_t fourCC = dxtDataPtr->dwFourCC;
 	uint32_t bufferSize = mipMapCount > 1 ? linearSize * 2 : linearSize;
-	uint8_t* bufferPtr = reinterpret_cast<uint8_t*>(&dxtDataPtr[128]);
+	uint8_t* bufferPtr = reinterpret_cast<uint8_t*>(&dxtDataPtr[1]);
 
 	GLenum format;
 	switch (fourCC)
@@ -304,6 +309,10 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE), "failed to set texture object warp s...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE), "failed to set texture object warp t...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR), "failed to set texture object min filter...");
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR), "failed to set texture object mag filter...");
 
 	for (uint32_t level = 0; level < mipMapCount && (width || height); ++level)
 	{
@@ -324,6 +333,8 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 			height = 1;
 		}
 	}
+	
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, 0), "failed to unbind texture object...");
 
 	return textureID;
 }
