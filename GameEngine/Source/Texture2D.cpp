@@ -266,8 +266,7 @@ uint32_t Texture2D::CreateASTCCompressionTexture(const std::string& path)
 
 uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 {
-	FileManager& fileManager = FileManager::Get();
-	std::vector<uint8_t> dxtData = fileManager.ReadFileToBuffer(path);
+	std::vector<uint8_t> dxtData = FileManager::Get().ReadFileToBuffer(path);
 	DDSFileHeader* dxtDataPtr = reinterpret_cast<DDSFileHeader*>(dxtData.data());
 	
 	std::string ddsFileCode;
@@ -306,9 +305,9 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 	uint32_t offset = 0;
 
 	uint32_t textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	GL_ASSERT(glGenTextures(1, &textureID), "failed to generate texture object...");
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, textureID), "failed to bind texture object...");
+	GL_ASSERT(glPixelStorei(GL_UNPACK_ALIGNMENT, 1), "failed to set pixel storage modes...");
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE), "failed to set texture object warp s...");
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE), "failed to set texture object warp t...");
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR), "failed to set texture object min filter...");
