@@ -285,24 +285,25 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 	uint8_t* bufferPtr = reinterpret_cast<uint8_t*>(&dxtDataPtr[1]);
 
 	GLenum format;
+	uint32_t blockSize;
 	switch (fourCC)
 	{
 	case FOURCC_DXT1:
 		format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+		blockSize = 8;
 		break;
 	case FOURCC_DXT3:
 		format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+		blockSize = 16;
 		break;
 	case FOURCC_DXT5:
 		format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+		blockSize = 16;
 		break;
 	default:
 		ASSERT(false, "not support DXT format or invalid DDS file format : %d", fourCC);
 		return 0;
 	}
-
-	uint32_t blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
-	uint32_t offset = 0;
 
 	uint32_t textureID;
 	GL_ASSERT(glGenTextures(1, &textureID), "failed to generate texture object...");
@@ -313,24 +314,20 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR), "failed to set texture object min filter...");
 	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR), "failed to set texture object mag filter...");
 
-	for (uint32_t level = 0; level < mipMapCount && (width || height); ++level)
+	for (uint32_t level = 0, offset = 0; level < mipMapCount; ++level)
 	{
+		if (width == 0 || height == 0)
+		{
+			mipMapCount--;
+			continue;
+		}
+
 		uint32_t size = ((width + 3) / 4) * ((height + 3) / 4) * blockSize;
 		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height, 0, size, bufferPtr + offset);
 
 		offset += size;
 		width /= 2;
 		height /= 2;
-
-		if (width < 1)
-		{
-			width = 1;
-		}
-
-		if (height < 1)
-		{
-			height = 1;
-		}
 	}
 	
 	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, 0), "failed to unbind texture object...");
