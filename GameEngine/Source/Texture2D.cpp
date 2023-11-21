@@ -323,7 +323,7 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 		}
 
 		uint32_t size = ((width + 3) / 4) * ((height + 3) / 4) * blockSize;
-		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height, 0, size, bufferPtr + offset);
+		GL_ASSERT(glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height, 0, size, bufferPtr + offset), "failed to compression texture...");
 
 		offset += size;
 		width /= 2;
