@@ -30,6 +30,36 @@ struct ASTCFileHeader
 };
 
 /**
+ * @brief DDS 파일의 헤더입니다.
+ * 
+ * @see https://learn.microsoft.com/en-us/windows/win32/direct3ddds/dds-header
+ */
+struct DDSFileHeader
+{
+	uint32_t dwSize;
+	uint32_t dwFlags;
+	uint32_t dwHeight;
+	uint32_t dwWidth;
+	uint32_t dwPitchOrLinearSize;
+	uint32_t dwDepth;
+	uint32_t dwMipMapCount;
+	uint32_t dwReserved1[11];
+	uint32_t dwPixelSize;
+	uint32_t dwPixelFlags;
+	uint32_t dwFourCC;
+	uint32_t dwRGBBitCount;
+	uint32_t dwRBitMask;
+	uint32_t dwGBitMask;
+	uint32_t dwBBitMask;
+	uint32_t dwABitMask;
+	uint32_t dwCaps;
+	uint32_t dwCaps2;
+	uint32_t dwCaps3;
+	uint32_t dwCaps4;
+	uint32_t dwReserved2;
+};
+
+/**
  * @brief ASTC 블록 크기를 나타내는 열거형입니다.
  * 
  * @note OpenGL의 GL_COMPRESSED_RGBA_ASTC_<SIZE>x<SIZE>_KHR 상수와 일대일 대응합니다.
@@ -258,7 +288,6 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 	unsigned int linearSize = *(unsigned int*)&(header[16]);
 	unsigned int mipMapCount = *(unsigned int*)&(header[24]);
 	unsigned int fourCC = *(unsigned int*)&(header[80]);
-
 
 	unsigned char* buffer;
 	unsigned int bufsize;
