@@ -66,7 +66,7 @@ const std::unordered_map<EASTCBlockSize, std::string> blockSizeMaps = {
 	{ EASTCBlockSize::ASTC_12x12, "12x12" },
 };
 
-const int32_t COUNT_SUPPORT_EXTENSIONS = 6;
+const int32_t COUNT_SUPPORT_EXTENSIONS = 7;
 const std::array<std::string, COUNT_SUPPORT_EXTENSIONS> supportExtensions = {
 	"jpeg",
 	"jpg",
@@ -74,6 +74,7 @@ const std::array<std::string, COUNT_SUPPORT_EXTENSIONS> supportExtensions = {
 	"tga",
 	"bmp",
 	"astc", // ¾ÐÃà Æ÷¸ä
+	"dds",  // ¾ÐÃà Æ÷¸ä
 };
 
 Texture2D::~Texture2D()
@@ -109,7 +110,11 @@ void Texture2D::Initialize(const std::string& path, bool bCheckValid)
 
 	if (extension == "astc")
 	{
-		textureID_ = CreateCompressionTexture(path);
+		textureID_ = CreateASTCCompressionTexture(path);
+	}
+	else if (extension == "dds")
+	{
+		textureID_ = CreateDXTCompressionTexture(path);
 	}
 	else
 	{
@@ -179,7 +184,7 @@ uint32_t Texture2D::CreateNonCompressionTexture(const std::string& path)
 	return textureID;
 }
 
-uint32_t Texture2D::CreateCompressionTexture(const std::string& path)
+uint32_t Texture2D::CreateASTCCompressionTexture(const std::string& path)
 {
 	FileManager& fileManager = FileManager::Get();
 	std::string filename = fileManager.RemoveBasePath(path);
@@ -222,4 +227,10 @@ uint32_t Texture2D::CreateCompressionTexture(const std::string& path)
 	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, 0), "failed to unbind texture object...");
 
 	return textureID;
+}
+
+uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
+{
+	ASSERT(false, "not support dxt format...");
+	return 0;
 }

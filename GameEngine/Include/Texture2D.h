@@ -75,11 +75,19 @@ private:
 
 
 	/**
-	 * @brief 압축 텍스처 리소스를 생성합니다.
+	 * @brief ASTC 압축 텍스처 리소스를 생성합니다.
 	 * 
 	 * @param path 이미지 파일의 경로입니다.
 	 */
-	uint32_t CreateCompressionTexture(const std::string& path);
+	uint32_t CreateASTCCompressionTexture(const std::string& path);
+
+
+	/**
+	 * @brief DXT 압축 텍스처 리소스를 생성합니다.
+	 * 
+	 * @param path 이미지 파일의 경로입니다.
+	 */
+	uint32_t CreateDXTCompressionTexture(const std::string& path);
 
 
 private:
