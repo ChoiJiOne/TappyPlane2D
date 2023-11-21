@@ -9,6 +9,10 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
+#define FOURCC_DXT1 0x31545844
+#define FOURCC_DXT3 0x33545844
+#define FOURCC_DXT5 0x35545844
+
 /**
  * @brief ASTC 파일의 헤더입니다.
  * 
@@ -228,10 +232,6 @@ uint32_t Texture2D::CreateASTCCompressionTexture(const std::string& path)
 
 	return textureID;
 }
-
-#define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII
-#define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
-#define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
 
 uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 {
