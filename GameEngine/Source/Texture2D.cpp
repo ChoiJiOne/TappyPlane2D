@@ -265,41 +265,22 @@ uint32_t Texture2D::CreateASTCCompressionTexture(const std::string& path)
 
 uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 {
-	unsigned char header[124];
+	FileManager& fileManager = FileManager::Get();
+	std::vector<uint8_t> dxtData = fileManager.ReadFileToBuffer(path);
 
-	FILE* fp;
+	std::string ddsFileCode(dxtData.begin(), dxtData.begin() + 4);
+	ASSERT(ddsFileCode == "DDS ", "invalid dds file code : %s", path.c_str());
+	
+	uint8_t* dxtDataPtr = dxtData.data();
+	uint32_t height = *reinterpret_cast<uint32_t*>(&dxtDataPtr[12]);
+	uint32_t width = *reinterpret_cast<uint32_t*>(&dxtDataPtr[16]);
+	uint32_t linearSize = *reinterpret_cast<uint32_t*>(&dxtDataPtr[20]);
+	uint32_t mipMapCount = *reinterpret_cast<uint32_t*>(&dxtDataPtr[28]);
+	uint32_t fourCC = *reinterpret_cast<uint32_t*>(&dxtDataPtr[84]);
+	uint32_t bufferSize = mipMapCount > 1 ? linearSize * 2 : linearSize;
+	uint8_t* bufferPtr = reinterpret_cast<uint8_t*>(&dxtDataPtr[128]);
 
-	/* try to open the file */
-	fp = fopen(path.c_str(), "rb");
-
-	/* verify the type of file */
-	char filecode[4];
-	fread(filecode, 1, 4, fp);
-	if (strncmp(filecode, "DDS ", 4) != 0) {
-		fclose(fp);
-		return 0;
-	}
-
-	/* get the surface desc */
-	fread(&header, 124, 1, fp);
-
-	unsigned int height = *(unsigned int*)&(header[8]);
-	unsigned int width = *(unsigned int*)&(header[12]);
-	unsigned int linearSize = *(unsigned int*)&(header[16]);
-	unsigned int mipMapCount = *(unsigned int*)&(header[24]);
-	unsigned int fourCC = *(unsigned int*)&(header[80]);
-
-	unsigned char* buffer;
-	unsigned int bufsize;
-	/* how big is it going to be including all mipmaps? */
-	bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
-	buffer = (unsigned char*)malloc(bufsize * sizeof(unsigned char));
-	fread(buffer, 1, bufsize, fp);
-	/* close the file pointer */
-	fclose(fp);
-
-	unsigned int components = (fourCC == FOURCC_DXT1) ? 3 : 4;
-	unsigned int format;
+	GLenum format;
 	switch (fourCC)
 	{
 	case FOURCC_DXT1:
@@ -312,36 +293,37 @@ uint32_t Texture2D::CreateDXTCompressionTexture(const std::string& path)
 		format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 		break;
 	default:
-		free(buffer);
+		ASSERT(false, "not support DXT format or invalid DDS file format : %d", fourCC);
 		return 0;
 	}
 
-	// Create one OpenGL texture
-	GLuint textureID;
-	glGenTextures(1, &textureID);
+	uint32_t blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
+	uint32_t offset = 0;
 
-	// "Bind" the newly created texture : all future texture functions will modify this texture
+	uint32_t textureID;
+	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
-	unsigned int offset = 0;
-
-	/* load the mipmaps */
-	for (unsigned int level = 0; level < mipMapCount && (width || height); ++level)
+	for (uint32_t level = 0; level < mipMapCount && (width || height); ++level)
 	{
-		unsigned int size = ((width + 3) / 4) * ((height + 3) / 4) * blockSize;
-		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height, 0, size, buffer + offset);
+		uint32_t size = ((width + 3) / 4) * ((height + 3) / 4) * blockSize;
+		glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height, 0, size, bufferPtr + offset);
 
 		offset += size;
 		width /= 2;
 		height /= 2;
 
-		// Deal with Non-Power-Of-Two textures. This code is not included in the webpage to reduce clutter.
-		if (width < 1) width = 1;
-		if (height < 1) height = 1;
+		if (width < 1)
+		{
+			width = 1;
+		}
+
+		if (height < 1)
+		{
+			height = 1;
+		}
 	}
 
-	free(buffer);
 	return textureID;
 }
