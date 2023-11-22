@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <functional>
 #include <unordered_map>
 
@@ -159,6 +160,16 @@ enum class EKeyCode : int32_t
 	KEY_RIGHT_ALT = 346,
 	KEY_RIGHT_SUPER = 347,
 	KEY_MENU = 348,
+};
+
+
+/**
+ * @brief 마우스 버튼 종류 열거형입니다.
+ */
+enum class EMouseButton : int32_t
+{
+	BUTTON_LEFT = 0x00,
+	BUTTON_RIGHT = 0x01,
 };
 
 
