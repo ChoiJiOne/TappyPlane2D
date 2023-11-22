@@ -18,6 +18,7 @@ void EngineManager::Startup()
 
 	CreateEngineWindow(properties);
 
+	InputManager::Get().PreStartup(window_.get());
 	InputManager::Get().Startup();
 	ResourceManager::Get().Startup();
 	StartupRenderManager(properties);
