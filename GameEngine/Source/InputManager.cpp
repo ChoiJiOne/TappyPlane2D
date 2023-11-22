@@ -7,7 +7,7 @@
 
 void InputManager::Startup()
 {
-	ASSERT(!bIsStartup_, "already startup render manager...");
+	ASSERT(!bIsStartup_, "already startup input manager...");
 
 	bIsStartup_ = true;
 }
