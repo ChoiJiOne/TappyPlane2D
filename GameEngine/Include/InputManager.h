@@ -174,6 +174,25 @@ enum class EMouseButton : int32_t
 
 
 /**
+ * @brief 윈도우 이벤트에 대한 열거형입니다.
+ */
+enum class EWindowEvent : int32_t
+{
+	None = 0x00,
+	Move = 0x01,
+	ResizeWindow = 0x02,
+	Close = 0x03,
+	Refresh = 0x04,
+	GainFocus = 0x05,
+	LostFocus = 0x06,
+	Minimize = 0x07,
+	Maximize = 0x08,
+	ResizeFramebuffer = 0x09,
+	ChangeDisplay = 0x10,
+};
+
+
+/**
  * @biref 입력 처리를 수행하는 매니저입니다.
  * 
  * @note 이 클래스는 싱글턴입니다.
