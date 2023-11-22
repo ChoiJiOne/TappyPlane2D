@@ -1,11 +1,12 @@
 #pragma once
 
-#include <array>
+#include <cstdint>
 #include <functional>
 #include <unordered_map>
 
 #include "IManager.h"
 #include "SingletonMacro.h"
+#include "Vector2.h"
 
 class Window; // 윈도우 클래스를 사용하기 위한 전방 선언입니다.
 
@@ -223,9 +224,67 @@ public:
 	void PreStartup(Window* window);
 
 
+	/**
+	 * @brief 입력 상태를 업데이트 합니다.
+	 */
+	void Tick();
+
+
+	/**
+	 * @brief 키 입력 상태를 얻습니다.
+	 *
+	 * @param keyCode 입력 상태를 얻을 키 코드 값입니다.
+	 *
+	 * @return 키 입력 상태를 반환합니다.
+	 */
+	EPressState GetKeyPressState(const EKeyCode& keyCode) const;
+
+
+	/**
+	 * @brief 마우스 버튼의 입력 상태를 얻습니다.
+	 *
+	 * @param mouseButton 입력 상태를 얻을 마우스 버튼입니다.
+	 *
+	 * @return 마우스 버튼의 입력 상태를 반환합니다.
+	 */
+	EPressState GetMouseButtonPressState(const EMouseButton& mouseButton) const;
+
+
+	/**
+	 * @brief 마우스의 현재 위치를 얻습니다.
+	 *
+	 * @return 마우스의 현재 위치를 반환합니다.
+	 */
+	Vector2f GetCurrentMousePosition() const;
+
+
 private:
 	/**
 	 * @brief 입력 처리를 수행할 윈도우입니다.
 	 */
 	Window* window_ = nullptr;
+
+	
+	/**
+	 * @brief Tick 호출 이전의 키 코드 값들의 상태입니다.
+	 */
+	std::unordered_map<EKeyCode, int32_t> prevKeyStates_;
+
+
+	/**
+	 * @brief Tick 호출 이후의 키 코드
+	 */
+	std::unordered_map<EKeyCode, int32_t> currKeyStates_;
+
+
+	/**
+	 * @brief Tick 호출 이전의 마우스 버튼의 상태입니다.
+	 */
+	std::unordered_map<EMouseButton, int32_t> prevMouseButtonStates_;
+
+
+	/**
+	 * @brief Tick 호출 이후의 마우스 버튼의 상태입니다.
+	 */
+	std::unordered_map<EMouseButton, int32_t> currMouseButtonStates_;
 };
