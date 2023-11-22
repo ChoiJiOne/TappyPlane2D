@@ -30,4 +30,19 @@ public:
 	 * @brief 입력 처리를 수행하는 매니저의 사용을 종료합니다.
 	 */
 	virtual void Shutdown() override;
+
+
+	/**
+	 * @brief 입력 처리를 수행하는 매니저의 사용 전 설정을 수행합니다.
+	 * 
+	 * @param window 입력 처리를 수행할 윈도우 포인터입니다.
+	 */
+	void PreStartup(Window* window);
+
+
+private:
+	/**
+	 * @brief 입력 처리를 수행할 윈도우입니다.
+	 */
+	Window* window_ = nullptr;
 };
