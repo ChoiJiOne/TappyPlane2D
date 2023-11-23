@@ -59,6 +59,14 @@ public:
 	virtual void Release() = 0;
 
 
+	/**
+	 * @brief 게임 오브젝트가 초기화된 적이 있는지 확인합니다.
+	 *
+	 * @return 게임 오브젝트가 초기화된 적이 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsInitialized() const { return bIsInitialized_; }
+
+
 protected:
 	/**
 	 * @brief 게임 오브젝트가 초기화되었는지 확인합니다.
