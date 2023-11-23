@@ -186,10 +186,12 @@ enum class EWindowEvent : int32_t
 	Refresh = 0x04,
 	GainFocus = 0x05,
 	LostFocus = 0x06,
-	Minimize = 0x07,
-	Maximize = 0x08,
-	ResizeFramebuffer = 0x09,
-	ChangeDisplay = 0x10,
+	EnterMinimize = 0x07,
+	ExitMinimize = 0x08,
+	EnterMaximize = 0x09,
+	ExitMaximize = 0x0A,
+	ResizeFramebuffer = 0x0B,
+	ChangeDisplay = 0x0C,
 };
 
 
@@ -258,6 +260,33 @@ public:
 	Vector2f GetCurrentMousePosition() const;
 
 
+	/**
+	 * @brief 윈도우 이벤트에 동작할 액션을 바인딩합니다.
+	 *
+	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
+	 * @param eventAction 윈도우 이벤트 감지될 경우 실행할 액션입니다.
+	 */
+	void BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction);
+
+
+	/**
+	 * @brief 윈도우 이벤트에 동작할 액션의 바인딩을 해제합니다.
+	 *
+	 * @param windowEvent 바인딩 해제할 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	void UnbindWindowEventAction(const EWindowEvent& windowEvent);
+
+
+	/**
+	 * @brief 윈도우 이벤트를 처리합니다.
+	 *
+	 * @note public 필드에 있는 메서드이지만, 외부에서 호출하면 안됩니다.
+	 *
+	 * @param windowEvent 처리할 윈도우 이밴트입니다.
+	 */
+	void ProcessWindowEvent(const EWindowEvent& windowEvent);
+
+
 private:
 	/**
 	 * @brief 입력 처리를 수행할 윈도우입니다.
@@ -287,4 +316,10 @@ private:
 	 * @brief Tick 호출 이후의 마우스 버튼의 상태입니다.
 	 */
 	std::unordered_map<EMouseButton, int32_t> currMouseButtonStates_;
+
+
+	/**
+	 * @brief 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	std::unordered_map<EWindowEvent, std::function<void()>> windowEventActions_;
 };

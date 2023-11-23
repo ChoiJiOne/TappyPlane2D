@@ -147,6 +147,74 @@ const std::array<EMouseButton, NUM_OF_MOUSEBUTTON> MOUSE_BUTTONS =
 	EMouseButton::BUTTON_RIGHT,
 };
 
+InputManager* inputManagerPtr = &InputManager::Get();
+
+void ProcessWindowPosCallback(GLFWwindow* window, int32_t xpos, int32_t ypos)
+{
+	inputManagerPtr->ProcessWindowEvent(EWindowEvent::Move);
+}
+
+void ProcessWindowResizeCallback(GLFWwindow* window, int32_t width, int32_t height)
+{
+	inputManagerPtr->ProcessWindowEvent(EWindowEvent::ResizeWindow);
+}
+
+void ProcessWindowCloseCallback(GLFWwindow* window)
+{
+	inputManagerPtr->ProcessWindowEvent(EWindowEvent::Close);
+}
+
+void ProcessWindowRefreshCallback(GLFWwindow* window)
+{
+	inputManagerPtr->ProcessWindowEvent(EWindowEvent::Refresh);
+}
+
+void ProcessWindowFocusCallback(GLFWwindow* window, int32_t focused)
+{
+	if (focused)
+	{
+		inputManagerPtr->ProcessWindowEvent(EWindowEvent::GainFocus);
+	}
+	else
+	{
+		inputManagerPtr->ProcessWindowEvent(EWindowEvent::LostFocus);
+	}
+}
+
+void ProcessWindowMinimizeCallback(GLFWwindow* window, int32_t minimized)
+{
+	if (minimized)
+	{
+		inputManagerPtr->ProcessWindowEvent(EWindowEvent::EnterMinimize);
+	}
+	else
+	{
+		inputManagerPtr->ProcessWindowEvent(EWindowEvent::ExitMinimize);
+	}
+}
+
+void ProcessWindowMaximizeCallback(GLFWwindow* window, int32_t maximized)
+{
+	if (maximized)
+	{
+		inputManagerPtr->ProcessWindowEvent(EWindowEvent::EnterMaximize);
+	}
+	else
+	{
+		inputManagerPtr->ProcessWindowEvent(EWindowEvent::ExitMaximize);
+	}
+}
+
+void ProcessFramebufferResizeCallback(GLFWwindow* window, int32_t width, int32_t height)
+{
+	inputManagerPtr->ProcessWindowEvent(EWindowEvent::ResizeFramebuffer);
+}
+
+void ProcessWindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale)
+{
+	inputManagerPtr->ProcessWindowEvent(EWindowEvent::ChangeDisplay);
+}
+
 void InputManager::Startup()
 {
 	ASSERT(!bIsStartup_, "already startup input manager...");
@@ -168,6 +236,19 @@ void InputManager::Startup()
 		prevMouseButtonStates_.insert({ mouseButton, 0 });
 		currMouseButtonStates_.insert({ mouseButton, 0 });
 	}
+
+	windowEventActions_ = std::unordered_map<EWindowEvent, std::function<void()>>();
+
+	GLFWwindow* window = window_->GetWindowPtr();
+	glfwSetWindowPosCallback(window, ProcessWindowPosCallback);
+	glfwSetWindowSizeCallback(window, ProcessWindowResizeCallback);
+	glfwSetWindowCloseCallback(window, ProcessWindowCloseCallback);
+	glfwSetWindowRefreshCallback(window, ProcessWindowRefreshCallback);
+	glfwSetWindowFocusCallback(window, ProcessWindowFocusCallback);
+	glfwSetWindowIconifyCallback(window, ProcessWindowMinimizeCallback);
+	glfwSetWindowMaximizeCallback(window, ProcessWindowMaximizeCallback);
+	glfwSetFramebufferSizeCallback(window, ProcessFramebufferResizeCallback);
+	glfwSetWindowContentScaleCallback(window, ProcessWindowContentScaleCallback);
 
 	bIsStartup_ = true;
 }
@@ -270,4 +351,26 @@ Vector2f InputManager::GetCurrentMousePosition() const
 	glfwGetCursorPos(window_->GetWindowPtr(), &x, &y);
 
 	return Vector2f(static_cast<float>(x), static_cast<float>(y));
+}
+
+void InputManager::BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
+{
+	ASSERT(windowEventActions_.find(windowEvent) == windowEventActions_.end(), "already bind window event action...");
+	windowEventActions_.insert({ windowEvent , eventAction });
+}
+
+void InputManager::UnbindWindowEventAction(const EWindowEvent& windowEvent)
+{
+	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	{
+		windowEventActions_.erase(windowEvent);
+	}
+}
+
+void InputManager::ProcessWindowEvent(const EWindowEvent& windowEvent)
+{
+	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	{
+		windowEventActions_.at(windowEvent)();
+	}
 }
