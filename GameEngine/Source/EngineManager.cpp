@@ -22,6 +22,7 @@ void EngineManager::Startup()
 	InputManager::Get().Startup();
 	ResourceManager::Get().Startup();
 	StartupRenderManager(properties);
+	ObjectManager::Get().Startup();
 	
 	bIsStartup_ = true;
 }
@@ -30,6 +31,7 @@ void EngineManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
 
+	ObjectManager::Get().Shutdown();
 	RenderManager::Get().Shutdown();
 	ResourceManager::Get().Shutdown();
 	InputManager::Get().Shutdown();

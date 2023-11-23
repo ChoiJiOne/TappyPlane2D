@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "Macro.h"
 #include "MathUtils.h"
+#include "ObjectManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 #include "Shader.h"
