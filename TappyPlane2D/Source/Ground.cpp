@@ -35,16 +35,26 @@ void Ground::Initialize()
 	height_ = static_cast<float>(windowHeight) / 10.0f;
 	center_ = Vector2f(width_ / 2.0f, static_cast<float>(windowHeight) - height_ / 2.0f);
 	
+	scrollSpeed_ = 200.0f;
+	scrollPosition_ = 0.0f;
+
 	bIsInitialized_ = true;
 }
 
 void Ground::Update(float deltaSeconds)
 {
+	scrollPosition_ += scrollSpeed_ * deltaSeconds;
+
+	if (scrollPosition_ >= width_)
+	{
+		scrollPosition_ -= width_;
+	}
 }
 
 void Ground::Render()
 {
-	RenderManager::Get().DrawTexture2D(texture_, center_, width_, height_, 0.0f);
+	float rate = scrollPosition_ / width_;
+	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, center_, width_, height_, rate);
 }
 
 void Ground::Release()
