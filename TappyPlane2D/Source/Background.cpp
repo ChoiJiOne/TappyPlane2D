@@ -42,7 +42,7 @@ void Background::Update(float deltaSeconds)
 {
 	scrollPosition_ += scrollSpeed_ * deltaSeconds;
 
-	if (scrollSpeed_ >= maxScrollPosition_)
+	if (scrollPosition_ >= maxScrollPosition_)
 	{
 		scrollPosition_ -= maxScrollPosition_;
 	}
