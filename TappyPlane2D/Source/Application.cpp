@@ -7,8 +7,6 @@ int main(int argc, char* argv[])
 	RenderManager::Get().SetAlphaBlend(true);
 	RenderManager::Get().SetDepthMode(false);
 
-	GLFWwindow* window = EngineManager::Get().GetWindowPtr()->GetWindowPtr();
-
 	std::string resourcePath;
 	CommandLineArg::GetStringValue("resource", resourcePath);
 
