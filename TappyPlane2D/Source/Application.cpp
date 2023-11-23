@@ -2,8 +2,6 @@
 
 int main(int argc, char* argv[])
 {
-	bool bCloseWindow = false;
-
 	EngineManager::Get().Startup();
 
 	RenderManager::Get().SetAlphaBlend(true);
@@ -39,12 +37,10 @@ int main(int argc, char* argv[])
 	float accumulateTime = 0.0f;
 	int32_t currentPlaneIndex = 0;
 
-	InputManager::Get().BindWindowEventAction("CloseLoopEvent", EWindowEvent::Close, [&]() { bCloseWindow = true; });
-	
 	GameTimer timer;
 	timer.Reset();
 
-	while (!bCloseWindow)
+	while (!InputManager::Get().ShouldCloseWindow())
 	{
 		timer.Tick();
 		InputManager::Get().Tick();
