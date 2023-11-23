@@ -397,3 +397,9 @@ void InputManager::ProcessWindowEvent(const EWindowEvent& windowEvent)
 		}
 	}
 }
+
+bool InputManager::ShouldCloseWindow()
+{
+	GLFWwindow* window = window_->GetWindowPtr();
+	return glfwWindowShouldClose(window);
+}

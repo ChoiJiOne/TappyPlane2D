@@ -309,6 +309,14 @@ public:
 	void ProcessWindowEvent(const EWindowEvent& windowEvent);
 
 
+	/**
+	 * @brief 윈도우 창을 닫아야 하는지 확인합니다.
+	 * 
+	 * @return 윈도우 창을 닫아야 한다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool ShouldCloseWindow();
+
+
 private:
 	/**
 	 * @brief 윈도우 이벤트 액션입니다.
