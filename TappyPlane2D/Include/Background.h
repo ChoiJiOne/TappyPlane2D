@@ -29,6 +29,12 @@ public:
 
 
 	/**
+	 * @brief 백그라운드 오브젝트의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
+	 */
+	DISALLOW_COPY_AND_ASSIGN(Background);
+
+
+	/**
 	 * @brief 백그라운드 오브젝트를 초기화합니다.
 	 */
 	void Initialize();
