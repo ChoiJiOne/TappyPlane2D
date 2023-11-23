@@ -1,10 +1,6 @@
 #include "EngineManager.h"
 
-#include <glad/glad.h>
 #include <glfw/glfw3.h>
-#include <stb_image.h>
-
-#include "GLAssertionMacro.h"
 
 int main(int argc, char* argv[])
 {
