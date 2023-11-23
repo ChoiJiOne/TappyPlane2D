@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 
 	std::string resourcePath;
 	CommandLineArg::GetStringValue("resource", resourcePath);
-	
+
 	Texture2D* background = ResourceManager::Get().CreateResource<Texture2D>("Background");
 	background->Initialize(resourcePath + "Texture\\background.png");
 
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	while (!glfwWindowShouldClose(window))
 	{
 		timer.Tick();
-		glfwPollEvents();
+		InputManager::Get().Tick();
 
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		{
@@ -81,6 +81,11 @@ int main(int argc, char* argv[])
 			73.0f,
 			0.0f
 		);
+		 
+		if (InputManager::Get().GetMouseButtonPressState(EMouseButton::BUTTON_LEFT) == EPressState::Held)
+		{
+			RenderManager::Get().PostEffectGaussianBlur(0.5f);
+		}
 
 		RenderManager::Get().EndFrame();
 	}
