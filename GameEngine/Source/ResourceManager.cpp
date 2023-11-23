@@ -31,7 +31,7 @@ void ResourceManager::DestroyResource(const std::string& signature)
 		IResource* resource = resources_.at(signature).get();
 		if (resource && resource->IsInitialized())
 		{
-			resources_.at(signature).get()->Release();
+			resource->Release();
 		}
 
 		resources_.erase(signature);
