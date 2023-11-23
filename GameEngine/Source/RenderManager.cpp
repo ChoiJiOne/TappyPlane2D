@@ -99,6 +99,12 @@ void RenderManager::EndFrame()
 	glfwSwapBuffers(window_->GetWindowPtr());
 }
 
+void RenderManager::GetRenderWindowSize(int32_t& outWidth, int32_t& outHeight)
+{
+	outWidth = screenWidth_;
+	outHeight = screenHeight_;
+}
+
 void RenderManager::SetVsyncMode(bool bIsEnable)
 {
 	glfwSwapInterval(static_cast<int32_t>(bIsEnable));

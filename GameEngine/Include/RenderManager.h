@@ -75,6 +75,15 @@ public:
 
 
 	/**
+	 * @brief 현재 렌더링 중인 윈도우의 크기를 얻습니다.
+	 * 
+	 * @param outWidth 윈도우의 가로 크기입니다.
+	 * @param outHeight 윈도우의 세로 크기입니다.
+	 */
+	void GetRenderWindowSize(int32_t& outWidth, int32_t& outHeight);
+
+
+	/**
 	 * @brief 수직 동기화 여부를 설정합니다.
 	 *
 	 * @param bIsEnable 수직 동기화 여부입니다.
