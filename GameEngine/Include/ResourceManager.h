@@ -33,7 +33,7 @@ public:
 
 
 	/**
-	 * @brief 리소스를 생성합니다.
+	 * @brief 빈 리소스를 생성합니다.
 	 *
 	 * @note
 	 * - 리소스 매니저는 초기화를 수행하지 않으므로, 반환하는 포인터 변수를 이용해서 초기화를 따로 수행해야 합니다.
@@ -41,7 +41,7 @@ public:
 	 *
 	 * @param signature 매니저 내부에서 리소스들을 구분할 시그니처 값입니다.
 	 *
-	 * @return 생성된 리소스의 포인터를 얻습니다.
+	 * @return 생성된 리소스의 포인터를 반환합니다.
 	 */
 	template <typename TResource>
 	TResource* CreateResource(const std::string& signature)
