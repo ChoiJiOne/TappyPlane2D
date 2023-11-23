@@ -262,19 +262,41 @@ public:
 
 	/**
 	 * @brief 윈도우 이벤트에 동작할 액션을 바인딩합니다.
+	 * 
+	 * @note
+	 * - 시그니처 문자열의 값은 입력 처리 매니저 내에서 유일해야 합니다.
+	 * - 윈도우 이벤트는 바인딩할 경우 기본적으로 활성화됩니다. 비활성화하기 위해서는 DisableWindowEventAction 메서드를 호출해야 합니다.
 	 *
+	 * @param signature 윈도우 이벤트의 시그니처 문자열입니다.
 	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
 	 * @param eventAction 윈도우 이벤트 감지될 경우 실행할 액션입니다.
 	 */
-	void BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction);
+	void BindWindowEventAction(const std::string& signature, const EWindowEvent& windowEvent, const std::function<void()>& eventAction);
 
 
 	/**
 	 * @brief 윈도우 이벤트에 동작할 액션의 바인딩을 해제합니다.
 	 *
-	 * @param windowEvent 바인딩 해제할 윈도우 이벤트에 대응하는 액션입니다.
+	 * @param signature 바인딩 해제할 윈도우 이벤트의 시그니처 값입니다.
 	 */
-	void UnbindWindowEventAction(const EWindowEvent& windowEvent);
+	void UnbindWindowEventAction(const std::string& signature);
+
+
+	/**
+	 * @brief 윈도우 이벤트를 활성화합니다.
+	 * 
+	 * @param signature 활성화할 윈도우 이벤트의 시그니처 값입니다.
+	 */
+	void EnableWindowEventAction(const std::string& signature);
+
+
+	/**
+	 * @brief 윈도우 이벤트를 비활성화합니다.
+	 * 
+	 * @param signature 비활성화할 윈도우 이벤트의 시그니처 값입니다.
+	 * 
+	 */
+	void DisableWindowEventAction(const std::string& signature);
 
 
 	/**
@@ -285,6 +307,33 @@ public:
 	 * @param windowEvent 처리할 윈도우 이밴트입니다.
 	 */
 	void ProcessWindowEvent(const EWindowEvent& windowEvent);
+
+
+private:
+	/**
+	 * @brief 윈도우 이벤트 액션입니다.
+	 */
+	struct WindowEventAction
+	{
+		/**
+		 * @brief 윈도우 이벤트의 활성화 여부입니다.
+		 * 
+		 * @note 비활성화되면 이벤트가 감지되어도 액션을 실행하지 않습니다.
+		 */
+		bool bIsActive;
+
+
+		/**
+		 * @brief 윈도우 이벤트의 열거형입니다.
+		 */
+		EWindowEvent windowEvent;
+
+
+		/**
+		 * @brief 실행할 윈도우 이벤트입니다.
+		 */
+		std::function<void()> windowEventAction;
+	};
 
 
 private:
@@ -321,5 +370,5 @@ private:
 	/**
 	 * @brief 윈도우 이벤트에 대응하는 액션입니다.
 	 */
-	std::unordered_map<EWindowEvent, std::function<void()>> windowEventActions_;
+	std::unordered_map<std::string, WindowEventAction> windowEventActions_;
 };

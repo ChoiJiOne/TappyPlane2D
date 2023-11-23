@@ -237,7 +237,7 @@ void InputManager::Startup()
 		currMouseButtonStates_.insert({ mouseButton, 0 });
 	}
 
-	windowEventActions_ = std::unordered_map<EWindowEvent, std::function<void()>>();
+	windowEventActions_ = std::unordered_map<std::string, WindowEventAction>();
 
 	GLFWwindow* window = window_->GetWindowPtr();
 	glfwSetWindowPosCallback(window, ProcessWindowPosCallback);
@@ -353,24 +353,47 @@ Vector2f InputManager::GetCurrentMousePosition() const
 	return Vector2f(static_cast<float>(x), static_cast<float>(y));
 }
 
-void InputManager::BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
+void InputManager::BindWindowEventAction(const std::string& signature, const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
 {
-	ASSERT(windowEventActions_.find(windowEvent) == windowEventActions_.end(), "already bind window event action...");
-	windowEventActions_.insert({ windowEvent , eventAction });
+	ASSERT(windowEventActions_.find(signature) == windowEventActions_.end(), "already bind window event action : %s", signature.c_str());
+
+	WindowEventAction windowEventAction { true, windowEvent, eventAction };
+	windowEventActions_.insert({ signature , windowEventAction });
 }
 
-void InputManager::UnbindWindowEventAction(const EWindowEvent& windowEvent)
+void InputManager::UnbindWindowEventAction(const std::string& signature)
 {
-	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	if (windowEventActions_.find(signature) != windowEventActions_.end())
 	{
-		windowEventActions_.erase(windowEvent);
+		windowEventActions_.erase(signature);
+	}
+}
+
+void InputManager::EnableWindowEventAction(const std::string& signature)
+{
+	if (windowEventActions_.find(signature) != windowEventActions_.end())
+	{
+		windowEventActions_.at(signature).bIsActive = true;
+	}
+}
+
+void InputManager::DisableWindowEventAction(const std::string& signature)
+{
+	if (windowEventActions_.find(signature) != windowEventActions_.end())
+	{
+		windowEventActions_.at(signature).bIsActive = false;
 	}
 }
 
 void InputManager::ProcessWindowEvent(const EWindowEvent& windowEvent)
 {
-	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	for (auto& windowEventAction : windowEventActions_)
 	{
-		windowEventActions_.at(windowEvent)();
+		WindowEventAction& processWindowEvent = windowEventAction.second;
+
+		if (processWindowEvent.windowEvent == windowEvent && processWindowEvent.bIsActive)
+		{
+			processWindowEvent.windowEventAction();
+		}
 	}
 }
