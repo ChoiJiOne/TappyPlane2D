@@ -18,6 +18,8 @@ void EngineManager::Startup()
 
 	CreateEngineWindow(properties);
 
+	InputManager::Get().PreStartup(window_.get());
+	InputManager::Get().Startup();
 	ResourceManager::Get().Startup();
 	StartupRenderManager(properties);
 	
@@ -28,8 +30,9 @@ void EngineManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
 
-	ResourceManager::Get().Shutdown();
 	RenderManager::Get().Shutdown();
+	ResourceManager::Get().Shutdown();
+	InputManager::Get().Shutdown();
 	FileManager::Get().Shutdown();
 
 	window_->Destroy();

@@ -53,7 +53,7 @@ void RenderManager::Startup()
 void RenderManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
-
+	window_ = nullptr;
 	bIsStartup_ = false;
 }
 

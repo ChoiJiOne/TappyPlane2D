@@ -7,6 +7,7 @@
 #include "FileManager.h"
 #include "GameTimer.h"
 #include "IManager.h"
+#include "InputManager.h"
 #include "Macro.h"
 #include "MathUtils.h"
 #include "RenderManager.h"
