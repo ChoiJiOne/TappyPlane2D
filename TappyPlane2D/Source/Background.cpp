@@ -27,16 +27,31 @@ void Background::Initialize()
 		texture_->Initialize(resourcePath + "Texture\\background.png");
 	}
 
+	int32_t windowWidth = 0;
+	int32_t windowHeight = 0;
+	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
+
+	scrollSpeed_ = 100.0f;
+	scrollPosition_ = 0.0f;
+	maxScrollPosition_ = static_cast<float>(windowWidth);
+	
 	bIsInitialized_ = true;
 }
 
 void Background::Update(float deltaSeconds)
 {
+	scrollPosition_ += scrollSpeed_ * deltaSeconds;
+
+	if (scrollSpeed_ >= maxScrollPosition_)
+	{
+		scrollPosition_ -= maxScrollPosition_;
+	}
 }
 
 void Background::Render()
 {
-	RenderManager::Get().DrawTexture2D(texture_);
+	float rate = scrollPosition_ / maxScrollPosition_;
+	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, rate);
 }
 
 void Background::Release()

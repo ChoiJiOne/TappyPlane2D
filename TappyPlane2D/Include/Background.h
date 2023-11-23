@@ -67,4 +67,26 @@ private:
 	 * @brief 백그라운드 텍스처 리소스입니다.
 	 */
 	Texture2D* texture_ = nullptr;
+
+
+	/**
+	 * @brief 백그라운드의 스크롤 속도입니다.
+	 * 
+	 * @note 
+	 * - 이 속도는 초당 움직이는 픽셀 수입니다.
+	 * - 예를 들어 200 이라면 초당 200 픽셀 만큼 움직입니다.
+	 */
+	float scrollSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드의 스크롤 지점입니다.
+	 */
+	float scrollPosition_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드의 스크롤 최대 지점입니다.
+	 */
+	float maxScrollPosition_ = 0.0f;
 };
