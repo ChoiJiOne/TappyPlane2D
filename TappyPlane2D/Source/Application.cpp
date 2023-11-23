@@ -1,9 +1,9 @@
 #include "EngineManager.h"
 
-#include <glfw/glfw3.h>
-
 int main(int argc, char* argv[])
 {
+	bool bCloseWindow = false;
+
 	EngineManager::Get().Startup();
 
 	RenderManager::Get().SetAlphaBlend(true);
@@ -39,23 +39,20 @@ int main(int argc, char* argv[])
 	float accumulateTime = 0.0f;
 	int32_t currentPlaneIndex = 0;
 
+	InputManager::Get().BindWindowEventAction("CloseLoopEvent", EWindowEvent::Close, [&]() { bCloseWindow = true; });
+	
 	GameTimer timer;
 	timer.Reset();
 
-	while (!glfwWindowShouldClose(window))
+	while (!bCloseWindow)
 	{
 		timer.Tick();
 		InputManager::Get().Tick();
 
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		{
-			glfwSetWindowShouldClose(window, true);
-		}
-
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
-		float time = static_cast<float>(glfwGetTime() / 10.0f);
+		float time = timer.GetTotalSeconds() / 10.0f;
 		float value = time - static_cast<float>(static_cast<int32_t>(time));
 
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
