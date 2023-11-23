@@ -65,14 +65,12 @@ public:
 	template <typename TResource>
 	TResource* GetResource(const std::string& signature)
 	{
-		TResource* resource = nullptr;
-
-		if (resources_.find(signature) != resources_.end())
+		if (!VerifyResource(signature))
 		{
-			resource = reinterpret_cast<TResource*>(resources_.at(signature).get());
+			return nullptr;
 		}
 
-		return resource;
+		return reinterpret_cast<TResource*>(resources_.at(signature).get());
 	}
 
 
