@@ -14,7 +14,6 @@ public:
 	{
 		None = 0x00,
 		AABB = 0x01,
-		OBB  = 0x02,
 	};
 
 
