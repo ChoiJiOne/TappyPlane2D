@@ -86,6 +86,25 @@ public:
 
 
 	/**
+	 * @brief AABB의 프로퍼티를 설정합니다.
+	 * 
+	 * @param minPosition 축 정렬 경계 상자의 최소 좌표입니다.
+	 * @param maxPosition 축 정렬 경계 상자의 최대 좌표입니다.
+	 */
+	void SetProperty(const Vector2f& minPosition, const Vector2f& maxPosition);
+
+
+	/**
+	 * @brief AABB의 생성자입니다.
+	 *
+	 * @param center 축 정렬 경계 상자의 중심 좌표입니다.
+	 * @param width 축 정렬 경계 상자의 가로 크기입니다.
+	 * @param height 축 정렬 경계 상자의 세로 크기입니다.
+	 */
+	void SetProperty(const Vector2f& center, const float& width, const float& height);
+
+
+	/**
 	 * @brief AABB의 타입을 반환합니다.
 	 * 
 	 * @return AABB의 타입을 반환합니다.
