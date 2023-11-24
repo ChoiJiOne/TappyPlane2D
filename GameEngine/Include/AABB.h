@@ -122,6 +122,22 @@ public:
 	virtual bool IsCollision(const IShape* shape) const override;
 
 
+	/**
+	 * @brief 상자 영역의 최소값을 얻습니다.
+	 * 
+	 * @return 상자 영역의 최소값을 반환합니다.
+	 */
+	Vector2f GetMinPosition() const { return minPosition_; }
+
+
+	/**
+	 * @brief 상자 영역의 최대값을 얻습니다.
+	 * 
+	 * @return 상자 영역의 최대값을 반환합니다.
+	 */
+	Vector2f GetMaxPosition() const { return maxPosition_; }
+
+
 private:
 	/**
 	 * @brief AABB 오브젝트와의 충돌 여부를 검사합니다.
