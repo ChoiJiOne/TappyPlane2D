@@ -16,8 +16,11 @@ int main(int argc, char* argv[])
 	Background* background = ObjectManager::Get().CreateGameObject<Background>("Background");
 	background->Initialize();
 
-	Ground* ground = ObjectManager::Get().CreateGameObject<Ground>("Ground");
-	ground->Initialize();
+	Ground* bottomGround = ObjectManager::Get().CreateGameObject<Ground>("BottomGround");
+	bottomGround->Initialize(Ground::EType::Bottom);
+
+	Ground* topGround = ObjectManager::Get().CreateGameObject<Ground>("TopGround");
+	topGround->Initialize(Ground::EType::Top);
 	
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
@@ -25,13 +28,15 @@ int main(int argc, char* argv[])
 		InputManager::Get().Tick();
 
 		background->Update(globalTimer.GetDeltaSeconds());
-		ground->Update(globalTimer.GetDeltaSeconds());
+		bottomGround->Update(globalTimer.GetDeltaSeconds());
+		topGround->Update(globalTimer.GetDeltaSeconds());
 
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 		background->Render();
-		ground->Render();
+		bottomGround->Render();
+		topGround->Render();
 
 		RenderManager::Get().EndFrame();
 	}
