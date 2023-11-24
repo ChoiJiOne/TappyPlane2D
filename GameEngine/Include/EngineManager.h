@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "AABB.h"
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
 #include "FileManager.h"
