@@ -53,7 +53,7 @@ void GlyphShader2D::Release()
 	GL_ASSERT(glDeleteVertexArrays(1, &vertexArrayObject_), "failed to delete glyph vertex array object...");
 }
 
-void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
+void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, const TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
 {
 	ASSERT(text.length() <= MAX_STRING_LEN, L"overflow text length for draw : %d", text.length());
 	ASSERT(font != nullptr, "invalid font resource...");
@@ -79,7 +79,7 @@ void GlyphShader2D::DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std:
 	Shader::Unbind();
 }
 
-uint32_t GlyphShader2D::UpdateGlyphVertexBuffer(TTFont* font, const std::wstring& text, const Vector2f& center)
+uint32_t GlyphShader2D::UpdateGlyphVertexBuffer(const TTFont* font, const std::wstring& text, const Vector2f& center)
 {
 	float glyphAtlasSize = static_cast<float>(font->GetGlyphAtlasSize());
 

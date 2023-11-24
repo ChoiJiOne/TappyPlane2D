@@ -64,7 +64,7 @@ public:
 	 * @param center 텍스트의 중심 좌표입니다.
 	 * @param color 텍스트의 RGBA 색상입니다.
 	 */
-	void DrawText2D(const Matrix4x4f& ortho, TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
+	void DrawText2D(const Matrix4x4f& ortho, const TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
 
 
 private:
@@ -77,7 +77,7 @@ private:
 	 * 
 	 * @return 텍스트에 맞는 버텍스의 수를 반환합니다.
 	 */
-	uint32_t UpdateGlyphVertexBuffer(TTFont* font, const std::wstring& text, const Vector2f& center);
+	uint32_t UpdateGlyphVertexBuffer(const TTFont* font, const std::wstring& text, const Vector2f& center);
 
 
 private:
