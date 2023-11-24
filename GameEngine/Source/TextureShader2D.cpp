@@ -56,7 +56,7 @@ void TextureShader2D::Release()
 	GL_ASSERT(glDeleteVertexArrays(1, &vertexArrayObject_), "failed to delete 2d texture vertex array object...");
 }
 
-void TextureShader2D::DrawTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float transparent)
+void TextureShader2D::DrawTexture2D(const Matrix4x4f& ortho, const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float transparent)
 {
 	vertices_[0] = VertexPositionTexture(Vector3f(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), Vector2f(0.0f, 0.0f));
 	vertices_[1] = VertexPositionTexture(Vector3f(center.x - width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
@@ -74,7 +74,7 @@ void TextureShader2D::DrawTexture2D(const Matrix4x4f& ortho, Texture2D* texture,
 	DrawTexture2D(transform, ortho, vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawTexture2D(Texture2D* texture, float transparent)
+void TextureShader2D::DrawTexture2D(const Texture2D* texture, float transparent)
 {
 	vertices_[0] = VertexPositionTexture(Vector3f(-1.0f, +1.0f, 0.0f), Vector2f(0.0f, 0.0f));
 	vertices_[1] = VertexPositionTexture(Vector3f(-1.0f, -1.0f, 0.0f), Vector2f(0.0f, 1.0f));
@@ -88,7 +88,7 @@ void TextureShader2D::DrawTexture2D(Texture2D* texture, float transparent)
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent)
+void TextureShader2D::DrawHorizonScrollTexture2D(const Texture2D* texture, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 	float x = -1.0f + 2.0f * (1.0f - rate);
@@ -113,7 +113,7 @@ void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate,
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
+void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 
@@ -148,7 +148,7 @@ void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Textur
 	DrawTexture2D(transform, ortho, vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
+void TextureShader2D::DrawVerticalScrollTexture2D(const Texture2D* texture, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 	float y = -1.0f + 2.0f * (1.0f - rate);
@@ -173,7 +173,7 @@ void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
+void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 
@@ -208,7 +208,7 @@ void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Textu
 	DrawTexture2D(transform, ortho, vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, Texture2D* texture, float transparent)
+void TextureShader2D::DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, const Texture2D* texture, float transparent)
 {
 	const void* bufferPtr = reinterpret_cast<const void*>(vertices_.data());
 	uint32_t bufferByteSize = static_cast<uint32_t>(VertexPositionTexture::GetStride() * vertices_.size());

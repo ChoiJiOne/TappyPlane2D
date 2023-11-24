@@ -69,7 +69,7 @@ public:
 	 */
 	void DrawTexture2D(
 		const Matrix4x4f& ortho,
-		Texture2D* texture,
+		const Texture2D* texture,
 		const Vector2f& center,
 		float width,
 		float height,
@@ -86,7 +86,7 @@ public:
 	 * @param texture 텍스처 리소스입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
-	void DrawTexture2D(Texture2D* texture, float transparent = 1.0f);
+	void DrawTexture2D(const Texture2D* texture, float transparent = 1.0f);
 
 
 	/**
@@ -110,7 +110,7 @@ public:
 	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
-	void DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent = 1.0f);
+	void DrawHorizonScrollTexture2D(const Texture2D* texture, float rate, float transparent = 1.0f);
 
 
 	/**
@@ -140,7 +140,7 @@ public:
 	 */
 	void DrawHorizonScrollTexture2D(
 		const Matrix4x4f& ortho,
-		Texture2D* texture,
+		const Texture2D* texture,
 		const Vector2f& center,
 		float width,
 		float height,
@@ -171,7 +171,7 @@ public:
 	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
-	void DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent = 1.0f);
+	void DrawVerticalScrollTexture2D(const Texture2D* texture, float rate, float transparent = 1.0f);
 
 
 	/**
@@ -201,7 +201,7 @@ public:
 	 */
 	void DrawVerticalScrollTexture2D(
 		const Matrix4x4f& ortho,
-		Texture2D* texture,
+		const Texture2D* texture,
 		const Vector2f& center,
 		float width,
 		float height,
@@ -221,7 +221,7 @@ private:
 	 * @param vertexCount 정점 수입니다.
 	 * @param transparent 텍스처의 투명도입니다.
 	 */
-	void DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, Texture2D* texture, float transparent);
+	void DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, const Texture2D* texture, float transparent);
 
 
 private:
