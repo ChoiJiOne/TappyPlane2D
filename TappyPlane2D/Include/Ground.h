@@ -6,10 +6,21 @@
 
 
 /**
- * @brief 그라운드(바닥) 오브젝트입니다.
+ * @brief 그라운드 오브젝트입니다.
  */
 class Ground : public IGameObject
 {
+public:
+	/**
+	 * @brief 그라운드 오브젝트의 종류입니다.
+	 */
+	enum class EType : int32_t
+	{
+		Top = 0x00,
+		Bottom = 0x01,
+	};
+
+
 public:
 	/**
 	 * @brief 그라운드 오브젝트의 디폴트 생성자입니다.
