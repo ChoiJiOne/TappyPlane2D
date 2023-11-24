@@ -282,7 +282,7 @@ void RenderManager::DrawVerticalScrollTexture2D(const Texture2D* texture, const 
 	shader->DrawVerticalScrollTexture2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
 }
 
-void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
+void RenderManager::DrawText2D(const TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
 {
 	GlyphShader2D* shader = reinterpret_cast<GlyphShader2D*>(resourceMaps_["Glyph2D"]);
 	shader->DrawText2D(screenOrtho_, font, text, center, color);

@@ -448,7 +448,7 @@ public:
 	 * @param center 텍스트의 중심 좌표입니다.
 	 * @param color 텍스트의 RGBA 색상입니다.
 	 */
-	void DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
+	void DrawText2D(const TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
 
 
 	/**
