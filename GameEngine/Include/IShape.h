@@ -31,14 +31,6 @@ public:
 
 
 	/**
-	 * @brief 게임 오브젝트 형태의 타입을 설정합니다.
-	 * 
-	 * @param type 설정할 타입입니다.
-	 */
-	virtual void SetType(const EType& type) = 0;
-
-
-	/**
 	 * @brief 게임 오브젝트 형태를 얻습니다.
 	 * 
 	 * @return 게임 오브젝트 형태를 반환합니다.
