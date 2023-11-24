@@ -113,7 +113,7 @@ void TextureShader2D::DrawHorizonScrollTexture2D(Texture2D* texture, float rate,
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 
@@ -140,8 +140,12 @@ void TextureShader2D::DrawHorizonScrollTexture2D(const Matrix4x4f& ortho, Textur
 	vertices_[10] = VertexPositionTexture(Vector3f(+x + 0.5f, y1 + 0.5f, 0.0f), Vector2f(0.0f, 1.0f));
 	vertices_[11] = VertexPositionTexture(Vector3f(x1 + 0.5f, y1 + 0.5f, 0.0f), Vector2f(rate, 1.0f));
 
+	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
+		* MathUtils::CreateRotateZ(rotate)
+		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
+
 	uint32_t vertexCount = 12;
-	DrawTexture2D(Matrix4x4f::GetIdentity(), ortho, vertexCount, texture, transparent);
+	DrawTexture2D(transform, ortho, vertexCount, texture, transparent);
 }
 
 void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
@@ -169,7 +173,7 @@ void TextureShader2D::DrawVerticalScrollTexture2D(Texture2D* texture, float rate
 	DrawTexture2D(Matrix4x4f::GetIdentity(), Matrix4x4f::GetIdentity(), vertexCount, texture, transparent);
 }
 
-void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	rate = MathUtils::Clamp<float>(rate, 0.0f, 1.0f);
 
@@ -196,8 +200,12 @@ void TextureShader2D::DrawVerticalScrollTexture2D(const Matrix4x4f& ortho, Textu
 	vertices_[10] = VertexPositionTexture(Vector3f(x0, y1, 0.0f), Vector2f(0.0f, 1.0f - rate));
 	vertices_[11] = VertexPositionTexture(Vector3f(x1, y1, 0.0f), Vector2f(1.0f, 1.0f - rate));
 
+	Matrix4x4f transform = MathUtils::CreateTranslation(Vector3f(-center.x, -center.y, 0.0f))
+		* MathUtils::CreateRotateZ(rotate)
+		* MathUtils::CreateTranslation(Vector3f(+center.x, +center.y, 0.0f));
+
 	uint32_t vertexCount = 12;
-	DrawTexture2D(Matrix4x4f::GetIdentity(), ortho, vertexCount, texture, transparent);
+	DrawTexture2D(transform, ortho, vertexCount, texture, transparent);
 }
 
 void TextureShader2D::DrawTexture2D(const Matrix4x4f& transform, const Matrix4x4f& ortho, uint32_t vertexCount, Texture2D* texture, float transparent)

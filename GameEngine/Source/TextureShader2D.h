@@ -131,7 +131,10 @@ public:
 	 *
 	 * @param ortho 직교 투영 행렬입니다.
 	 * @param texture 텍스처 리소스입니다.
-	 * @param center 
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 회전 각도입니다. 단위는 라디안입니다. 
 	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
@@ -141,6 +144,7 @@ public:
 		const Vector2f& center,
 		float width,
 		float height,
+		float rotate,
 		float rate, 
 		float transparent = 1.0f
 	);
@@ -188,7 +192,10 @@ public:
 	 * 
 	 * @param ortho 직교 투영 행렬입니다.
 	 * @param texture 텍스처 리소스입니다.
-	 * @param center
+	 * @param center 텍스처의 중심 좌표입니다.
+	 * @param width 텍스처의 가로 크기입니다.
+	 * @param height 텍스처의 세로 크기입니다.
+	 * @param rotate 텍스처의 회전 각도입니다. 단위는 라디안입니다.
 	 * @param rate 분할 비율입니다. 값의 범위는 0.0f ~ 1.0f 입니다.
 	 * @param transparent 텍스처의 투명도입니다. 기본 값은 1.0f(불투명)입니다.
 	 */
@@ -198,6 +205,7 @@ public:
 		const Vector2f& center,
 		float width,
 		float height,
+		float rotate,
 		float rate,
 		float transparent = 1.0f
 	);

@@ -264,10 +264,10 @@ void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, float rate, f
 	shader->DrawHorizonScrollTexture2D(texture, rate, transparent);
 }
 
-void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
-	shader->DrawHorizonScrollTexture2D(screenOrtho_, texture, center, width, height, rate, transparent);
+	shader->DrawHorizonScrollTexture2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
 }
 
 void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
@@ -276,10 +276,10 @@ void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, 
 	shader->DrawVerticalScrollTexture2D(texture, rate, transparent);
 }
 
-void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rate, float transparent)
+void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
-	shader->DrawVerticalScrollTexture2D(screenOrtho_, texture, center, width, height, rate, transparent);
+	shader->DrawVerticalScrollTexture2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
 }
 
 void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
