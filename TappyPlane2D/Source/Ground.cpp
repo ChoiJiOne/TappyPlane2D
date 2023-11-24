@@ -61,7 +61,7 @@ void Ground::Initialize(const EType& type)
 		ASSERT(false, "undefined ground type : %d", static_cast<int32_t>(type));
 	}
 	
-	scrollSpeed_ = 200.0f;
+	scrollSpeed_ = 150.0f;
 	scrollPosition_ = 0.0f;
 
 	bIsInitialized_ = true;

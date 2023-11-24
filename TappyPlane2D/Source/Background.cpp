@@ -31,7 +31,7 @@ void Background::Initialize()
 	int32_t windowHeight = 0;
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
 
-	scrollSpeed_ = 100.0f;
+	scrollSpeed_ = 50.0f;
 	scrollPosition_ = 0.0f;
 	maxScrollPosition_ = static_cast<float>(windowWidth);
 	
