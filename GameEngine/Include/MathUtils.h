@@ -331,6 +331,48 @@ namespace MathUtils
 
 
 	/**
+	 * @brief 2차원 벡터의 크기를 얻습니다.
+	 * 
+	 * @param v 크기를 계산할 벡터입니다.
+	 * 
+	 * @return 계산된 크기 값을 반환합니다.
+	 */
+	inline float Length(const Vector2f& v)
+	{
+		float lengthSquare = LengthSquare<float>(v);
+		return std::sqrtf(lengthSquare);
+	}
+
+
+	/**
+	 * @brief 3차원 벡터의 크기를 얻습니다.
+	 *
+	 * @param v 크기를 계산할 벡터입니다.
+	 *
+	 * @return 계산된 크기 값을 반환합니다.
+	 */
+	inline float Length(const Vector3f& v)
+	{
+		float lengthSquare = LengthSquare<float>(v);
+		return std::sqrtf(lengthSquare);
+	}
+
+
+	/**
+	 * @brief 4차원 벡터의 크기를 얻습니다.
+	 *
+	 * @param v 크기를 계산할 벡터입니다.
+	 *
+	 * @return 계산된 크기 값을 반환합니다.
+	 */
+	inline float Length(const Vector4f& v)
+	{
+		float lengthSquare = LengthSquare<float>(v);
+		return std::sqrtf(lengthSquare);
+	}
+
+
+	/**
 	 * @brief 임의의 정수를 생성합니다.
 	 *
 	 * @param minValue 생성할 난수 범위의 최솟값입니다.
