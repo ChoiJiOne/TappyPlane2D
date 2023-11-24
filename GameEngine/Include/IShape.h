@@ -35,7 +35,7 @@ public:
 	 * 
 	 * @return 게임 오브젝트 형태를 반환합니다.
 	 */
-	virtual EType GetType() = 0;
+	virtual EType GetType() const = 0;
 
 
 	/**
