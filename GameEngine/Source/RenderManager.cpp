@@ -246,37 +246,37 @@ void RenderManager::DrawGrid2D(float minX, float maxX, float strideX, float minY
 	shader->DrawGrid2D(screenOrtho_, minX, maxX, strideX, minY, maxY, strideY, color);
 }
 
-void RenderManager::DrawTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float transparent)
+void RenderManager::DrawTexture2D(const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
 	shader->DrawTexture2D(screenOrtho_, texture, center, width, height, rotate, transparent);
 }
 
-void RenderManager::DrawTexture2D(Texture2D* texture, float transparent)
+void RenderManager::DrawTexture2D(const Texture2D* texture, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
 	shader->DrawTexture2D(texture, transparent);
 }
 
-void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, float rate, float transparent)
+void RenderManager::DrawHorizonScrollTexture2D(const Texture2D* texture, float rate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
 	shader->DrawHorizonScrollTexture2D(texture, rate, transparent);
 }
 
-void RenderManager::DrawHorizonScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
+void RenderManager::DrawHorizonScrollTexture2D(const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
 	shader->DrawHorizonScrollTexture2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
 }
 
-void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, float rate, float transparent)
+void RenderManager::DrawVerticalScrollTexture2D(const Texture2D* texture, float rate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
 	shader->DrawVerticalScrollTexture2D(texture, rate, transparent);
 }
 
-void RenderManager::DrawVerticalScrollTexture2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
+void RenderManager::DrawVerticalScrollTexture2D(const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, float rate, float transparent)
 {
 	TextureShader2D* shader = reinterpret_cast<TextureShader2D*>(resourceMaps_["Texture2D"]);
 	shader->DrawVerticalScrollTexture2D(screenOrtho_, texture, center, width, height, rotate, rate, transparent);
@@ -288,7 +288,7 @@ void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vec
 	shader->DrawText2D(screenOrtho_, font, text, center, color);
 }
 
-void RenderManager::DrawTextureSilhouette2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float transparent)
+void RenderManager::DrawTextureSilhouette2D(const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector3f& silhouetteRGB, float transparent)
 {
 	SilhouetteShader2D* silhouetteShader = reinterpret_cast<SilhouetteShader2D*>(resourceMaps_["Silhouette2D"]);
 	silhouetteShader->DrawTextureSilhouette2D(
@@ -303,7 +303,7 @@ void RenderManager::DrawTextureSilhouette2D(Texture2D* texture, const Vector2f& 
 	);
 }
 
-void RenderManager::DrawTextureOutline2D(Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector4f& outline, float transparent)
+void RenderManager::DrawTextureOutline2D(const Texture2D* texture, const Vector2f& center, float width, float height, float rotate, const Vector4f& outline, float transparent)
 {
 	OutlineShader2D* shader = reinterpret_cast<OutlineShader2D*>(resourceMaps_["Outline2D"]);
 	shader->DrawTextureOutline2D(screenOrtho_, texture, center, width, height, rotate, outline, transparent);

@@ -68,7 +68,7 @@ public:
 	 */
 	void DrawTextureSilhouette2D(
 		const Matrix4x4f& ortho,
-		Texture2D* texture,
+		const Texture2D* texture,
 		const Vector2f& center,
 		float width,
 		float height,
