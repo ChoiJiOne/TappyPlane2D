@@ -373,6 +373,48 @@ namespace MathUtils
 
 
 	/**
+	 * @brief 2차원 벡터를 정규화합니다.
+	 * 
+	 * @param v 정규화 할 벡터입니다.
+	 * 
+	 * @return 정규화된 벡터를 반환합니다.
+	 */
+	inline Vector2f Normalize(const Vector2f& v)
+	{
+		float length = Length(v);
+		return Vector2f(v.x / length, v.y / length);
+	}
+
+
+	/**
+	 * @brief 3차원 벡터를 정규화합니다.
+	 *
+	 * @param v 정규화 할 벡터입니다.
+	 *
+	 * @return 정규화된 벡터를 반환합니다.
+	 */
+	inline Vector3f Normalize(const Vector3f& v)
+	{
+		float length = Length(v);
+		return Vector3f(v.x / length, v.y / length, v.z / length);
+	}
+
+
+	/**
+	 * @brief 4차원 벡터를 정규화합니다.
+	 *
+	 * @param v 정규화 할 벡터입니다.
+	 *
+	 * @return 정규화된 벡터를 반환합니다.
+	 */
+	inline Vector4f Normalize(const Vector4f& v)
+	{
+		float length = Length(v);
+		return Vector4f(v.x / length, v.y / length, v.z / length, v.w / length);
+	}
+
+
+	/**
 	 * @brief 임의의 정수를 생성합니다.
 	 *
 	 * @param minValue 생성할 난수 범위의 최솟값입니다.
