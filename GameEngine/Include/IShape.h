@@ -47,5 +47,5 @@ public:
 	 * 
 	 * @note 한 오브젝트가 다른 오브젝트 내부에 포함되어도 충돌로 판단합니다.
 	 */
-	virtual bool IsCollision(const IShape* shape) = 0;
+	virtual bool IsCollision(const IShape* shape) const = 0;
 };
