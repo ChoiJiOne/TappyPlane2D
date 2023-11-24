@@ -4,6 +4,7 @@
 #include "CommandLineArg.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "MathUtils.h"
 
 Ground::~Ground()
 {
@@ -13,19 +14,11 @@ Ground::~Ground()
 	}
 }
 
-void Ground::Initialize()
+void Ground::Initialize(const EType& type)
 {
 	ASSERT(!bIsInitialized_, "already initialize ground game object...");
 
-	std::string resourcePath;
-	CommandLineArg::GetStringValue("resource", resourcePath);
-
-	ResourceManager& manager = ResourceManager::Get();
-	if (!manager.GetResource<Texture2D>("Ground"))
-	{
-		texture_ = manager.CreateResource<Texture2D>("Ground");
-		texture_->Initialize(resourcePath + "Texture\\groundGrass.png");
-	}
+	type_ = type;
 
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
@@ -33,7 +26,40 @@ void Ground::Initialize()
 
 	width_ = static_cast<float>(windowWidth);
 	height_ = static_cast<float>(windowHeight) / 10.0f;
-	center_ = Vector2f(width_ / 2.0f, static_cast<float>(windowHeight) - height_ / 2.0f);
+
+	std::string resourcePath;
+	CommandLineArg::GetStringValue("resource", resourcePath);
+
+	ResourceManager& manager = ResourceManager::Get();
+	switch (type_)
+	{
+	case EType::Bottom:
+		texture_ = manager.GetResource<Texture2D>("BottomGround");
+		if (!texture_)
+		{
+			texture_ = manager.CreateResource<Texture2D>("BottomGround");
+			texture_->Initialize(resourcePath + "Texture\\groundGrass.png");
+		}
+
+		rotate_ = 0.0f;
+		center_ = Vector2f(width_ / 2.0f, static_cast<float>(windowHeight) - height_ / 2.0f);
+		break;
+
+	case EType::Top:
+		texture_ = manager.GetResource<Texture2D>("TopGround");
+		if (!texture_)
+		{
+			texture_ = manager.CreateResource<Texture2D>("TopGround");
+			texture_->Initialize(resourcePath + "Texture\\groundDirt.png");
+		}
+
+		rotate_ = MathUtils::Pi;
+		center_ = Vector2f(width_ / 2.0f, height_ / 2.0f);
+		break;
+
+	default:
+		ASSERT(false, "undefined ground type : %d", static_cast<int32_t>(type));
+	}
 	
 	scrollSpeed_ = 200.0f;
 	scrollPosition_ = 0.0f;
@@ -54,14 +80,17 @@ void Ground::Update(float deltaSeconds)
 void Ground::Render()
 {
 	float rate = scrollPosition_ / width_;
-	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, center_, width_, height_, rate);
+
+	if (type_ == EType::Top)
+	{
+		rate = 1.0f - rate;
+	}
+
+	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, center_, width_, height_, rotate_, rate);
 }
 
 void Ground::Release()
 {
 	ASSERT(bIsInitialized_, "not initialized before or has already been released...");
-
-	ResourceManager::Get().DestroyResource("Ground");
-
 	bIsInitialized_ = false;
 }

@@ -44,8 +44,10 @@ public:
 
 	/**
 	 * @brief 그라운드 오브젝트를 초기화합니다.
+	 * 
+	 * @param type 그라운드 오브젝트의 타입입니다.
 	 */
-	void Initialize();
+	void Initialize(const EType& type);
 
 
 	/**
@@ -72,6 +74,12 @@ public:
 
 private:
 	/**
+	 * @brief 그라운드의 타입입니다.
+	 */
+	EType type_;
+
+
+	/**
 	 * @brief 그라운드 텍스처 리소스입니다.
 	 */
 	Texture2D* texture_ = nullptr;
@@ -93,6 +101,12 @@ private:
 	 * @brief 그라운드의 세로 크기입니다.
 	 */
 	float height_ = 0.0f;
+
+
+	/**
+	 * @brief 그라운드의 회전 각도입니다.
+	 */
+	float rotate_ = 0.0f;
 
 
 	/**
