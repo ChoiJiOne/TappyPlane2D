@@ -4,11 +4,13 @@
 
 #include "AABB.h"
 #include "AssertionMacro.h"
+#include "Circle.h"
 #include "CommandLineArg.h"
 #include "FileManager.h"
 #include "GameTimer.h"
 #include "IManager.h"
 #include "InputManager.h"
+#include "LineSegment.h"
 #include "Macro.h"
 #include "MathUtils.h"
 #include "ObjectManager.h"
