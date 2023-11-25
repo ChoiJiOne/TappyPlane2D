@@ -14,6 +14,7 @@ public:
 	{
 		None = 0x00,
 		AABB = 0x01,
+		Circle = 0x02,
 	};
 
 
