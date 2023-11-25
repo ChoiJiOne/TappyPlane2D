@@ -289,6 +289,23 @@ namespace MathUtils
 
 
 	/**
+	 * @brief 2차원 백터의 외적 연산을 수행합니다.
+	 *
+	 * @param lhs 백터의 외적 연산을 수행할 좌측 피연산자입니다.
+	 * @param rhs 백터의 외적 연산을 수행할 우측 피연산자입니다.
+	 *
+	 * @return 외적 연산 결과를 반환합니다.
+	 * 
+	 * @note 일반적인 3차원 외적 연산과 다릅니다.
+	 */
+	template <typename T>
+	inline T CrossProduct(const Vector2<T>& lhs, const Vector2<T>& rhs)
+	{
+		return lhs.x * rhs.y - lhs.y * rhs.x;
+	}
+
+
+	/**
 	 * @brief 2차원 백터의 크기 제곱 값을 계산합니다.
 	 * 
 	 * @param v 크기 제곱을 계산할 벡터입니다.
