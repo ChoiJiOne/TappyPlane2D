@@ -78,7 +78,7 @@ bool LineSegment::IsCollisionLineSegment(const IShape* shape) const
 		float uA = MathUtils::CrossProduct<float>(p34, p31) / cross;
 		float uB = MathUtils::CrossProduct<float>(p12, p31) / cross;
 
-		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1)
+		if (uA >= 0.0f && uA <= 1.0f && uB >= 0.0f && uB <= 1.0f)
 		{
 			return true;
 		}
