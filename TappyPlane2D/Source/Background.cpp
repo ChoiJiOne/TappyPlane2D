@@ -1,7 +1,6 @@
 #include "Background.h"
 
 #include "AssertionMacro.h"
-#include "CommandLineArg.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
 
@@ -17,15 +16,7 @@ void Background::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize background game object...");
 
-	std::string resourcePath;
-	CommandLineArg::GetStringValue("resource", resourcePath);
-
-	ResourceManager& manager = ResourceManager::Get();
-	if (!manager.GetResource<Texture2D>("Background"))
-	{
-		texture_ = manager.CreateResource<Texture2D>("Background");
-		texture_->Initialize(resourcePath + "Texture\\background.png");
-	}
+	texture_ = ResourceManager::Get().GetResource<Texture2D>("background");
 
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
