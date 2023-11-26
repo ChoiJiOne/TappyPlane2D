@@ -2,6 +2,7 @@
 
 #include "AABB.h"
 #include "AssertionMacro.h"
+#include "Circle.h"
 #include "MathUtils.h"
 
 bool LineSegment::IsCollision(const IShape* shape) const
@@ -17,6 +18,10 @@ bool LineSegment::IsCollision(const IShape* shape) const
 
 	case IShape::EType::AABB:
 		bIsCollision = IsCollisionAABB(shape);
+		break;
+
+	case IShape::EType::Circle:
+		bIsCollision = IsCollisionCircle(shape);
 		break;
 
 	case IShape::EType::LineSegment:
@@ -37,6 +42,15 @@ bool LineSegment::IsCollisionAABB(const IShape* shape) const
 	const AABB* aabb = reinterpret_cast<const AABB*>(shape);
 
 	return aabb->IsCollision(this);
+}
+
+bool LineSegment::IsCollisionCircle(const IShape* shape) const
+{
+	ASSERT(shape->GetType() == EType::Circle, "must be of the Circle shape type...");
+
+	const Circle* circle = reinterpret_cast<const Circle*>(shape);
+
+	return circle->IsCollision(this);
 }
 
 bool LineSegment::IsCollisionLineSegment(const IShape* shape) const

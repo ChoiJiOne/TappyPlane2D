@@ -137,6 +137,16 @@ private:
 
 
 	/**
+	 * @brief Circle 오브젝트와의 충돌 여부를 검사합니다.
+	 *
+	 * @param shape 충돌 여부를 검사할 AABB 오브젝트입니다.
+	 *
+	 * @return 다른 Circle 오브젝트와 충돌한다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsCollisionCircle(const IShape* shape) const;
+
+
+	/**
 	 * @brief 선분 오브젝트와의 충돌 여부를 검사합니다.
 	 * 
 	 * @param shape 충돌 여부를 검사할 선분 오브젝트입니다.
