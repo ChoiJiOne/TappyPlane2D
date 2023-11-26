@@ -31,56 +31,40 @@ bool LineSegment::IsCollisionLineSegment(const IShape* shape) const
 
 	const LineSegment* lineSegment = reinterpret_cast<const LineSegment*>(shape);
 
-	float x1 = points_[0].x;
-	float y1 = points_[0].y;
+	Vector2f p1 = points_[0];
+	Vector2f p2 = points_[1];
+	Vector2f p3 = lineSegment->points_[0];
+	Vector2f p4 = lineSegment->points_[1];
 
-	float x2 = points_[1].x;
-	float y2 = points_[1].y;
+	Vector2f p12 = p2 - p1;
+	Vector2f p34 = p4 - p3;
+	Vector2f p31 = p1 - p3;
 
-	float x3 = lineSegment->points_[0].x;
-	float y3 = lineSegment->points_[0].y;
-
-	float x4 = lineSegment->points_[1].x;
-	float y4 = lineSegment->points_[1].y;
-
-	float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-	float uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-
-	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) 
+	float cross = MathUtils::CrossProduct<float>(p12, p34);
+	if (MathUtils::NearZero(cross)) // 두 벡터가 평행하거나 같은 방향
 	{
-		return true;
+		return CheckSegment(p1, p2, p3) || CheckSegment(p1, p2, p4) || CheckSegment(p3, p4, p1) || CheckSegment(p3, p4, p2);
+	}
+	else
+	{
+		float uA = MathUtils::CrossProduct<float>(p34, p31) / cross;
+		float uB = MathUtils::CrossProduct<float>(p12, p31) / cross;
+
+		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1)
+		{
+			return true;
+		}
 	}
 
 	return false;
 }
 
-LineSegment::EOrientation LineSegment::GetOrientation(const Vector2f& p0, const Vector2f& p1, const Vector2f& p2) const
+bool LineSegment::CheckSegment(const Vector2f& boundMinPoint, const Vector2f& boundMaxPoint, const Vector2f& point) const
 {
-	Vector2f p12 = p2 - p1;
-	Vector2f p01 = p1 - p0;
-	float cross = MathUtils::CrossProduct<float>(p12, p01);
-
-	if (MathUtils::NearZero(cross))
-	{
-		return EOrientation::Collinear;
-	}
-	else
-	{
-		return (cross > 0.0f) ? EOrientation::Clockwise : EOrientation::Counterclockwise;
-	}
-}
-
-bool LineSegment::CheckSegment(const Vector2f& boundPoint0, const Vector2f& boundPoint1, const Vector2f& point) const
-{
-	Vector2f minPoint = Vector2f(
-		MathUtils::Min<float>(boundPoint0.x, boundPoint1.x),
-		MathUtils::Min<float>(boundPoint0.y, boundPoint1.y)
-	);
-
-	Vector2f maxPoint = Vector2f(
-		MathUtils::Max<float>(boundPoint0.x, boundPoint1.x),
-		MathUtils::Max<float>(boundPoint0.y, boundPoint1.y)
-	);
-
-	return (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);
+	float minX = MathUtils::Min<float>(boundMinPoint.x, boundMaxPoint.x);
+	float minY = MathUtils::Min<float>(boundMinPoint.y, boundMaxPoint.y);
+	float maxX = MathUtils::Max<float>(boundMinPoint.x, boundMaxPoint.x);
+	float maxY = MathUtils::Max<float>(boundMinPoint.y, boundMaxPoint.y);
+	
+	return (minX <= point.x && point.x <= maxX) && (minY <= point.y && point.y <= maxY);
 }
