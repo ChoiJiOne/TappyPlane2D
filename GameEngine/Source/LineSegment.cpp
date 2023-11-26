@@ -31,29 +31,26 @@ bool LineSegment::IsCollisionLineSegment(const IShape* shape) const
 
 	const LineSegment* lineSegment = reinterpret_cast<const LineSegment*>(shape);
 
-	Vector2f p0 = points_[0];
-	Vector2f q0 = points_[1];
-	Vector2f p1 = lineSegment->points_[0];
-	Vector2f q1 = lineSegment->points_[1];
+	float x1 = points_[0].x;
+	float y1 = points_[0].y;
 
-	EOrientation orient0 = GetOrientation(p0, q0, p1);
-	EOrientation orient1 = GetOrientation(p0, q0, q1);
-	EOrientation orient2 = GetOrientation(p1, q1, p0);
-	EOrientation orient3 = GetOrientation(p1, q1, q0);
+	float x2 = points_[1].x;
+	float y2 = points_[1].y;
 
-	if (orient0 != orient1 && orient2 != orient3)
+	float x3 = lineSegment->points_[0].x;
+	float y3 = lineSegment->points_[0].y;
+
+	float x4 = lineSegment->points_[1].x;
+	float y4 = lineSegment->points_[1].y;
+
+	float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+	float uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+
+	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) 
 	{
 		return true;
 	}
 
-	if ((orient0 == EOrientation::Collinear && CheckSegment(p0, p1, q0)) ||
-		(orient1 == EOrientation::Collinear && CheckSegment(p0, q1, q0)) ||
-		(orient2 == EOrientation::Collinear && CheckSegment(p1, p0, q1)) ||
-		(orient3 == EOrientation::Collinear && CheckSegment(p1, q0, q1)))
-	{
-		return true;
-	}
-	
 	return false;
 }
 
