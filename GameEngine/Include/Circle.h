@@ -161,6 +161,36 @@ private:
 	bool IsCollisionCircle(const IShape* shape) const;
 
 
+	/**
+	 * @brief LineSegment 오브젝트와의 충돌 여부를 검사합니다.
+	 *
+	 * @param shape 충돌 여부를 검사할 LineSegment 오브젝트입니다.
+	 *
+	 * @return 다른 LineSegment 오브젝트와 충돌한다면 true, 그렇지 않으면 false를 반환합니다.
+	 * 
+	 * @see https://mathworld.wolfram.com/Circle-LineIntersection.html
+	 */
+	bool IsCollisionLineSegment(const IShape* shape) const;
+
+
+	/**
+	 * @brief 점이 원에 포함되는지 확인합니다.
+	 * 
+	 * @param point 원에 포함되는지 확인할 점입니다. 
+	 */
+	bool CheckCircleSegment(const Vector2f& point) const;
+
+
+	/**
+	 * @brief 특정 점이 두 점의 영역에 포함되는지 확인합니다.
+	 *
+	 * @param boundMinPoint 영역의 최소 좌표입니다.
+	 * @param boundMaxPoint 영역의 최대 좌표입니다.
+	 * @param point 확인할 점입니다.
+	 */
+	bool CheckSegment(const Vector2f& boundMinPoint, const Vector2f& boundMaxPoint, const Vector2f& point) const;
+
+
 private:
 	/**
 	 * @brief 원의 중심입니다.
