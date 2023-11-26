@@ -15,6 +15,16 @@ public:
 	/**
 	 * @brief 선분의 생성자입니다.
 	 * 
+	 * @param point0 선분의 한 끝점입니다.
+	 * @param point1 선분의 다른 한 끝점입니다.
+	 */
+	LineSegment(const Vector2f& point0, const Vector2f& point1)
+		: points_(std::array<Vector2f, 2>{ point0, point1 }) {}
+
+	
+	/**
+	 * @brief 선분의 생성자입니다.
+	 * 
 	 * @param points 선분의 양 끝점입니다.
 	 */
 	LineSegment(const std::array<Vector2f, 2>& points)
