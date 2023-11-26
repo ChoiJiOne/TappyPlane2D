@@ -23,6 +23,9 @@ void EngineManager::Startup()
 	ResourceManager::Get().Startup();
 	StartupRenderManager(properties);
 	ObjectManager::Get().Startup();
+
+	LoadTextureResource(properties);
+	LoadFontResource(properties);
 	
 	bIsStartup_ = true;
 }
@@ -87,4 +90,54 @@ void EngineManager::StartupRenderManager(const Json::Value& properties)
 
 	bool bIsEnableVsync = properties["vsync"].asBool();
 	renderManager.SetVsyncMode(bIsEnableVsync);
+}
+
+void EngineManager::LoadTextureResource(const Json::Value& properties)
+{
+	if (properties["texture"].isNull() || !properties["texture"].isArray())
+	{
+		return;
+	}
+
+	std::string resourcePath;
+	CommandLineArg::GetStringValue("resource", resourcePath);
+
+	const Json::Value& textures = properties["texture"];
+	for (std::size_t index = 0; index < textures.size(); ++index)
+	{
+		std::string resourceName = FileManager::Get().RemoveFileExtension(textures[static_cast<uint32_t>(index)].asCString());
+		Texture2D* texture = ResourceManager::Get().CreateResource<Texture2D>(resourceName);
+		texture->Initialize(StringUtils::PrintF("%sTexture\\%s", resourcePath.c_str(), textures[static_cast<uint32_t>(index)].asCString()));
+	}
+}
+
+void EngineManager::LoadFontResource(const Json::Value& properties)
+{
+	if (properties["font"].isNull() || !properties["font"].isArray())
+	{
+		return;
+	}
+
+	std::string resourcePath;
+	CommandLineArg::GetStringValue("resource", resourcePath);
+
+	const Json::Value& fonts = properties["font"];
+	for (std::size_t index = 0; index < fonts.size(); ++index)
+	{
+		const Json::Value& font = fonts[static_cast<uint32_t>(index)];
+
+		ASSERT((font["resource"].isString() && !font["resource"].isNull()), "inavlid font resource...");
+		ASSERT((font["name"].isString() && !font["name"].isNull()), "inavlid font resource name...");
+		ASSERT((font["begin"].isInt() && !font["begin"].isNull()), "inavlid font resource begin code point...");
+		ASSERT((font["end"].isInt() && !font["end"].isNull()), "inavlid font resource end code point...");
+		ASSERT((font["size"].isDouble() && !font["size"].isNull()), "inavlid font resource size...");
+
+		std::string resourceName = std::string(font["name"].asCString());
+		int32_t beginCodePoint = font["begin"].asInt();
+		int32_t endCodePoint = font["end"].asInt();
+		float size = font["size"].asFloat();
+
+		TTFont* fontPtr = ResourceManager::Get().CreateResource<TTFont>(resourceName);
+		fontPtr->Initialize(StringUtils::PrintF("%sFont\\%s", resourcePath.c_str(), font["resource"].asCString()), beginCodePoint, endCodePoint, size);
+	}
 }

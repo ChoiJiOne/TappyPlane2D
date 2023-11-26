@@ -70,7 +70,23 @@ private:
 	 * @param properties 게임 설정이 포함된 Json 객체입니다. 
 	 */
 	void StartupRenderManager(const Json::Value& properties);
-	
+
+
+	/**
+	 * @brief 게임에서 사용할 텍스처 리소스를 로딩합니다.
+	 * 
+	 * @param properties 게임 설정이 포함된 Json 객체입니다. 
+	 */
+	void LoadTextureResource(const Json::Value& properties);
+
+
+	/**
+	 * @brief 게임에서 사용할 폰트 리소스를 로딩합니다.
+	 * 
+	 * @param properties 게임 설정이 포함된 Json 객체입니다. 
+	 */
+	void LoadFontResource(const Json::Value& properties);
+
 
 private:
 	/**
