@@ -149,6 +149,16 @@ private:
 	bool IsCollisionAABB(const IShape* shape) const;
 
 
+	/**
+	 * @brief Circle 오브젝트와의 충돌 여부를 검사합니다.
+	 * 
+	 * @param shape 충돌 여부를 검사할 Circle 오브젝트입니다.
+	 * 
+	 * @return 다른 Circle 오브젝트외 충돌한다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsCollisionCircle(const IShape* shape) const;
+
+
 private:
 	/**
 	 * @brief 상자 영역의 최소값입니다.

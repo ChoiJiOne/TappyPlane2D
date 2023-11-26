@@ -1,5 +1,6 @@
 #include "Circle.h"
 
+#include "AABB.h"
 #include "AssertionMacro.h"
 #include "MathUtils.h"
 
@@ -14,6 +15,10 @@ bool Circle::IsCollision(const IShape* shape) const
 		bIsCollision = false;
 		break;
 
+	case IShape::EType::AABB:
+		bIsCollision = IsCollisionAABB(shape);
+		break;
+
 	case IShape::EType::Circle:
 		bIsCollision = IsCollisionCircle(shape);
 		break;
@@ -23,6 +28,15 @@ bool Circle::IsCollision(const IShape* shape) const
 	}
 
 	return bIsCollision;
+}
+
+bool Circle::IsCollisionAABB(const IShape* shape) const
+{
+	ASSERT(shape->GetType() == EType::AABB, "must be of the AABB shape type...");
+
+	const AABB* aabb = reinterpret_cast<const AABB*>(shape);
+
+	return aabb->IsCollision(this);
 }
 
 bool Circle::IsCollisionCircle(const IShape* shape) const

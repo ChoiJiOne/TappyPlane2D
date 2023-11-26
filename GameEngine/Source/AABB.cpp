@@ -1,6 +1,7 @@
 #include "AABB.h"
 
 #include "AssertionMacro.h"
+#include "Circle.h"
 #include "MathUtils.h"
 
 AABB::AABB(const Vector2f& minPosition, const Vector2f& maxPosition)
@@ -56,6 +57,10 @@ bool AABB::IsCollision(const IShape* shape) const
 		bIsCollision = IsCollisionAABB(shape);
 		break;
 
+	case IShape::EType::Circle:
+		bIsCollision = IsCollisionCircle(shape);
+		break;
+
 	default:
 		ASSERT(false, "undefined object shape type : %d", static_cast<int32_t>(type));
 	}
@@ -80,4 +85,26 @@ bool AABB::IsCollisionAABB(const IShape* shape) const
 	}
 	
 	return true;
+}
+
+bool AABB::IsCollisionCircle(const IShape* shape) const
+{
+	ASSERT(shape->GetType() == EType::Circle, "must be of the AABB shape type...");
+
+	const Circle* circle = reinterpret_cast<const Circle*>(shape);
+	Vector2f circleCenter = circle->GetCenter();
+
+	float x = MathUtils::Clamp<float>(circleCenter.x, minPosition_.x, maxPosition_.x);
+	float y = MathUtils::Clamp<float>(circleCenter.y, minPosition_.y, maxPosition_.y);
+	float diffX = (circleCenter.x - x);
+	float diffY = (circleCenter.y - y);
+	float distanceSquare = (diffX * diffX) + (diffY * diffY);
+	float radiusSquare = circle->GetRadius() * circle->GetRadius();
+
+	if (distanceSquare <= radiusSquare)
+	{
+		return true;
+	}
+
+	return false;
 }
