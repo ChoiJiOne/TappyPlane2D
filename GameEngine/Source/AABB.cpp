@@ -2,6 +2,7 @@
 
 #include "AssertionMacro.h"
 #include "Circle.h"
+#include "LineSegment.h"
 #include "MathUtils.h"
 
 AABB::AABB(const Vector2f& minPosition, const Vector2f& maxPosition)
@@ -61,6 +62,10 @@ bool AABB::IsCollision(const IShape* shape) const
 		bIsCollision = IsCollisionCircle(shape);
 		break;
 
+	case IShape::EType::LineSegment:
+		bIsCollision = IsCollisionLineSegment(shape);
+		break;
+
 	default:
 		ASSERT(false, "undefined object shape type : %d", static_cast<int32_t>(type));
 	}
@@ -89,7 +94,7 @@ bool AABB::IsCollisionAABB(const IShape* shape) const
 
 bool AABB::IsCollisionCircle(const IShape* shape) const
 {
-	ASSERT(shape->GetType() == EType::Circle, "must be of the AABB shape type...");
+	ASSERT(shape->GetType() == EType::Circle, "must be of the Circle shape type...");
 
 	const Circle* circle = reinterpret_cast<const Circle*>(shape);
 	Vector2f circleCenter = circle->GetCenter();
@@ -104,6 +109,32 @@ bool AABB::IsCollisionCircle(const IShape* shape) const
 	if (distanceSquare <= radiusSquare)
 	{
 		return true;
+	}
+
+	return false;
+}
+
+bool AABB::IsCollisionLineSegment(const IShape* shape) const
+{
+	ASSERT(shape->GetType() == EType::LineSegment, "must be of the LineSegment shape type...");
+
+	const LineSegment* line = reinterpret_cast<const LineSegment*>(shape);
+
+	std::array<Vector2f, 5> points = {
+		Vector2f(minPosition_.x, minPosition_.y),
+		Vector2f(minPosition_.x, maxPosition_.y),
+		Vector2f(maxPosition_.x, maxPosition_.y),
+		Vector2f(maxPosition_.x, minPosition_.y),
+		Vector2f(minPosition_.x, minPosition_.y),
+	};
+
+	for (std::size_t index = 0; index < points.size() - 1; ++index)
+	{
+		LineSegment lineSegment(points[index], points[index + 1]);
+		if (lineSegment.IsCollision(line))
+		{
+			return true;
+		}
 	}
 
 	return false;
