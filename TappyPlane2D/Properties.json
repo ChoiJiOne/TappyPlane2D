@@ -90,25 +90,29 @@
   ],
   "font": [
     {
-      "name": "kenvector_future.ttf",
+      "resource": "kenvector_future.ttf",
+      "name": "kenvector_future_32",
       "begin": 32,
       "end": 127,
       "size": 32.0
     },
     {
-      "name": "kenvector_future.ttf",
+      "resource": "kenvector_future.ttf",
+      "name": "kenvector_future_64",
       "begin": 32,
       "end": 127,
       "size": 64.0
     },
     {
-      "name": "kenvector_future_thin.ttf",
+      "resource": "kenvector_future_thin.ttf",
+      "name": "kenvector_future_thin_32",
       "begin": 32,
       "end": 127,
       "size": 32.0
     },
     {
-      "name": "kenvector_future_thin.ttf",
+      "resource": "kenvector_future_thin.ttf",
+      "name": "kenvector_future_thin_64",
       "begin": 32,
       "end": 127,
       "size": 64.0
