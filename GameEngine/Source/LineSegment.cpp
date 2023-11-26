@@ -1,5 +1,6 @@
 #include "LineSegment.h"
 
+#include "AABB.h"
 #include "AssertionMacro.h"
 #include "MathUtils.h"
 
@@ -14,6 +15,10 @@ bool LineSegment::IsCollision(const IShape* shape) const
 		bIsCollision = false;
 		break;
 
+	case IShape::EType::AABB:
+		bIsCollision = IsCollisionAABB(shape);
+		break;
+
 	case IShape::EType::LineSegment:
 		bIsCollision = IsCollisionLineSegment(shape);
 		break;
@@ -23,6 +28,15 @@ bool LineSegment::IsCollision(const IShape* shape) const
 	}
 
 	return bIsCollision;
+}
+
+bool LineSegment::IsCollisionAABB(const IShape* shape) const
+{
+	ASSERT(shape->GetType() == EType::AABB, "must be of the AABB shape type...");
+
+	const AABB* aabb = reinterpret_cast<const AABB*>(shape);
+
+	return aabb->IsCollision(this);
 }
 
 bool LineSegment::IsCollisionLineSegment(const IShape* shape) const
