@@ -126,7 +126,7 @@ private:
 		Counterclockwise = 0x02 // 세 점이 반 시계 방향
 	};
 
-	
+
 private:
 	/**
 	 * @brief 선분 오브젝트와의 충돌 여부를 검사합니다.
@@ -140,7 +140,7 @@ private:
 
 	/**
 	 * @brief 세 점의 방향을 얻습니다.
-	 * 
+	 *
 	 * @param p0 세 점 중 첫 번째 점입니다.
 	 * @param p1 세 점 중 두 번째 점입니다.
 	 * @param p2 세 점 중 세 번째 점입니다.
@@ -150,13 +150,13 @@ private:
 
 	/**
 	 * @brief 한 점이 두 점의 경계 영역에 포함되는지 확인합니다.
-	 * 
+	 *
 	 * @param boundPoint0 경계 영역이 될 한 점입니다.
 	 * @param boundPoint1 경계 영역이 될 다른 한 점입니다.
 	 * @param point 경계 영역에 포함되는지 확인할 점입니다.
 	 */
 	bool CheckSegment(const Vector2f& boundPoint0, const Vector2f& boundPoint1, const Vector2f& point) const;
-	
+
 
 private:
 	/**

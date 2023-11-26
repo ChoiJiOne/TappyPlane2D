@@ -40,38 +40,28 @@ bool LineSegment::IsCollisionLineSegment(const IShape* shape) const
 	EOrientation orient1 = GetOrientation(p0, q0, q1);
 	EOrientation orient2 = GetOrientation(p1, q1, p0);
 	EOrientation orient3 = GetOrientation(p1, q1, q0);
-	
+
 	if (orient0 != orient1 && orient2 != orient3)
 	{
 		return true;
 	}
 
-	if (orient0 == EOrientation::Collinear && CheckSegment(p0, p1, q0))
+	if ((orient0 == EOrientation::Collinear && CheckSegment(p0, p1, q0)) ||
+		(orient1 == EOrientation::Collinear && CheckSegment(p0, q1, q0)) ||
+		(orient2 == EOrientation::Collinear && CheckSegment(p1, p0, q1)) ||
+		(orient3 == EOrientation::Collinear && CheckSegment(p1, q0, q1)))
 	{
 		return true;
 	}
-
-	if (orient1 == EOrientation::Collinear && CheckSegment(p0, q1, q0))
-	{
-		return true;
-	}
-
-	if (orient2 == EOrientation::Collinear && CheckSegment(p1, p0, q1))
-	{
-		return true;
-	}
-
-	if (orient3 == EOrientation::Collinear && CheckSegment(p1, q0, q1))
-	{
-		return true;
-	}
-
+	
 	return false;
 }
 
 LineSegment::EOrientation LineSegment::GetOrientation(const Vector2f& p0, const Vector2f& p1, const Vector2f& p2) const
 {
-	float cross = (p1.y - p0.y) * (p2.x - p1.x) - (p1.x - p0.x) * (p2.y - p1.y);
+	Vector2f p12 = p2 - p1;
+	Vector2f p01 = p1 - p0;
+	float cross = MathUtils::CrossProduct<float>(p12, p01);
 
 	if (MathUtils::NearZero(cross))
 	{
