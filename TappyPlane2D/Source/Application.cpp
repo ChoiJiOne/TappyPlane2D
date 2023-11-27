@@ -2,6 +2,7 @@
 
 #include "Background.h"
 #include "Ground.h"
+#include "Plane.h"
 
 int main(int argc, char* argv[])
 {
@@ -21,6 +22,9 @@ int main(int argc, char* argv[])
 
 	Ground* topGround = ObjectManager::Get().CreateGameObject<Ground>("TopGround");
 	topGround->Initialize(Ground::EType::Top);
+
+	Plane* plane = ObjectManager::Get().CreateGameObject<Plane>("Plane");
+	plane->Initialize(Plane::EColor::Yellow);
 	
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
@@ -30,6 +34,7 @@ int main(int argc, char* argv[])
 		background->Update(globalTimer.GetDeltaSeconds());
 		bottomGround->Update(globalTimer.GetDeltaSeconds());
 		topGround->Update(globalTimer.GetDeltaSeconds());
+		plane->Update(globalTimer.GetDeltaSeconds());
 			
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
@@ -37,6 +42,7 @@ int main(int argc, char* argv[])
 		background->Render();
 		bottomGround->Render();
 		topGround->Render();
+		plane->Render();
 		
 		RenderManager::Get().EndFrame();
 	}
