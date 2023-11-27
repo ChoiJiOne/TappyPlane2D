@@ -26,6 +26,18 @@ public:
 	};
 
 
+	/**
+	 * @brief 비행기의 상태를 나타냅니다.
+	 */
+	enum class EState : int32_t
+	{
+		Wait = 0x00,    // 대기 상태
+		Flight = 0x01,  // 비행 중
+		Landing = 0x02, // 하강 중
+		Crash = 0x03,   // 충돌
+	};
+
+
 public:
 	/**
 	 * @brief 비행기의 디폴트 생성자입니다.
@@ -79,6 +91,15 @@ public:
 
 private:
 	/**
+	 * @brief 비행기의 애니메이션을 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void UpdateAnimation(float deltaSeconds);
+
+
+private:
+	/**
 	 * @brief 비행기의 색상 종류입니다.
 	 */
 	EColor colorType_ = EColor::Blue;
@@ -109,6 +130,12 @@ private:
 
 
 	/**
+	 * @brief 비행기의 대기 위치입니다.
+	 */
+	Vector2f waitPosition_;
+
+
+	/**
 	 * @brief 비행기의 중심 좌표입니다.
 	 */
 	Vector2f center_;
@@ -136,4 +163,16 @@ private:
 	 * @brief 충돌 처리를 위한 원입니다.
 	 */
 	Circle collisionBound_;
+
+
+	/**
+	 * @brief 비행기의 누적된 시간입니다.
+	 */
+	float accumulateTime_ = 0.0f;
+
+
+	/**
+	 * @brief 현재 비행기의 상태입니다.
+	 */
+	EState state_ = EState::Wait;
 };

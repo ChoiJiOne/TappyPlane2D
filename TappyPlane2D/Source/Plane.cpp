@@ -48,22 +48,25 @@ void Plane::Initialize(const EColor& colorType)
 	int32_t windowHeight = 0;
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
 
+	waitPosition_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, static_cast<float>(windowHeight) / 2.0f);
 	center_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, static_cast<float>(windowHeight) / 2.0f);
 
 	collisionBound_ = Circle(center_, height_ / 2.0f);
+
+	state_ = EState::Wait;
 
 	bIsInitialized_ = true;
 }
 
 void Plane::Update(float deltaSeconds)
 {
-	accumulateAnimationFrameTime_ += deltaSeconds;
+	UpdateAnimation(deltaSeconds);
 
-	if (accumulateAnimationFrameTime_ >= animationFrameTime_)
-	{
-		accumulateAnimationFrameTime_ = 0.0f;
-		animationTextureIndex_ = (animationTextureIndex_ + 1) % (animationTextures_.size());
-	}
+	accumulateTime_ += deltaSeconds;
+
+	center_.x = waitPosition_.x;
+	center_.y = waitPosition_.y + 10.0f * MathUtils::ScalarSin(accumulateTime_ * 2.0f);
+	collisionBound_.SetCenter(center_);
 }
 
 void Plane::Render()
@@ -78,4 +81,15 @@ void Plane::Release()
 {
 	ASSERT(bIsInitialized_, "not initialized before or has already been released...");
 	bIsInitialized_ = false;
+}
+
+void Plane::UpdateAnimation(float deltaSeconds)
+{
+	accumulateAnimationFrameTime_ += deltaSeconds;
+
+	if (accumulateAnimationFrameTime_ >= animationFrameTime_)
+	{
+		accumulateAnimationFrameTime_ = 0.0f;
+		animationTextureIndex_ = (animationTextureIndex_ + 1) % (animationTextures_.size());
+	}
 }
