@@ -5,6 +5,7 @@
 #include "Circle.h"
 #include "IGameObject.h"
 #include "Texture2D.h"
+#include "MathUtils.h"
 #include "Vector2.h"
 
 
@@ -98,12 +99,134 @@ private:
 	void UpdateAnimation(float deltaSeconds);
 
 
+	/**
+	 * @brief 비행기가 대기중인 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void UpdateWaitState(float deltaSeconds);
+
+
+	/**
+	 * @brief 배행기가 나는 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void UpdateFlightState(float deltaSeconds);
+
+
+	/**
+	 * @brief 비행기가 떨어지는 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void UpdateLandingState(float deltaSeconds);
+
+
+	/**
+	 * @brief 비행기가 충돌했을 때 상태를 업데이트합니다.
+	 * 
+	 * @param deltaSeconds 델타 시간 값입니다.
+	 */
+	void UpdateCrashState(float deltaSeconds);
+
+
 private:
 	/**
 	 * @brief 비행기의 색상 종류입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
 	 */
 	EColor colorType_ = EColor::Blue;
-	
+
+
+	/**
+	 * @brief 비행기의 중심 좌표입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	Vector2f center_;
+
+
+	/**
+	 * @brief 비행기의 가로 크기입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	float width_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 세로 크기입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	float height_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 회전 각도입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	float rotate_ = 0.0f;
+
+
+	/**
+	 * @brief 현재 비행기의 상태입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	EState state_ = EState::Wait;
+
+
+	/**
+	 * @brief 충돌 처리를 위한 원입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	Circle collisionBound_;
+
+
+	/**
+	 * @brief 비행기의 최대 속도입니다.
+	 *
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	float maxFlightSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 현재 속도입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	float currentFlightSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 회전 속도입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	float rotateSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 최소 각도입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	const float minRotate_ = -MathUtils::PiDiv4;
+
+
+	/**
+	 * @brief 비행기의 최대 각도입니다.
+	 * 
+	 * @note 이 속성은 비행기의 기본 속성입니다.
+	 */
+	const float maxRotate_ = MathUtils::PiDiv4;
+
 
 	/**
 	 * @brief 비행기의 애니메이션을 수행하기 위한 텍스처입니다.
@@ -130,49 +253,19 @@ private:
 
 
 	/**
+	 * @brief 비행기의 대기 시간입니다.
+	 */
+	float waitAccumulateTime_ = 0.0f;
+
+
+	/**
 	 * @brief 비행기의 대기 위치입니다.
 	 */
 	Vector2f waitPosition_;
 
 
 	/**
-	 * @brief 비행기의 중심 좌표입니다.
-	 */
-	Vector2f center_;
-
-
-	/**
-	 * @brief 비행기의 가로 크기입니다.
-	 */
-	float width_ = 0.0f;
-
-
-	/**
-	 * @brief 비행기의 세로 크기입니다.
-	 */
-	float height_ = 0.0f;
-
-
-	/**
-	 * @brief 비행기의 회전 각도입니다.
-	 */
-	float rotate_ = 0.0f;
-
-
-	/**
-	 * @brief 충돌 처리를 위한 원입니다.
-	 */
-	Circle collisionBound_;
-
-
-	/**
-	 * @brief 비행기의 누적된 시간입니다.
+	 * @brief 나는 동안의 누적 시간입니다.
 	 */
 	float accumulateTime_ = 0.0f;
-
-
-	/**
-	 * @brief 현재 비행기의 상태입니다.
-	 */
-	EState state_ = EState::Wait;
 };
