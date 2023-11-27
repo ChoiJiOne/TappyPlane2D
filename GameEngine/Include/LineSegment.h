@@ -13,6 +13,12 @@ class LineSegment : public IShape
 {
 public:
 	/**
+	 * @brief 선분의 디폴트 생성자입니다.
+	 */
+	LineSegment() = default;
+
+
+	/**
 	 * @brief 선분의 생성자입니다.
 	 * 
 	 * @param point0 선분의 한 끝점입니다.

@@ -11,6 +11,12 @@ class AABB : public IShape
 {
 public:
 	/**
+	 * @brief AABB의 디폴트 생성자입니다.
+	 */
+	AABB() = default;
+
+
+	/**
 	 * @brief AABB의 생성자입니다.
 	 * 
 	 * @param minPosition 축 정렬 경계 상자의 최소 좌표입니다.

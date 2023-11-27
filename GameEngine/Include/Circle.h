@@ -11,6 +11,12 @@ class Circle : public IShape
 {
 public:
 	/**
+	 * @brief Circle의 디폴트 생성자입니다.
+	 */
+	Circle() = default;
+
+
+	/**
 	 * @brief 원의 생성자입니다.
 	 * 
 	 * @param center 원의 중심 좌표입니다.
