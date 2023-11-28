@@ -31,6 +31,8 @@ void Star::Update(float deltaSeconds)
 void Star::Render()
 {
 	RenderManager::Get().DrawTexture2D(texture_, center_, width_, height_, 0.0f);
+
+	RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Star::Release()
