@@ -70,7 +70,7 @@ public:
 	 */
 	virtual void Release() override;
 
-
+	
 	/**
 	 * @brief 별 오브젝트의 충돌 경계 영역을 얻습니다.
 	 *
@@ -85,6 +85,22 @@ public:
 	 * @param center 별 오브젝트의 중심 위치입니다.
 	 */
 	void SetupProperties(const Vector2f& center);
+
+
+	/**
+	 * @brief 별 오브젝트의 상태를 얻습니다.
+	 *
+	 * @return 별 오브젝트의 상태를 반환합니다.
+	 */
+	EState GetState() const { return state_; }
+
+
+	/**
+	 * @brief 별 오브젝트의 상태를 설정합니다.
+	 *
+	 * @param state 설정할 별 오브젝트의 상태입니다.
+	 */
+	void SetState(const EState& state) { state_ = state; }
 
 
 private:

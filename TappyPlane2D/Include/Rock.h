@@ -122,6 +122,22 @@ public:
 	 * @brief 바위 오브젝트 내부 프로퍼티를 초기화합니다.
 	 */
 	void SetupProperties();
+
+
+	/**
+	 * @brief 바위 오브젝트의 상태를 얻습니다.
+	 * 
+	 * @return 바위 오브젝트의 상태를 반환합니다.
+	 */
+	EState GetState() const { return state_; }
+
+	
+	/**
+	 * @brief 바위 오브젝트의 상태를 설정합니다.
+	 * 
+	 * @param state 설정할 바위 오브젝트의 상태입니다.
+	 */
+	void SetState(const EState& state) { state_ = state; }
 	
 
 public:
