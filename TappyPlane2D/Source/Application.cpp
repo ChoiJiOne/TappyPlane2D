@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 	plane->Initialize(Plane::EColor::Yellow);
 
 	Rock* rock = ObjectManager::Get().CreateGameObject<Rock>("Rock");
-	rock->Initialize(Rock::EType::Ice, 1000.0f);
+	rock->Initialize(Rock::EType::Ice, 1100.0f);
 	
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
@@ -34,16 +34,16 @@ int main(int argc, char* argv[])
 
 		background->Update(globalTimer.GetDeltaSeconds());
 		ground->Update(globalTimer.GetDeltaSeconds());
-		plane->Update(globalTimer.GetDeltaSeconds());
 		rock->Update(globalTimer.GetDeltaSeconds());
-			
+		plane->Update(globalTimer.GetDeltaSeconds());
+
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		background->Render();
 		ground->Render();
-		plane->Render();
 		rock->Render();
+		plane->Render();
 		
 		RenderManager::Get().EndFrame();
 	}
