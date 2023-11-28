@@ -1,4 +1,5 @@
 #include "Rock.h"
+#include "Plane.h"
 
 #include "AssertionMacro.h"
 #include "RenderManager.h"
@@ -95,4 +96,19 @@ void Rock::Release()
 {
 	ASSERT(bIsInitialized_, "not initialized before or has already been released...");
 	bIsInitialized_ = false;
+}
+
+bool Rock::IsCollision(const Plane* plane)
+{
+	const AABB& aabb = plane->GetCollisionBound();
+
+	for (const auto& outline : outlines_)
+	{
+		if (aabb.IsCollision(&outline))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

@@ -5,6 +5,8 @@
 #include "Texture2D.h"
 #include "Vector2.h"
 
+class Plane;
+
 
 /**
  * @brief 바위 오브젝트입니다.
@@ -74,6 +76,14 @@ public:
 	 * @note 바위 오브젝트 인터페이스를 상속받는 하위 클래스에서 반드시 구현해야 합니다.
 	 */
 	virtual void Release() override;
+
+
+	/**
+	 * @brief 비행기와 충돌했는지 검사합니다.
+	 * 
+	 * @param plane 충돌 검사를 수행할 비행기 오브젝트입니다.
+	 */
+	bool IsCollision(const Plane* plane);
 
 
 public:
