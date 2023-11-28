@@ -116,6 +116,15 @@ bool Rock::IsCollisionRock(const Rock* rock) const
 	return false;
 }
 
+Vector2f Rock::GetEmptyMiddlePoint() const
+{
+	const std::array<Vector2f, 2>& points0 = outlines_[0].GetPoints();
+	const std::array<Vector2f, 2>& points2 = outlines_[2].GetPoints();
+
+	Vector2f point = points0[1] + points2[1];
+	return Vector2f(point.x / 2.0f, point.y / 2.0f);
+}
+
 void Rock::SetupProperties()
 {
 	int32_t windowWidth = 0;

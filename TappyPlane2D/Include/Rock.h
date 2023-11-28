@@ -72,8 +72,6 @@ public:
 
 	/**
 	 * @brief 바위 오브젝트 내의 리소스를 할당 해제합니다.
-	 *
-	 * @note 바위 오브젝트 인터페이스를 상속받는 하위 클래스에서 반드시 구현해야 합니다.
 	 */
 	virtual void Release() override;
 
@@ -100,6 +98,14 @@ public:
 	 * @return 바위 오브젝트 외곽선 배열의 상수 참조자를 반환합니다.
 	 */
 	const std::array<LineSegment, 4>& GetOutlines() const { return outlines_; }
+
+
+	/**
+	 * @brief 바위 오브젝트의 두 바위 사이에 비어있는 중간 점 좌표를 얻습니다.
+	 * 
+	 * @return 바위 오브젝트의 두 바위 사이의 중간 점 좌표를 반환합니다.
+	 */
+	Vector2f GetEmptyMiddlePoint() const;
 
 
 private:
