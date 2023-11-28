@@ -56,12 +56,6 @@ void Rock::Update(float deltaSeconds)
 
 	topCenter_.x -= speed_ * deltaSeconds;
 	bottomCenter_.x -= speed_ * deltaSeconds;
-
-	Background* background = ObjectManager::Get().GetGameObject<Background>("Background");
-	if (background->IsOuterRock(this) && topCenter_.x < 0.0f)
-	{
-		SetupProperties();
-	}
 }
 
 void Rock::Render()
