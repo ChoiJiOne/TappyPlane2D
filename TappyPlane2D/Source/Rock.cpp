@@ -29,25 +29,30 @@ Rock::~Rock()
 	}
 }
 
-void Rock::Initialize(const EType& type)
+void Rock::Initialize(const EType& type, const float& startXPosition)
 {
 	ASSERT(!bIsInitialized_, "already initialize rock game object...");
 
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
-
+	
 	topTexture_ = ResourceManager::Get().GetResource<Texture2D>(topRockMaps.at(type));
 	bottomTexture_ = ResourceManager::Get().GetResource<Texture2D>(bottomRockMaps.at(type));
-	width_ = 108.0f;
-	height_ = 239.0f;
+	startXPosition_ = startXPosition;
 	speed_ = 200.0f;
-	
-	startXPosition_ = static_cast<float>(windowWidth) + width_ / 2.0f;
 
-	topCenter_ = Vector2f(startXPosition_, height_ / 2.0f);
-	bottomCenter_ = Vector2f(startXPosition_, static_cast<float>(windowHeight) - height_ / 2.0f);
-	
+	float minHeight = 200.0f;
+	float diffHeight = 200.0f;
+
+	topWidth_ = 108.0f;
+	topHeight_ = MathUtils::GenerateRandomFloat(minHeight, static_cast<float>(windowHeight) - diffHeight - minHeight);
+	topCenter_ = Vector2f(startXPosition_, topHeight_ / 2.0f);
+
+	bottomWidth_ = 108.0f;
+	bottomHeight_ = static_cast<float>(windowHeight) - diffHeight - topHeight_;
+	bottomCenter_ = Vector2f(startXPosition_, static_cast<float>(windowHeight) - bottomHeight_ / 2.0f);
+		
 	bIsInitialized_ = true;
 }
 
@@ -59,8 +64,8 @@ void Rock::Update(float deltaSeconds)
 
 void Rock::Render()
 {
-	RenderManager::Get().DrawTexture2D(topTexture_, topCenter_, width_, height_, 0.0f);
-	RenderManager::Get().DrawTexture2D(bottomTexture_, bottomCenter_, width_, height_, 0.0f);
+	RenderManager::Get().DrawTexture2D(topTexture_, topCenter_, topWidth_, topHeight_, 0.0f);
+	RenderManager::Get().DrawTexture2D(bottomTexture_, bottomCenter_, bottomWidth_, bottomHeight_, 0.0f);
 }
 
 void Rock::Release()

@@ -49,8 +49,9 @@ public:
 	 * @brief 바위 오브젝트를 초기화합니다.
 	 * 
 	 * @param type 바위 오브젝트의 타입입니다.
+	 * @param startXPosition 바위 오브젝트의 시작 X좌표입니다.
 	 */
-	void Initialize(const EType& type);
+	void Initialize(const EType& type, const float& startXPosition);
 
 
 	/**
@@ -89,6 +90,18 @@ public:
 
 
 	/**
+	 * @brief 상단 바위의 가로 크기입니다.
+	 */
+	float topWidth_ = 0.0f;
+
+
+	/**
+	 * @brief 상단 바위의 세로 크기입니다.
+	 */
+	float topHeight_ = 0.0f;
+
+
+	/**
 	 * @brief 하단 바위 텍스처 리소스입니다.
 	 */
 	Texture2D* bottomTexture_ = nullptr;
@@ -101,15 +114,15 @@ public:
 
 
 	/**
-	 * @brief 바위의 가로 크기입니다.
+	 * @brief 하단 바위의 가로 크기입니다.
 	 */
-	float width_ = 0.0f;
+	float bottomWidth_ = 0.0f;
 
 
 	/**
-	 * @brief 바위의 세로 크기입니다.
+	 * @brief 하단 바위의 세로 크기입니다.
 	 */
-	float height_ = 0.0f;
+	float bottomHeight_ = 0.0f;
 
 
 	/**
