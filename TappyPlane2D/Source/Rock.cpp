@@ -56,6 +56,12 @@ void Rock::Update(float deltaSeconds)
 
 	topCenter_.x -= speed_ * deltaSeconds;
 	bottomCenter_.x -= speed_ * deltaSeconds;
+
+	Background* background = ObjectManager::Get().GetGameObject<Background>("Background");
+	if (background->IsOuterRock(this) && topCenter_.x < 0.0f)
+	{
+		SetupProperties();
+	}
 }
 
 void Rock::Render()
@@ -77,7 +83,7 @@ void Rock::Release()
 	bIsInitialized_ = false;
 }
 
-bool Rock::IsCollision(const Plane* plane) const
+bool Rock::IsCollisionPlane(const Plane* plane) const
 {
 	const AABB& aabb = plane->GetCollisionBound();
 
@@ -86,6 +92,24 @@ bool Rock::IsCollision(const Plane* plane) const
 		if (aabb.IsCollision(&outline))
 		{
 			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Rock::IsCollisionRock(const Rock* rock) const
+{
+	const std::array<LineSegment, 4>& otherOutlines = rock->GetOutlines();
+
+	for (const auto& outline : outlines_)
+	{
+		for (const auto& otherOutline : otherOutlines)
+		{
+			if (outline.IsCollision(&otherOutline))
+			{
+				return true;
+			}
 		}
 	}
 

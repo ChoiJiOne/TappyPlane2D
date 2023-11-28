@@ -83,7 +83,15 @@ public:
 	 * 
 	 * @param plane 충돌 검사를 수행할 비행기 오브젝트입니다.
 	 */
-	bool IsCollision(const Plane* plane) const;
+	bool IsCollisionPlane(const Plane* plane) const;
+
+
+	/**
+	 * @brief 다른 바위 오브젝트와 충돌했는지 검사합니다.
+	 * 
+	 * @param rock 충돌 검사를 수행할 바위 오브젝트입니다.
+	 */
+	bool IsCollisionRock(const Rock* rock) const;
 
 
 	/**
