@@ -17,8 +17,11 @@ public:
 	 */
 	enum class EType : int32_t
 	{
-		Top = 0x00,
-		Bottom = 0x01,
+		Dirt = 0x00,
+		Grass = 0x01,
+		Ice = 0x02,
+		Rock = 0x03,
+		Snow = 0x04,
 	};
 
 
@@ -75,21 +78,21 @@ public:
 
 private:
 	/**
-	 * @brief 그라운드의 타입입니다.
-	 */
-	EType type_;
-
-
-	/**
 	 * @brief 그라운드 텍스처 리소스입니다.
 	 */
 	Texture2D* texture_ = nullptr;
 
+	
+	/**
+	 * @brief 그라운드 상단의 중심 위치입니다.
+	 */
+	Vector2f topCenter_;
+
 
 	/**
-	 * @brief 그라운드의 중심 위치입니다.
+	 * @brief 그라운드 하단의 중심 위치입니다.
 	 */
-	Vector2f center_;
+	Vector2f bottomCenter_;
 
 
 	/**
@@ -105,12 +108,6 @@ private:
 
 
 	/**
-	 * @brief 그라운드의 회전 각도입니다.
-	 */
-	float rotate_ = 0.0f;
-
-
-	/**
 	 * @brief 그라운드의 스크롤 속도입니다.
 	 *
 	 * @note
@@ -121,7 +118,7 @@ private:
 
 
 	/**
-	 * @brief 백그라운드의 스크롤 지점입니다.
+	 * @brief 그라운드의 스크롤 지점입니다.
 	 */
 	float scrollPosition_ = 0.0f;
 };

@@ -5,6 +5,16 @@
 #include "ResourceManager.h"
 #include "MathUtils.h"
 
+#include <map>
+
+std::map<Ground::EType, std::string> groundTypeMaps = {
+	{ Ground::EType::Dirt,  "groundDirt" },
+	{ Ground::EType::Grass, "groundGrass" },
+	{ Ground::EType::Ice,   "groundIce" },
+	{ Ground::EType::Rock,  "groundRock" },
+	{ Ground::EType::Snow,  "groundSnow" },
+};
+
 Ground::~Ground()
 {
 	if (bIsInitialized_)
@@ -17,35 +27,17 @@ void Ground::Initialize(const EType& type)
 {
 	ASSERT(!bIsInitialized_, "already initialize ground game object...");
 
-	type_ = type;
-
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
 
 	width_ = static_cast<float>(windowWidth);
 	height_ = static_cast<float>(windowHeight) / 10.0f;
-
-	ResourceManager& manager = ResourceManager::Get();
-	switch (type_)
-	{
-	case EType::Bottom:
-		texture_ = manager.GetResource<Texture2D>("groundGrass");
-		rotate_ = 0.0f;
-		center_ = Vector2f(width_ / 2.0f, static_cast<float>(windowHeight) - height_ / 2.0f);
-		break;
-
-	case EType::Top:
-		texture_ = manager.GetResource<Texture2D>("groundDirt");
-		rotate_ = MathUtils::Pi;
-		center_ = Vector2f(width_ / 2.0f, height_ / 2.0f);
-		break;
-
-	default:
-		ASSERT(false, "undefined ground type : %d", static_cast<int32_t>(type));
-	}
-
-	scrollSpeed_ = 150.0f;
+	texture_ = ResourceManager::Get().GetResource<Texture2D>(groundTypeMaps.at(type));
+	topCenter_ = Vector2f(width_ / 2.0f, height_ / 2.0f);
+	bottomCenter_ = Vector2f(width_ / 2.0f, static_cast<float>(windowHeight) - height_ / 2.0f);
+	
+	scrollSpeed_ = 200.0f;
 	scrollPosition_ = 0.0f;
 
 	bIsInitialized_ = true;
@@ -65,12 +57,8 @@ void Ground::Render()
 {
 	float rate = scrollPosition_ / width_;
 
-	if (type_ == EType::Top)
-	{
-		rate = 1.0f - rate;
-	}
-
-	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, center_, width_, height_, rotate_, rate);
+	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, bottomCenter_, width_, height_, 0.0f, rate);
+	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, topCenter_, width_, height_, MathUtils::Pi, 1.0f - rate);
 }
 
 void Ground::Release()
