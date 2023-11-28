@@ -109,11 +109,6 @@ bool Rock::IsCollisionPlane(const Plane* plane) const
 
 bool Rock::IsCollisionRock(const Rock* rock) const
 {
-	if (state_ == EState::Wait || rock->GetState() == EState::Wait)
-	{
-		return false;
-	}
-
 	const std::array<LineSegment, 4>& otherOutlines = rock->GetOutlines();
 
 	for (const auto& outline : outlines_)
