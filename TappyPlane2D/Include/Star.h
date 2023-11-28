@@ -5,6 +5,8 @@
 #include "Texture2D.h"
 #include "Vector2.h"
 
+class Plane;
+
 
 /**
  * @brief 플레이어가 획득 가능한 별 오브젝트입니다.
@@ -69,6 +71,14 @@ public:
 	 * @brief 별 오브젝트 내의 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
+
+
+	/**
+	 * @brief 비행기와 충돌했는지 검사합니다.
+	 * 
+	 * @param plane 충돌 검사를 수행할 비행기 오브젝트입니다.
+	 */
+	bool IsCollisionPlane(const Plane* plane) const;
 
 	
 	/**

@@ -1,4 +1,5 @@
 #include "Star.h"
+#include "Plane.h"
 
 #include "AssertionMacro.h"
 #include "RenderManager.h"
@@ -39,6 +40,13 @@ void Star::Release()
 {
 	ASSERT(bIsInitialized_, "not initialized before or has already been released...");
 	bIsInitialized_ = false;
+}
+
+bool Star::IsCollisionPlane(const Plane* plane) const
+{
+	const AABB& aabb = plane->GetCollisionBound();
+
+	return collisionBound_.IsCollision(&aabb);
 }
 
 void Star::SetupProperties(const Vector2f& center)
