@@ -5,7 +5,7 @@
   "width": 1000,
   "height": 800,
   "resize": false,
-  "vsync": false,
+  "vsync": true,
   "opengl": "4.6",
   "texture": [
     "background.png",
