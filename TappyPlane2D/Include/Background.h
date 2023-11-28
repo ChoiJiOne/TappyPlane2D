@@ -6,6 +6,7 @@
 
 class Plane;
 class Rock;
+class Star;
 
 
 /**
@@ -74,8 +75,18 @@ public:
 
 	/**
 	 * @brief 바위가 백그라운드 외부에 있는지 확인합니다.
+	 * 
+	 * @param rock 백그라운드 외부에 있는지 확인할 바위 오브젝트입니다.
 	 */
 	bool IsOuterRock(const Rock* rock) const;
+
+
+	/**
+	 * @brief 별이 백그라운드 외부에 있는지 확인합니다.
+	 * 
+	 * @param star 백그라운드 외부에 있는지 확인할 별 오브젝트입니다.
+	 */
+	bool IsOuterStar(const Star* star) const;
 
 
 private:

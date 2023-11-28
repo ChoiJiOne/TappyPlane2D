@@ -1,6 +1,7 @@
 #include "Background.h"
 #include "Plane.h"
 #include "Rock.h"
+#include "Star.h"
 
 #include "AssertionMacro.h"
 #include "RenderManager.h"
@@ -91,6 +92,21 @@ bool Background::IsOuterRock(const Rock* rock) const
 			{
 				return false;
 			}
+		}
+	}
+
+	return true;
+}
+
+bool Background::IsOuterStar(const Star* star) const
+{
+	const AABB& aabb = star->GetCollisionBound();
+
+	for (const auto& outline : outlines_)
+	{
+		if (aabb.IsCollision(&outline))
+		{
+			return false;
 		}
 	}
 
