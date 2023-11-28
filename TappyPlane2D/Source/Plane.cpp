@@ -1,10 +1,13 @@
 #include "Plane.h"
+#include "Background.h"
+#include "Rock.h"
 
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "ObjectManager.h"
 #include "StringUtils.h"
 #include "Texture2D.h"
 
@@ -40,7 +43,7 @@ void Plane::Initialize(const EColor& colorType)
 	height_ = 73.0f;
 	rotate_ = 0.0f;
 	state_ = EState::Wait;
-	collisionBound_ = AABB(center_, width_ / 2.0f, height_ / 2.0f);
+	collisionBound_ = AABB(center_, width_, height_);
 
 	// 애니메이션 속성 설정
 	animationTextures_ = {
@@ -57,9 +60,9 @@ void Plane::Initialize(const EColor& colorType)
 	waitAccumulateTime_ = 0.0f;
 	waitPosition_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, static_cast<float>(windowHeight) / 2.0f);
 
-	maxSpeed_ = 300.0f;
+	maxSpeed_ = 400.0f;
 	currentSpeed_ = 0.0f;
-	dampingSpeed_ = 0.8f;
+	dampingSpeed_ = 10.0f;
 
 	bIsInitialized_ = true;
 }
@@ -90,7 +93,16 @@ void Plane::Update(float deltaSeconds)
 void Plane::Render()
 {
 	RenderManager::Get().DrawTexture2D(animationTextures_[animationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
-	RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+
+	Rock* rock = ObjectManager::Get().GetGameObject<Rock>("Rock");
+	if (rock->IsCollisionPlane(this))
+	{
+		RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+	}
+	else
+	{
+		RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
+	}
 }
 
 void Plane::Release()
@@ -118,7 +130,7 @@ void Plane::UpdateWaitState(float deltaSeconds)
 
 	center_.x = waitPosition_.x;
 	center_.y = waitPosition_.y + 10.0f * MathUtils::ScalarSin(waitAccumulateTime_ * 2.0f);
-	collisionBound_.SetProperty(center_, width_ / 2.0f, height_ / 2.0f);
+	collisionBound_.SetProperty(center_, width_, height_);
 
 	if (InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
 	{
@@ -139,7 +151,7 @@ void Plane::UpdateFlightState(float deltaSeconds)
 		currentSpeed_ = maxSpeed_;
 	}
 	
-	collisionBound_.SetProperty(center_, width_ / 2.0f, height_ / 2.0f);
+	collisionBound_.SetProperty(center_, width_, height_);
 }
 
 void Plane::UpdateCrashState(float deltaSeconds)
