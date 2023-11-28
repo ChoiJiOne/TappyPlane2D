@@ -60,8 +60,6 @@ public:
 
 	/**
 	 * @brief 백그라운드 오브젝트 내의 리소스를 할당 해제합니다.
-	 *
-	 * @note 백그라운드 오브젝트 인터페이스를 상속받는 하위 클래스에서 반드시 구현해야 합니다.
 	 */
 	virtual void Release() override;
 
