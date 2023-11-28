@@ -90,6 +90,7 @@ void Plane::Update(float deltaSeconds)
 void Plane::Render()
 {
 	RenderManager::Get().DrawTexture2D(animationTextures_[animationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+	RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Plane::Release()
