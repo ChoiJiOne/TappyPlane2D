@@ -33,7 +33,7 @@ public:
 	{
 		Wait = 0x00,
 		Move = 0x01,
-		Stop= 0x02,
+		Stop = 0x02,
 	};
 
 
