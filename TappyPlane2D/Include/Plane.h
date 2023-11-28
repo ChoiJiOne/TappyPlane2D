@@ -262,10 +262,4 @@ private:
 	 * @brief 비행기의 대기 위치입니다.
 	 */
 	Vector2f waitPosition_;
-
-
-	/**
-	 * @brief 나는 동안의 누적 시간입니다.
-	 */
-	float accumulateTime_ = 0.0f;
 };

@@ -93,9 +93,6 @@ void Plane::Update(float deltaSeconds)
 void Plane::Render()
 {
 	RenderManager::Get().DrawTexture2D(animationTextures_[animationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
-
-	// 충돌 처리 확인용! => 나중에 삭제해야 함
-	RenderManager::Get().DrawWireframeCircle2D(collisionBound_.GetCenter(), collisionBound_.GetRadius(), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Plane::Release()
@@ -135,11 +132,6 @@ void Plane::UpdateWaitState(float deltaSeconds)
 void Plane::UpdateFlightState(float deltaSeconds)
 {
 	ASSERT(state_ == EState::Flight, "inavlid plane state : %d", static_cast<int32_t>(state_));
-
-	accumulateTime_ += deltaSeconds;
-
-	center_.x = waitPosition_.x;
-	center_.y = waitPosition_.y - 250.0f * std::abs(MathUtils::ScalarSin(accumulateTime_ * 2.0f));
 }
 
 void Plane::UpdateLandingState(float deltaSeconds)
