@@ -44,6 +44,11 @@ void Star::Release()
 
 bool Star::IsCollisionPlane(const Plane* plane) const
 {
+	if (state_ == EState::Wait)
+	{
+		return false;
+	}
+
 	const AABB& aabb = plane->GetCollisionBound();
 
 	return collisionBound_.IsCollision(&aabb);

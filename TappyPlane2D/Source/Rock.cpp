@@ -79,6 +79,11 @@ void Rock::Release()
 
 bool Rock::IsCollisionPlane(const Plane* plane) const
 {
+	if (state_ == EState::Wait)
+	{
+		return false;
+	}
+
 	const AABB& aabb = plane->GetCollisionBound();
 
 	for (const auto& outline : outlines_)
