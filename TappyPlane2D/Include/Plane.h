@@ -89,6 +89,14 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 비행기의 충돌 경계 영역을 얻습니다.
+	 * 
+	 * @return 비행기 충돌 경계 영역의 상수 참조자를 반환합니다.
+	 */
+	const AABB& GetCollisionBound() const { return collisionBound_; }
+
+
 private:
 	/**
 	 * @brief 비행기의 애니메이션을 업데이트합니다.
