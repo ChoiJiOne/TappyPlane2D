@@ -27,7 +27,7 @@ Plane::~Plane()
 
 void Plane::Initialize(const EColor& colorType)
 {
-	ASSERT(!bIsInitialized_, "already initialize ground game object...");
+	ASSERT(!bIsInitialized_, "already initialize plane game object...");
 
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
