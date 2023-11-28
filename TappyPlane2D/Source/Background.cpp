@@ -101,14 +101,8 @@ bool Background::IsOuterRock(const Rock* rock) const
 bool Background::IsOuterStar(const Star* star) const
 {
 	const AABB& aabb = star->GetCollisionBound();
-
-	for (const auto& outline : outlines_)
-	{
-		if (aabb.IsCollision(&outline))
-		{
-			return false;
-		}
-	}
-
-	return true;
+	const Vector2f& minPosition = aabb.GetMinPosition();
+	const Vector2f& maxPosition = aabb.GetMaxPosition();
+	
+	return (maxPosition.x < 0.0f || minPosition.x > width_);
 }
