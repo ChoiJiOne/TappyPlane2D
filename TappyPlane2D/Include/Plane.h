@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "Circle.h"
+#include "AABB.h"
 #include "IGameObject.h"
 #include "Texture2D.h"
 #include "MathUtils.h"
@@ -121,7 +121,7 @@ private:
 	 */
 	void UpdateCrashState(float deltaSeconds);
 
-
+	
 private:
 	/**
 	 * @brief 비행기의 색상 종류입니다.
@@ -172,11 +172,11 @@ private:
 
 
 	/**
-	 * @brief 충돌 처리를 위한 원입니다.
+	 * @brief 충돌 처리를 위한 AABB입니다.
 	 * 
 	 * @note 이 속성은 비행기의 기본 속성입니다.
 	 */
-	Circle collisionBound_;
+	AABB collisionBound_;
 
 
 	/**
@@ -213,4 +213,22 @@ private:
 	 * @brief 비행기의 대기 위치입니다.
 	 */
 	Vector2f waitPosition_;
+
+	
+	/**
+	 * @brief 비행기의 최대 속도입니다.
+	 */
+	float maxSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 현재 속도입니다.
+	 */
+	float currentSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기의 감속 속도입니다.
+	 */
+	float dampingSpeed_ = 0.0f;
 };

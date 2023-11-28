@@ -40,7 +40,7 @@ void Plane::Initialize(const EColor& colorType)
 	height_ = 73.0f;
 	rotate_ = 0.0f;
 	state_ = EState::Wait;
-	collisionBound_ = Circle(center_, height_ / 2.0f);
+	collisionBound_ = AABB(center_, width_ / 2.0f, height_ / 2.0f);
 
 	// 애니메이션 속성 설정
 	animationTextures_ = {
@@ -56,6 +56,10 @@ void Plane::Initialize(const EColor& colorType)
 
 	waitAccumulateTime_ = 0.0f;
 	waitPosition_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, static_cast<float>(windowHeight) / 2.0f);
+
+	maxSpeed_ = 300.0f;
+	currentSpeed_ = 0.0f;
+	dampingSpeed_ = 0.8f;
 
 	bIsInitialized_ = true;
 }
@@ -111,19 +115,30 @@ void Plane::UpdateWaitState(float deltaSeconds)
 
 	waitAccumulateTime_ += deltaSeconds;
 
-	if (InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
-	{
-		state_ = EState::Flight;
-	}
-
 	center_.x = waitPosition_.x;
 	center_.y = waitPosition_.y + 10.0f * MathUtils::ScalarSin(waitAccumulateTime_ * 2.0f);
-	collisionBound_.SetCenter(center_);
+	collisionBound_.SetProperty(center_, width_ / 2.0f, height_ / 2.0f);
+
+	if (InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
+	{
+		currentSpeed_ = maxSpeed_;
+		state_ = EState::Flight;
+	}
 }
 
 void Plane::UpdateFlightState(float deltaSeconds)
 {
 	ASSERT(state_ == EState::Flight, "inavlid plane state : %d", static_cast<int32_t>(state_));
+	
+	currentSpeed_ -= dampingSpeed_;
+	center_.y -= currentSpeed_ * deltaSeconds;
+
+	if (currentSpeed_ <= 0.0f && InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
+	{
+		currentSpeed_ = maxSpeed_;
+	}
+	
+	collisionBound_.SetProperty(center_, width_ / 2.0f, height_ / 2.0f);
 }
 
 void Plane::UpdateCrashState(float deltaSeconds)
