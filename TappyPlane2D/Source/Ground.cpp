@@ -48,8 +48,6 @@ void Ground::Initialize(const EType& type)
 	scrollSpeed_ = 150.0f;
 	scrollPosition_ = 0.0f;
 
-	collisionBound_ = AABB(center_, width_, height_);
-
 	bIsInitialized_ = true;
 }
 
@@ -73,9 +71,6 @@ void Ground::Render()
 	}
 
 	RenderManager::Get().DrawHorizonScrollTexture2D(texture_, center_, width_, height_, rotate_, rate);
-
-	// 충돌 처리 확인용! => 나중에 삭제해야 함
-	RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Ground::Release()

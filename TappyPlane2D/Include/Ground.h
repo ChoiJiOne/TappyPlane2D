@@ -124,10 +124,4 @@ private:
 	 * @brief 백그라운드의 스크롤 지점입니다.
 	 */
 	float scrollPosition_ = 0.0f;
-
-
-	/**
-	 * @brief 충돌 처리를 위한 AABB입니다.
-	 */
-	AABB collisionBound_;
 };
