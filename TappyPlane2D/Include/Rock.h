@@ -94,7 +94,26 @@ public:
 	const std::array<LineSegment, 4>& GetOutlines() const { return outlines_; }
 
 
+private:
+	/**
+	 * @brief 내부 프로퍼티를 초기화합니다.
+	 */
+	void SetupProperties();
+
+
 public:
+	/**
+	 * @brief 바위 오브젝트의 타입입니다.
+	 */
+	EType type_ = EType::Plain;
+
+
+	/**
+	 * @brief 바위의 시작 X좌표입니다.
+	 */
+	float startXPosition_ = 0.0f;
+
+
 	/**
 	 * @brief 상단 바위 텍스처 리소스입니다.
 	 */
@@ -153,10 +172,4 @@ public:
 	 * @brief 바위의 이동 속도입니다.
 	 */
 	float speed_ = 0.0f;
-
-
-	/**
-	 * @brief 바위의 시작 X좌표입니다.
-	 */
-	float startXPosition_ = 0.0f;
 };

@@ -1,9 +1,11 @@
 #include "Rock.h"
+#include "Background.h"
 #include "Plane.h"
 
 #include "AssertionMacro.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "ObjectManager.h"
 #include "MathUtils.h"
 
 #include <map>
@@ -34,32 +36,9 @@ void Rock::Initialize(const EType& type, const float& startXPosition)
 {
 	ASSERT(!bIsInitialized_, "already initialize rock game object...");
 
-	int32_t windowWidth = 0;
-	int32_t windowHeight = 0;
-	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
-	
-	topTexture_ = ResourceManager::Get().GetResource<Texture2D>(topRockMaps.at(type));
-	bottomTexture_ = ResourceManager::Get().GetResource<Texture2D>(bottomRockMaps.at(type));
+	type_ = type;
 	startXPosition_ = startXPosition;
-	speed_ = 200.0f;
-
-	float minHeight = 200.0f;
-	float diffHeight = 200.0f;
-
-	topWidth_ = 108.0f;
-	topHeight_ = MathUtils::GenerateRandomFloat(minHeight, static_cast<float>(windowHeight) - diffHeight - minHeight);
-	topCenter_ = Vector2f(startXPosition_, topHeight_ / 2.0f);
-
-	bottomWidth_ = 108.0f;
-	bottomHeight_ = static_cast<float>(windowHeight) - diffHeight - topHeight_;
-	bottomCenter_ = Vector2f(startXPosition_, static_cast<float>(windowHeight) - bottomHeight_ / 2.0f);
-
-	outlines_ = {
-		LineSegment(Vector2f(startXPosition_ - topWidth_ * 0.5f, 0.0f), Vector2f(startXPosition_ + topWidth_ * 0.1f, topHeight_)),
-		LineSegment(Vector2f(startXPosition_ + topWidth_ * 0.5f, 0.0f), Vector2f(startXPosition_ + topWidth_ * 0.1f, topHeight_)),
-		LineSegment(Vector2f(startXPosition_ - topWidth_ * 0.5f, static_cast<float>(windowHeight)), Vector2f(startXPosition_ + topWidth_ * 0.1f, static_cast<float>(windowHeight) - bottomHeight_)),
-		LineSegment(Vector2f(startXPosition_ + topWidth_ * 0.5f, static_cast<float>(windowHeight)), Vector2f(startXPosition_ + topWidth_ * 0.1f, static_cast<float>(windowHeight) - bottomHeight_)),
-	};
+	SetupProperties();
 
 	bIsInitialized_ = true;
 }
@@ -111,4 +90,34 @@ bool Rock::IsCollision(const Plane* plane) const
 	}
 
 	return false;
+}
+
+void Rock::SetupProperties()
+{
+	int32_t windowWidth = 0;
+	int32_t windowHeight = 0;
+	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
+
+	topTexture_ = ResourceManager::Get().GetResource<Texture2D>(topRockMaps.at(type_));
+	bottomTexture_ = ResourceManager::Get().GetResource<Texture2D>(bottomRockMaps.at(type_));
+	startXPosition_ = startXPosition_;
+	speed_ = 200.0f;
+
+	float minHeight = 200.0f;
+	float diffHeight = 200.0f;
+
+	topWidth_ = 108.0f;
+	topHeight_ = MathUtils::GenerateRandomFloat(minHeight, static_cast<float>(windowHeight) - diffHeight - minHeight);
+	topCenter_ = Vector2f(startXPosition_, topHeight_ / 2.0f);
+
+	bottomWidth_ = 108.0f;
+	bottomHeight_ = static_cast<float>(windowHeight) - diffHeight - topHeight_;
+	bottomCenter_ = Vector2f(startXPosition_, static_cast<float>(windowHeight) - bottomHeight_ / 2.0f);
+
+	outlines_ = {
+		LineSegment(Vector2f(startXPosition_ - topWidth_ * 0.5f, 0.0f), Vector2f(startXPosition_ + topWidth_ * 0.1f, topHeight_)),
+		LineSegment(Vector2f(startXPosition_ + topWidth_ * 0.5f, 0.0f), Vector2f(startXPosition_ + topWidth_ * 0.1f, topHeight_)),
+		LineSegment(Vector2f(startXPosition_ - topWidth_ * 0.5f, static_cast<float>(windowHeight)), Vector2f(startXPosition_ + topWidth_ * 0.1f, static_cast<float>(windowHeight) - bottomHeight_)),
+		LineSegment(Vector2f(startXPosition_ + topWidth_ * 0.5f, static_cast<float>(windowHeight)), Vector2f(startXPosition_ + topWidth_ * 0.1f, static_cast<float>(windowHeight) - bottomHeight_)),
+	};
 }
