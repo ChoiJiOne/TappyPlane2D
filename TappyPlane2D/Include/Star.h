@@ -68,6 +68,14 @@ public:
 	const AABB& GetCollisionBound() const { return collisionBound_; }
 
 
+	/**
+	 * @brief 별 오브젝트의 내부 프로퍼티를 초기화합니다.
+	 * 
+	 * @param center 별 오브젝트의 중심 위치입니다.
+	 */
+	void SetupProperties(const Vector2f& center);
+
+
 private:
 	/**
 	 * @brief 별 오브젝트의 중심 위치입니다.

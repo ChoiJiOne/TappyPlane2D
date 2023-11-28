@@ -17,14 +17,7 @@ void Star::Initialize(const Vector2f& center)
 {
 	ASSERT(!bIsInitialized_, "already initialize star game object...");
 
-	center_ = center;
-	width_ = 39.0f;
-	height_ = 38.0f;
-	speed_ = 200.0f;
-
-	texture_ = ResourceManager::Get().GetResource<Texture2D>("starGold");
-
-	collisionBound_.SetProperty(center_, width_, height_);
+	SetupProperties(center);
 
 	bIsInitialized_ = true;
 }
@@ -44,4 +37,16 @@ void Star::Release()
 {
 	ASSERT(bIsInitialized_, "not initialized before or has already been released...");
 	bIsInitialized_ = false;
+}
+
+void Star::SetupProperties(const Vector2f& center)
+{
+	center_ = center;
+	width_ = 39.0f;
+	height_ = 38.0f;
+	speed_ = 200.0f;
+
+	texture_ = ResourceManager::Get().GetResource<Texture2D>("starGold");
+
+	collisionBound_.SetProperty(center_, width_, height_);
 }
