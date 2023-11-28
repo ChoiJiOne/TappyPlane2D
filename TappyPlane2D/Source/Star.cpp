@@ -25,12 +25,22 @@ void Star::Initialize(const Vector2f& center)
 
 void Star::Update(float deltaSeconds)
 {
+	if (state_ == EState::Wait)
+	{
+		return;
+	}
+
 	center_.x -= speed_ * deltaSeconds;
 	collisionBound_.SetProperty(center_, width_, height_);
 }
 
 void Star::Render()
 {
+	if (state_ == EState::Wait)
+	{
+		return;
+	}
+
 	RenderManager::Get().DrawTexture2D(texture_, center_, width_, height_, 0.0f);
 
 	RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));

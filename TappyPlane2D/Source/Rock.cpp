@@ -45,6 +45,11 @@ void Rock::Initialize(const EType& type, const float& startXPosition)
 
 void Rock::Update(float deltaSeconds)
 {
+	if (state_ == EState::Wait)
+	{
+		return;
+	}
+	
 	std::array<Vector2f, 2> points;
 	for (auto& outline : outlines_)
 	{
@@ -60,6 +65,11 @@ void Rock::Update(float deltaSeconds)
 
 void Rock::Render()
 {
+	if (state_ == EState::Wait)
+	{
+		return;
+	}
+
 	RenderManager::Get().DrawTexture2D(topTexture_, topCenter_, topWidth_, topHeight_, 0.0f);
 	RenderManager::Get().DrawTexture2D(bottomTexture_, bottomCenter_, bottomWidth_, bottomHeight_, 0.0f);
 
