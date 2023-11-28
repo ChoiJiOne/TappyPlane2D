@@ -2,6 +2,10 @@
 
 #include "IGameObject.h"
 #include "Texture2D.h"
+#include "LineSegment.h"
+
+class Plane;
+class Rock;
 
 
 /**
@@ -62,7 +66,33 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 비행기가 백그라운드 내부에 있는지 확인합니다.
+	 * 
+	 * @param plane 백그라운드 내부에 있는지 확인할 비행기 오브젝트입니다.
+	 */
+	bool IsInnerPlane(const Plane* plane) const;
+
+
+	/**
+	 * @brief 바위가 백그라운드 외부에 있는지 확인합니다.
+	 */
+	bool IsOuterRock(const Rock* rock) const;
+
+
 private:
+	/**
+	 * @brief 백그라운드의 가로 크기입니다.
+	 */
+	float width_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드의 세로 크기입니다.
+	 */
+	float height_ = 0.0f;
+
+
 	/**
 	 * @brief 백그라운드 텍스처 리소스입니다.
 	 */
@@ -89,4 +119,10 @@ private:
 	 * @brief 백그라운드의 스크롤 최대 지점입니다.
 	 */
 	float maxScrollPosition_ = 0.0f;
+
+
+	/**
+	 * @brief 백그라운드의 외곽선입니다.
+	 */
+	std::array<LineSegment, 4> outlines_;
 };
