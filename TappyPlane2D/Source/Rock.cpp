@@ -45,7 +45,7 @@ void Rock::Initialize(const EType& type, const float& startXPosition)
 
 void Rock::Update(float deltaSeconds)
 {
-	if (state_ == EState::Wait)
+	if (state_ == EState::Wait || state_ == EState::Stop)
 	{
 		return;
 	}

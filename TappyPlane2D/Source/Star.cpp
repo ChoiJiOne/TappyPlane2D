@@ -25,7 +25,7 @@ void Star::Initialize(const Vector2f& center)
 
 void Star::Update(float deltaSeconds)
 {
-	if (state_ == EState::Wait)
+	if (state_ == EState::Wait || state_ == EState::Stop)
 	{
 		return;
 	}
