@@ -46,7 +46,7 @@ public:
 	template <typename TGameObject>
 	TGameObject* CreateGameObject(const std::string& signature)
 	{
-		ASSERT(!VerifyResource(signature), "already exist game object signature key : %s", signature.c_str());
+		ASSERT(!VerifyGameObject(signature), "already exist game object signature key : %s", signature.c_str());
 
 		std::unique_ptr<TGameObject> gameObject = std::make_unique<TGameObject>();
 		gameObjects_.insert({ signature, std::move(gameObject) });
@@ -56,7 +56,7 @@ public:
 
 
 	/**
-	 * @brief 게임 오브젝트 매니저가 관리하는 리소스를 얻습니다.
+	 * @brief 게임 오브젝트 매니저가 관리하는 게임 오브젝트의 포인터를 얻습니다.
 	 *
 	 * @param signature 매니저 내부에서 게임 오브젝트를 구분할 시그니처 값입니다.
 	 *
@@ -65,7 +65,7 @@ public:
 	template <typename TGameObject>
 	TGameObject* GetGameObject(const std::string& signature)
 	{
-		if (!VerifyResource(signature))
+		if (!VerifyGameObject(signature))
 		{
 			return nullptr;
 		}
@@ -75,22 +75,22 @@ public:
 
 
 	/**
-	 * @brief 리소스 매니저가 관리하는 리소스를 삭제합니다.
+	 * @brief 게임 오브젝트 매니저가 관리하는 게임 오브젝트를 삭제합니다.
 	 *
 	 * @param signature 삭제할 리소스의 시그니처 값입니다.
 	 */
-	void DestroyResource(const std::string& signature);
+	void DestroyGameObject(const std::string& signature);
 
 
 private:
 	/**
-	 * @brief 시그니처 값에 대응하는 리소스가 존재하는지 확인합니다.
+	 * @brief 시그니처 값에 대응하는 게임 오브젝트가 존재하는지 확인합니다.
 	 *
-	 * @param signature 리소스가 존재하는 지 확인할 시그니처 값입니다.
+	 * @param signature 게임 오브젝트가 존재하는 지 확인할 시그니처 값입니다.
 	 *
 	 * @return 시그니처 값이 유효하다면 true, 그렇지 않으면 false를 반환합니다.
 	 */
-	bool VerifyResource(const std::string& signature);
+	bool VerifyGameObject(const std::string& signature);
 
 
 private:

@@ -4,7 +4,7 @@
 
 void ObjectManager::Startup()
 {
-	ASSERT(!bIsStartup_, "already startup resource manager...");
+	ASSERT(!bIsStartup_, "already startup game object manager...");
 
 	gameObjects_ = std::unordered_map<std::string, std::unique_ptr<IGameObject>>();
 
@@ -24,9 +24,9 @@ void ObjectManager::Shutdown()
 	bIsStartup_ = false;
 }
 
-void ObjectManager::DestroyResource(const std::string& signature)
+void ObjectManager::DestroyGameObject(const std::string& signature)
 {
-	if (VerifyResource(signature))
+	if (VerifyGameObject(signature))
 	{
 		IGameObject* gameObject = gameObjects_.at(signature).get();
 		if (gameObject && gameObject->IsInitialized())
@@ -38,7 +38,7 @@ void ObjectManager::DestroyResource(const std::string& signature)
 	}
 }
 
-bool ObjectManager::VerifyResource(const std::string& signature)
+bool ObjectManager::VerifyGameObject(const std::string& signature)
 {
 	return gameObjects_.find(signature) != gameObjects_.end();
 }
