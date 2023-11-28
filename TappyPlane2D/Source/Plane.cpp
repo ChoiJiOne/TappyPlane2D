@@ -1,6 +1,7 @@
 #include "Plane.h"
 #include "Background.h"
 #include "Rock.h"
+#include "Star.h"
 
 #include "AssertionMacro.h"
 #include "CommandLineArg.h"
@@ -95,7 +96,9 @@ void Plane::Render()
 	RenderManager::Get().DrawTexture2D(animationTextures_[animationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
 
 	Rock* rock = ObjectManager::Get().GetGameObject<Rock>("Rock");
-	if (rock->IsCollisionPlane(this))
+	Star* star = ObjectManager::Get().GetGameObject<Star>("Star");
+
+	if (rock->IsCollisionPlane(this) || star->IsCollisionPlane(this))
 	{
 		RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 	}
