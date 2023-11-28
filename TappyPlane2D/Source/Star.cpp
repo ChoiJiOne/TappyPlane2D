@@ -41,6 +41,8 @@ void Star::Release()
 
 void Star::SetupProperties(const Vector2f& center)
 {
+	state_ = EState::Wait;
+
 	center_ = center;
 	width_ = 39.0f;
 	height_ = 38.0f;

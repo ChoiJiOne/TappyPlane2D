@@ -89,6 +89,12 @@ public:
 
 private:
 	/**
+	 * @brief 별 오브젝트의 상태입니다.
+	 */
+	EState state_ = EState::Wait;
+
+
+	/**
 	 * @brief 별 오브젝트의 중심 위치입니다.
 	 */
 	Vector2f center_;

@@ -126,6 +126,12 @@ public:
 
 public:
 	/**
+	 * @brief 바위 오브젝트의 상태입니다.
+	 */
+	EState state_ = EState::Wait;
+
+
+	/**
 	 * @brief 바위 오브젝트의 타입입니다.
 	 */
 	EType type_ = EType::Plain;
