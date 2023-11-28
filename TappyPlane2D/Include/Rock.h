@@ -108,12 +108,11 @@ public:
 	Vector2f GetEmptyMiddlePoint() const;
 
 
-private:
 	/**
-	 * @brief 내부 프로퍼티를 초기화합니다.
+	 * @brief 바위 오브젝트 내부 프로퍼티를 초기화합니다.
 	 */
 	void SetupProperties();
-
+	
 
 public:
 	/**
