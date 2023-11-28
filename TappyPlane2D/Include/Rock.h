@@ -102,18 +102,6 @@ public:
 
 
 	/**
-	 * @brief 상단 바위의 왼쪽 선분입니다.
-	 */
-	LineSegment topLeftLine_;
-
-
-	/**
-	 * @brief 상단 바위의 오른쪽 선분입니다.
-	 */
-	LineSegment topRightLine_;
-
-
-	/**
 	 * @brief 하단 바위 텍스처 리소스입니다.
 	 */
 	Texture2D* bottomTexture_ = nullptr;
@@ -138,15 +126,9 @@ public:
 
 
 	/**
-	 * @brief 하단 바위의 왼쪽 선분입니다.
+	 * @brief 바위의 외곽 라인입니다.
 	 */
-	LineSegment bottomLeftLine_;
-
-
-	/**
-	 * @brief 하단 바위의 오른쪽 선분입니다.
-	 */
-	LineSegment bottomRightLine_;
+	std::array<LineSegment, 4> outlines_;
 
 
 	/**
