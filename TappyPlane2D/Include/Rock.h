@@ -86,6 +86,14 @@ public:
 	bool IsCollision(const Plane* plane) const;
 
 
+	/**
+	 * @brief 바위 오브젝트의 외곽선들을 얻습니다.
+	 * 
+	 * @return 바위 오브젝트 외곽선 배열의 상수 참조자를 반환합니다.
+	 */
+	const std::array<LineSegment, 4>& GetOutlines() const { return outlines_; }
+
+
 public:
 	/**
 	 * @brief 상단 바위 텍스처 리소스입니다.
