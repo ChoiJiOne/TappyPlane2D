@@ -83,7 +83,7 @@ public:
 	 * 
 	 * @param plane 충돌 검사를 수행할 비행기 오브젝트입니다.
 	 */
-	bool IsCollision(const Plane* plane);
+	bool IsCollision(const Plane* plane) const;
 
 
 public:

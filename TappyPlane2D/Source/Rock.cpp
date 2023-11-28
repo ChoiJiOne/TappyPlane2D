@@ -98,7 +98,7 @@ void Rock::Release()
 	bIsInitialized_ = false;
 }
 
-bool Rock::IsCollision(const Plane* plane)
+bool Rock::IsCollision(const Plane* plane) const
 {
 	const AABB& aabb = plane->GetCollisionBound();
 
