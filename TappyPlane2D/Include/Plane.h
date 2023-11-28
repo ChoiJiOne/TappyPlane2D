@@ -34,8 +34,7 @@ public:
 	{
 		Wait = 0x00,    // 대기 상태
 		Flight = 0x01,  // 비행 중
-		Landing = 0x02, // 하강 중
-		Crash = 0x03,   // 충돌
+		Crash = 0x02,   // 충돌
 	};
 
 
@@ -116,14 +115,6 @@ private:
 
 
 	/**
-	 * @brief 비행기가 떨어지는 상태를 업데이트합니다.
-	 * 
-	 * @param deltaSeconds 델타 시간 값입니다.
-	 */
-	void UpdateLandingState(float deltaSeconds);
-
-
-	/**
 	 * @brief 비행기가 충돌했을 때 상태를 업데이트합니다.
 	 * 
 	 * @param deltaSeconds 델타 시간 값입니다.
@@ -186,46 +177,6 @@ private:
 	 * @note 이 속성은 비행기의 기본 속성입니다.
 	 */
 	Circle collisionBound_;
-
-
-	/**
-	 * @brief 비행기의 최대 속도입니다.
-	 *
-	 * @note 이 속성은 비행기의 기본 속성입니다.
-	 */
-	float maxFlightSpeed_ = 0.0f;
-
-
-	/**
-	 * @brief 비행기의 현재 속도입니다.
-	 * 
-	 * @note 이 속성은 비행기의 기본 속성입니다.
-	 */
-	float currentFlightSpeed_ = 0.0f;
-
-
-	/**
-	 * @brief 비행기의 회전 속도입니다.
-	 * 
-	 * @note 이 속성은 비행기의 기본 속성입니다.
-	 */
-	float rotateSpeed_ = 0.0f;
-
-
-	/**
-	 * @brief 비행기의 최소 각도입니다.
-	 * 
-	 * @note 이 속성은 비행기의 기본 속성입니다.
-	 */
-	const float minRotate_ = -MathUtils::PiDiv4;
-
-
-	/**
-	 * @brief 비행기의 최대 각도입니다.
-	 * 
-	 * @note 이 속성은 비행기의 기본 속성입니다.
-	 */
-	const float maxRotate_ = MathUtils::PiDiv4;
 
 
 	/**

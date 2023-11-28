@@ -41,9 +41,6 @@ void Plane::Initialize(const EColor& colorType)
 	rotate_ = 0.0f;
 	state_ = EState::Wait;
 	collisionBound_ = Circle(center_, height_ / 2.0f);
-	maxFlightSpeed_ = 200.0f;
-	currentFlightSpeed_ = 0.0f;
-	rotateSpeed_ = 3.0f;
 
 	// 애니메이션 속성 설정
 	animationTextures_ = {
@@ -75,10 +72,6 @@ void Plane::Update(float deltaSeconds)
 
 	case EState::Flight:
 		UpdateFlightState(deltaSeconds);
-		break;
-
-	case EState::Landing:
-		UpdateLandingState(deltaSeconds);
 		break;
 
 	case EState::Crash:
@@ -121,7 +114,6 @@ void Plane::UpdateWaitState(float deltaSeconds)
 	if (InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
 	{
 		state_ = EState::Flight;
-		currentFlightSpeed_ = maxFlightSpeed_;
 	}
 
 	center_.x = waitPosition_.x;
@@ -132,11 +124,6 @@ void Plane::UpdateWaitState(float deltaSeconds)
 void Plane::UpdateFlightState(float deltaSeconds)
 {
 	ASSERT(state_ == EState::Flight, "inavlid plane state : %d", static_cast<int32_t>(state_));
-}
-
-void Plane::UpdateLandingState(float deltaSeconds)
-{
-	ASSERT(state_ == EState::Landing, "inavlid plane state : %d", static_cast<int32_t>(state_));
 }
 
 void Plane::UpdateCrashState(float deltaSeconds)
