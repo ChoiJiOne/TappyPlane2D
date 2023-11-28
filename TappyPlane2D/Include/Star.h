@@ -13,6 +13,17 @@ class Star : public IGameObject
 {
 public:
 	/**
+	 * @brief 별 오브젝트의 상태입니다.
+	 */
+	enum class EState : int32_t
+	{
+		Wait = 0x00,
+		Move = 0x01,
+	};
+
+
+public:
+	/**
 	 * @brief 별 오브젝트의 디폴트 생성자입니다.
 	 */
 	Star() = default;
