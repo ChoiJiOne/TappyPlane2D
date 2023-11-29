@@ -89,7 +89,29 @@ public:
 	bool IsOuterStar(const Star* star) const;
 
 
+	/**
+	 * @brief 백그라운드의 움직임 여부를 설정합니다.
+	 * 
+	 * @param bCanMove 설정할 백그라운드 움직임 여부입니다.
+	 */
+	void SetCanMove(bool bCanMove) { bCanMove_ = bCanMove; }
+
+
+	/**
+	 * @brief 백그라운드의 움직임 여부를 얻습니다.
+	 * 
+	 * @return 백그라운드가 움직일 수 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool CanMove() const { return bCanMove_; }
+
+
 private:
+	/**
+	 * @brief 백그라운드가 움직일 수 있는지 확인합니다.
+	 */
+	bool bCanMove_ = false;
+
+
 	/**
 	 * @brief 백그라운드의 가로 크기입니다.
 	 */

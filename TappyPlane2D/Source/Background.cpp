@@ -19,6 +19,8 @@ void Background::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize background game object...");
 
+	bCanMove_ = true;
+
 	texture_ = ResourceManager::Get().GetResource<Texture2D>("background");
 
 	int32_t windowWidth = 0;
@@ -44,11 +46,14 @@ void Background::Initialize()
 
 void Background::Update(float deltaSeconds)
 {
-	scrollPosition_ += scrollSpeed_ * deltaSeconds;
-
-	if (scrollPosition_ >= maxScrollPosition_)
+	if (bCanMove_)
 	{
-		scrollPosition_ -= maxScrollPosition_;
+		scrollPosition_ += scrollSpeed_ * deltaSeconds;
+
+		if (scrollPosition_ >= maxScrollPosition_)
+		{
+			scrollPosition_ -= maxScrollPosition_;
+		}
 	}
 }
 
