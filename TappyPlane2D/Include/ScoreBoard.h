@@ -80,6 +80,14 @@ public:
 	bool IsActive() const { return bIsActive_; }
 
 
+	/**
+	 * @brief 스코어 보드의 스코어를 설정하는 기능 추가
+	 * 
+	 * @param score 설정할 스코어 값입니다.
+	 */
+	void SetScore(const int32_t& score) { score_ = score; }
+
+
 private:
 	/**
 	 * @brief 스코어 보드의 활성화 여부입니다.
