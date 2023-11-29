@@ -2,6 +2,7 @@
 
 #include "Background.h"
 #include "Ground.h"
+#include "ObjectScheduler.h"
 #include "Plane.h"
 #include "Rock.h"
 #include "Star.h"
@@ -22,6 +23,9 @@ int main(int argc, char* argv[])
 	Ground* ground = ObjectManager::Get().CreateGameObject<Ground>("Ground");
 	ground->Initialize(Ground::EType::Grass);
 
+	ObjectScheduler* scheduler = ObjectManager::Get().CreateGameObject<ObjectScheduler>("Scheduler");
+	scheduler->Initialize(Rock::EType::Plain, 1100.0f);
+
 	Plane* plane = ObjectManager::Get().CreateGameObject<Plane>("Plane");
 	plane->Initialize(Plane::EColor::Yellow);
 
@@ -32,6 +36,7 @@ int main(int argc, char* argv[])
 
 		background->Update(globalTimer.GetDeltaSeconds());
 		ground->Update(globalTimer.GetDeltaSeconds());
+		scheduler->Update(globalTimer.GetDeltaSeconds());
 		plane->Update(globalTimer.GetDeltaSeconds());
 
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
@@ -39,6 +44,7 @@ int main(int argc, char* argv[])
 		
 		background->Render();
 		ground->Render();
+		scheduler->Render();
 		plane->Render();
 		
 		RenderManager::Get().EndFrame();
