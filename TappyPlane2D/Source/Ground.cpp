@@ -27,6 +27,8 @@ void Ground::Initialize(const EType& type)
 {
 	ASSERT(!bIsInitialized_, "already initialize ground game object...");
 
+	bCanMove_ = true;
+	
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
@@ -45,11 +47,14 @@ void Ground::Initialize(const EType& type)
 
 void Ground::Update(float deltaSeconds)
 {
-	scrollPosition_ += scrollSpeed_ * deltaSeconds;
-
-	if (scrollPosition_ >= width_)
+	if (bCanMove_)
 	{
-		scrollPosition_ -= width_;
+		scrollPosition_ += scrollSpeed_ * deltaSeconds;
+
+		if (scrollPosition_ >= width_)
+		{
+			scrollPosition_ -= width_;
+		}
 	}
 }
 
