@@ -48,8 +48,8 @@ void Plane::Initialize(const EColor& colorType)
 	state_ = EState::Wait;
 	collisionBound_ = AABB(center_, width_, height_);
 
-	// 애니메이션 속성 설정
-	animationTextures_ = {
+	// 비행 애니메이션 속성 설정
+	flightAnimationTextures_ = {
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 1)),
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 2)),
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 3)),
@@ -57,7 +57,7 @@ void Plane::Initialize(const EColor& colorType)
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 1)),
 	};
 	accumulateAnimationFrameTime_ = 0;
-	animationFrameTime_ = 0.09f;
+	flightAnimationFrameTime_ = 0.09f;
 	accumulateAnimationFrameTime_ = 0.0f;
 
 	waitAccumulateTime_ = 0.0f;
@@ -65,7 +65,7 @@ void Plane::Initialize(const EColor& colorType)
 
 	maxSpeed_ = 400.0f;
 	currentSpeed_ = 0.0f;
-	dampingSpeed_ = 20.0f;
+	dampingSpeed_ = 10.0f;
 
 	countOfCollisionStar_ = 0;
 
@@ -74,8 +74,6 @@ void Plane::Initialize(const EColor& colorType)
 
 void Plane::Update(float deltaSeconds)
 {
-	UpdateAnimation(deltaSeconds);
-
 	switch (state_)
 	{
 	case EState::Wait:
@@ -97,7 +95,7 @@ void Plane::Update(float deltaSeconds)
 
 void Plane::Render()
 {
-	RenderManager::Get().DrawTexture2D(animationTextures_[animationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+	RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
 }
 
 void Plane::Release()
@@ -106,20 +104,22 @@ void Plane::Release()
 	bIsInitialized_ = false;
 }
 
-void Plane::UpdateAnimation(float deltaSeconds)
+void Plane::UpdateFlightAnimation(float deltaSeconds)
 {
 	accumulateAnimationFrameTime_ += deltaSeconds;
 
-	if (accumulateAnimationFrameTime_ >= animationFrameTime_)
+	if (accumulateAnimationFrameTime_ >= flightAnimationFrameTime_)
 	{
 		accumulateAnimationFrameTime_ = 0.0f;
-		animationTextureIndex_ = (animationTextureIndex_ + 1) % (animationTextures_.size());
+		flightAnimationTextureIndex_ = (flightAnimationTextureIndex_ + 1) % (flightAnimationTextures_.size());
 	}
 }
 
 void Plane::UpdateWaitState(float deltaSeconds)
 {
 	ASSERT(state_ == EState::Wait, "inavlid plane state : %d", static_cast<int32_t>(state_));
+
+	UpdateFlightAnimation(deltaSeconds);
 
 	waitAccumulateTime_ += deltaSeconds;
 
@@ -140,6 +140,8 @@ void Plane::UpdateWaitState(float deltaSeconds)
 void Plane::UpdateFlightState(float deltaSeconds)
 {
 	ASSERT(state_ == EState::Flight, "inavlid plane state : %d", static_cast<int32_t>(state_));
+
+	UpdateFlightAnimation(deltaSeconds);
 	
 	currentSpeed_ -= dampingSpeed_;
 	center_.y -= currentSpeed_ * deltaSeconds;

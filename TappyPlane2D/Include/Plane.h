@@ -105,11 +105,11 @@ public:
 
 private:
 	/**
-	 * @brief 비행기의 애니메이션을 업데이트합니다.
+	 * @brief 비행기의 비행 애니메이션을 업데이트합니다.
 	 * 
 	 * @param deltaSeconds 델타 시간 값입니다.
 	 */
-	void UpdateAnimation(float deltaSeconds);
+	void UpdateFlightAnimation(float deltaSeconds);
 
 
 	/**
@@ -196,19 +196,19 @@ private:
 	/**
 	 * @brief 비행기의 애니메이션을 수행하기 위한 텍스처입니다.
 	 */
-	std::array<Texture2D*, 5> animationTextures_;
+	std::array<Texture2D*, 5> flightAnimationTextures_;
 
 
 	/**
 	 * @brief 현재 애니메이션 텍스처 인덱스입니다.
 	 */
-	uint32_t animationTextureIndex_ = 0;
+	uint32_t flightAnimationTextureIndex_ = 0;
 
 
 	/**
 	 * @brief 애니메이션을 수행하기 위한 한 프레임의 지속 시간입니다.
 	 */
-	float animationFrameTime_ = 0.0f;
+	float flightAnimationFrameTime_ = 0.0f;
 
 
 	/**
