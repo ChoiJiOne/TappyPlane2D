@@ -237,4 +237,10 @@ private:
 	 * @brief 비행기의 감속 속도입니다.
 	 */
 	float dampingSpeed_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기와 별 오브젝트의 충돌 횟수입니다.
+	 */
+	int32_t countOfCollisionStar_ = 0;
 };

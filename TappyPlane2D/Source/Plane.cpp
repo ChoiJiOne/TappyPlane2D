@@ -66,6 +66,8 @@ void Plane::Initialize(const EColor& colorType)
 	currentSpeed_ = 0.0f;
 	dampingSpeed_ = 20.0f;
 
+	countOfCollisionStar_ = 0;
+
 	bIsInitialized_ = true;
 }
 
@@ -147,6 +149,14 @@ void Plane::UpdateFlightState(float deltaSeconds)
 	}
 	
 	collisionBound_.SetProperty(center_, width_, height_);
+
+	ObjectScheduler* scheduler = ObjectManager::Get().GetGameObject<ObjectScheduler>("Scheduler");
+	Star* star = scheduler->GetCollisionStar(this);
+	if (star != nullptr)
+	{
+		countOfCollisionStar_++;
+		star->SetState(Star::EState::Wait);
+	}
 }
 
 void Plane::UpdateCrashState(float deltaSeconds)
