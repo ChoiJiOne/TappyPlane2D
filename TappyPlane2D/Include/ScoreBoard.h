@@ -3,8 +3,9 @@
 #include <map>
 
 #include "IGameObject.h"
-#include "Texture2D.h"
+#include "TTFont.h"
 #include "Vector2.h"
+#include "Vector4.h"
 
 
 /**
@@ -37,11 +38,9 @@ public:
 	 * @brief 스코어 보드 오브젝트를 초기화합니다.
 	 * 
 	 * @param center 스코어 보드의 중심 좌표입니다.
-	 * @param numberWidth 표시할 숫자의 가로 크기입니다.
-	 * @param numberHeight 표시할 숫자의 세로 크기입니다.
-	 * @param numberGap 표시할 숫자 간의 간격입니다.
+	 * @param color 스코어 보드 텍스트의 색상입니다.
 	 */
-	void Initialize(const Vector2f& center, const float& numberWidth, const float& numberHeight, const float& numberGap);
+	void Initialize(const Vector2f& center, const Vector4f& color);
 
 
 	/**
@@ -108,25 +107,13 @@ private:
 
 
 	/**
-	 * @brief 표시할 숫자의 가로 크기입니다.
+	 * @brief 표시할 숫자의 색상입니다.
 	 */
-	float numberWidth_ = 0.0f;
+	Vector4f color_;
 
 
 	/**
-	 * @brief 표시할 숫자의 세로 크기입니다.
+	 * @brief 스코어 보드의 폰트입니다.
 	 */
-	float numberHeight_ = 0.0f;
-
-
-	/**
-	 * @brief 표시한 숫자 간의 갭 차이입니다.
-	 */
-	float numberGap_ = 0.0f;
-
-
-	/**
-	 * @brief 숫자의 텍스처 리소스입니다.
-	 */
-	std::map<char, Texture2D*> numberTextureMap_;
+	TTFont* font_ = nullptr;
 };
