@@ -1,5 +1,6 @@
 #include "Plane.h"
 #include "Background.h"
+#include "ObjectScheduler.h"
 #include "Rock.h"
 #include "Star.h"
 
@@ -127,6 +128,9 @@ void Plane::UpdateWaitState(float deltaSeconds)
 	{
 		currentSpeed_ = maxSpeed_;
 		state_ = EState::Flight;
+
+		ObjectScheduler* scheduler = ObjectManager::Get().GetGameObject<ObjectScheduler>("Scheduler");
+		scheduler->SetActive(true);
 	}
 }
 
