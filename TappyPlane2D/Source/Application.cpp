@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 	plane->Initialize(Plane::EColor::Yellow);
 
 	ScoreBoard* board = ObjectManager::Get().CreateGameObject<ScoreBoard>("Board");
-	board->Initialize(Vector2f(500.0f, 100.0f), 53.0f, 78.0f, 10.0f);
+	board->Initialize(Vector2f(500.0f, 100.0f), Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
 
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
