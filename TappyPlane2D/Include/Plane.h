@@ -95,6 +95,14 @@ public:
 	const AABB& GetCollisionBound() const { return collisionBound_; }
 
 
+	/**
+	 * @brief 비행기와 별 오브젝트의 충돌 횟수를 얻습니다.
+	 * 
+	 * @return 비행기와 별 오브젝트의 충돌 횟수를 반환합니다.
+	 */
+	int32_t GetCountOfCollisionStar() const { return countOfCollisionStar_; }
+
+
 private:
 	/**
 	 * @brief 비행기의 애니메이션을 업데이트합니다.
