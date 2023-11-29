@@ -85,6 +85,22 @@ public:
 	 */
 	bool IsCollisionRocks(const Plane* plane);
 
+
+	/**
+	 * @brief 스케줄링 활성화 여부를 설정합니다.
+	 * 
+	 * @param bIsActive 설정할 스케줄링 활성화 여부입니다.
+	 */
+	void SetActive(bool bIsActive) { bIsActive_ = bIsActive; }
+
+
+	/**
+	 * @brief 스케줄링 활성화가 되어있는지 확인합니다.
+	 * 
+	 * @return 스케줄링 활성화가 되어 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsActive() const { return bIsActive_; }
+
 	
 private:
 	/**
@@ -104,6 +120,12 @@ private:
 	
 
 private:
+	/**
+	 * @brief 스케줄링 활성화 여부입니다.
+	 */
+	bool bIsActive_ = false;
+
+
 	/**
 	 * @brief 생성할 바위 오브젝트의 타입입니다.
 	 */

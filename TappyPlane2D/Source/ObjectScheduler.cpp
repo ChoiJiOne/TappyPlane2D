@@ -23,6 +23,7 @@ void ObjectScheduler::Initialize(const Rock::EType& rockType, const float& start
 {
 	ASSERT(!bIsInitialized_, "already initialize object generator object...");
 
+	bIsActive_ = false;
 	rockType_ = rockType;
 	startXPosition_ = startXPosition;
 	interval_ = 300.0f;
@@ -47,6 +48,8 @@ void ObjectScheduler::Initialize(const Rock::EType& rockType, const float& start
 
 void ObjectScheduler::Update(float deltaSeconds)
 {
+	if (!bIsActive_) return;
+
 	for (auto& rock : rocks_)
 	{
 		rock->Update(deltaSeconds);
