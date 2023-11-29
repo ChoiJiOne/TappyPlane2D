@@ -277,4 +277,40 @@ private:
 	 * @brief 비행기와 별 오브젝트의 충돌 횟수입니다.
 	 */
 	int32_t countOfCollisionStar_ = 0;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 탭 텍스처의 가로 크기입니다.
+	 */
+	float tapWidth_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 탭 텍스처의 세로 크기입니다.
+	 */
+	float tapHeight_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 클릭 탭 텍스처의 크기입니다.
+	 */
+	float tickTapSize_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 왼쪽 탭 텍스처입니다.
+	 */
+	Texture2D* leftTapTexture_ = nullptr;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 오른쪽 탭 텍스처입니다.
+	 */
+	Texture2D* rightTapTexture_ = nullptr;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 클릭 텍스처입니다.
+	 */
+	Texture2D* tickTapTexture_ = nullptr;
 };

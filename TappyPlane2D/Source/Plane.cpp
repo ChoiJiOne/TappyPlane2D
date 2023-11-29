@@ -79,6 +79,13 @@ void Plane::Initialize(const EColor& colorType)
 
 	countOfCollisionStar_ = 0;
 
+	tapWidth_ = 85.0f;
+	tapHeight_ = 42.0f;
+	tickTapSize_ = 59.0f;
+	leftTapTexture_ = ResourceManager::Get().GetResource<Texture2D>("tapLeft");
+	rightTapTexture_ = ResourceManager::Get().GetResource<Texture2D>("tapRight");
+	tickTapTexture_ = ResourceManager::Get().GetResource<Texture2D>("tapTick");
+
 	bIsInitialized_ = true;
 }
 
@@ -109,6 +116,9 @@ void Plane::Render()
 	{
 	case EState::Wait:
 		RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+		RenderManager::Get().DrawTexture2D( leftTapTexture_, Vector2f(center_.x - 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
+		RenderManager::Get().DrawTexture2D(rightTapTexture_, Vector2f(center_.x + 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
+		RenderManager::Get().DrawTexture2D( tickTapTexture_, Vector2f(center_.x +  20.0f, center_.y + 70.0f), tickTapSize_, tickTapSize_, 0.0f);
 		break;
 
 	case EState::Flight:
