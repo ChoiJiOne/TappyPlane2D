@@ -5,6 +5,8 @@
 #include "Rock.h"
 #include "Star.h"
 
+class Plane;
+
 
 /**
  * @brief 오브젝트 스케줄러입니다.
@@ -64,6 +66,26 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 비행기와 가장 먼저 충돌한 별 오브젝트를 얻습니다.
+	 * 
+	 * @param plane 충돌 검사를 수행할 비행기입니다.
+	 * 
+	 * @return 비행기와 가장 먼저 충돌한 별 오브젝트를 반환합니다. 충돌하지 않는다면 nullptr를 반환합니다.
+	 */
+	Star* GetCollisionStar(const Plane* plane);
+
+
+	/**
+	 * @brief 비행기와 바위 오브젝트들과 충돌하는지 확인합니다.
+	 * 
+	 * @param plane 충돌 검사를 수행할 비행기입니다.
+	 * 
+	 * @return 비행기와 바위 오브젝트들이 충돌한다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsCollisionRocks(const Plane* plane);
+
+	
 private:
 	/**
 	 * @brief 오브젝트의 상태를 Wait에서 Move로 변경할 수 있는지 확인합니다.

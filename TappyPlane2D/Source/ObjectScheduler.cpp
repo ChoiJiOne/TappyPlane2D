@@ -1,5 +1,6 @@
 #include "ObjectScheduler.h"
 #include "Background.h"
+#include "Plane.h"
 #include "Rock.h"
 #include "Star.h"
 
@@ -95,6 +96,32 @@ void ObjectScheduler::Release()
 	}
 
 	bIsInitialized_ = false;
+}
+
+Star* ObjectScheduler::GetCollisionStar(const Plane* plane)
+{
+	for (auto& star : stars_)
+	{
+		if(star->IsCollisionPlane(plane))
+		{
+			return star;
+		}
+	}
+
+	return nullptr;
+}
+
+bool ObjectScheduler::IsCollisionRocks(const Plane* plane)
+{
+	for (auto& rock : rocks_)
+	{
+		if (rock->IsCollisionPlane(plane))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool ObjectScheduler::CanChangeWaitToMove(int32_t index)
