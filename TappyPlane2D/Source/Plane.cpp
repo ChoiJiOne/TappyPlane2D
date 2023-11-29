@@ -63,7 +63,7 @@ void Plane::Initialize(const EColor& colorType)
 
 	maxSpeed_ = 400.0f;
 	currentSpeed_ = 0.0f;
-	dampingSpeed_ = 10.0f;
+	dampingSpeed_ = 20.0f;
 
 	bIsInitialized_ = true;
 }
