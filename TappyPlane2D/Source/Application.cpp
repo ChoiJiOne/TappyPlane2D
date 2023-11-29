@@ -5,6 +5,7 @@
 #include "ObjectScheduler.h"
 #include "Plane.h"
 #include "Rock.h"
+#include "ScoreBoard.h"
 #include "Star.h"
 
 int main(int argc, char* argv[])
@@ -29,15 +30,19 @@ int main(int argc, char* argv[])
 	Plane* plane = ObjectManager::Get().CreateGameObject<Plane>("Plane");
 	plane->Initialize(Plane::EColor::Yellow);
 
+	ScoreBoard* board = ObjectManager::Get().CreateGameObject<ScoreBoard>("Board");
+	board->Initialize(Vector2f(500.0f, 100.0f), 53.0f, 78.0f, 10.0f);
+
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
 		globalTimer.Tick();
 		InputManager::Get().Tick();
-
+		
 		background->Update(globalTimer.GetDeltaSeconds());
 		ground->Update(globalTimer.GetDeltaSeconds());
 		scheduler->Update(globalTimer.GetDeltaSeconds());
 		plane->Update(globalTimer.GetDeltaSeconds());
+		board->Update(globalTimer.GetDeltaSeconds());
 
 		RenderManager::Get().SetViewport(0, 0, 1000, 800);
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
@@ -46,7 +51,8 @@ int main(int argc, char* argv[])
 		ground->Render();
 		scheduler->Render();
 		plane->Render();
-		
+		board->Render();
+
 		RenderManager::Get().EndFrame();
 	}
 
