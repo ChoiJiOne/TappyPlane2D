@@ -48,7 +48,7 @@ void Plane::Initialize(const EColor& colorType)
 	state_ = EState::Wait;
 	collisionBound_ = AABB(center_, width_, height_);
 
-	// 비행 애니메이션 속성 설정
+	// 애니메이션 속성 설정
 	flightAnimationTextures_ = {
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 1)),
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 2)),
@@ -56,10 +56,20 @@ void Plane::Initialize(const EColor& colorType)
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 2)),
 		ResourceManager::Get().GetResource<Texture2D>(StringUtils::PrintF("%s%d", colorTypeMaps.at(colorType).c_str(), 1)),
 	};
-	accumulateAnimationFrameTime_ = 0;
+	flightAnimationTextureIndex_ = 0;
 	flightAnimationFrameTime_ = 0.09f;
-	accumulateAnimationFrameTime_ = 0.0f;
 
+	explosionAnimationTextures_ = {
+		ResourceManager::Get().GetResource<Texture2D>("explosion1"),
+		ResourceManager::Get().GetResource<Texture2D>("explosion2"),
+		ResourceManager::Get().GetResource<Texture2D>("explosion3"),
+		ResourceManager::Get().GetResource<Texture2D>("explosion4"),
+		ResourceManager::Get().GetResource<Texture2D>("explosion5"),
+	};
+	explosionAnimationTextureIndex_ = 0;
+	explosionAnimationFrameTime_ = 0.3f;
+	accumulateAnimationFrameTime_ = 0.0f;
+	
 	waitAccumulateTime_ = 0.0f;
 	waitPosition_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, static_cast<float>(windowHeight) / 2.0f);
 
@@ -95,7 +105,26 @@ void Plane::Update(float deltaSeconds)
 
 void Plane::Render()
 {
-	RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+	switch (state_)
+	{
+	case EState::Wait:
+		RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+		break;
+
+	case EState::Flight:
+		RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+		break;
+
+	case EState::Crash:
+		if (explosionAnimationTextureIndex_ < explosionAnimationTextures_.size())
+		{
+			RenderManager::Get().DrawTexture2D(explosionAnimationTextures_[explosionAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+		}
+		break;
+
+	default:
+		ASSERT(false, "undefined plane state : %d", static_cast<int32_t>(state_));
+	}
 }
 
 void Plane::Release()
@@ -112,6 +141,22 @@ void Plane::UpdateFlightAnimation(float deltaSeconds)
 	{
 		accumulateAnimationFrameTime_ = 0.0f;
 		flightAnimationTextureIndex_ = (flightAnimationTextureIndex_ + 1) % (flightAnimationTextures_.size());
+	}
+}
+
+void Plane::UpdateExplosionAnimation(float deltaSeconds)
+{
+	if (explosionAnimationTextureIndex_ >= explosionAnimationTextures_.size())
+	{
+		return;
+	}
+
+	accumulateAnimationFrameTime_ += deltaSeconds;
+
+	if (accumulateAnimationFrameTime_ >= explosionAnimationFrameTime_)
+	{
+		accumulateAnimationFrameTime_ = 0.0f;
+		explosionAnimationTextureIndex_++;
 	}
 }
 
@@ -177,4 +222,6 @@ void Plane::UpdateFlightState(float deltaSeconds)
 void Plane::UpdateCrashState(float deltaSeconds)
 {
 	ASSERT(state_ == EState::Crash, "inavlid plane state : %d", static_cast<int32_t>(state_));
+
+	UpdateExplosionAnimation(deltaSeconds);
 }
