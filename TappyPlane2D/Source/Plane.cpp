@@ -3,6 +3,7 @@
 #include "Ground.h"
 #include "ObjectScheduler.h"
 #include "Rock.h"
+#include "ScoreBoard.h"
 #include "Star.h"
 
 #include "AssertionMacro.h"
@@ -189,6 +190,9 @@ void Plane::UpdateWaitState(float deltaSeconds)
 
 		ObjectScheduler* scheduler = ObjectManager::Get().GetGameObject<ObjectScheduler>("Scheduler");
 		scheduler->SetActive(true);
+
+		ScoreBoard* board = ObjectManager::Get().GetGameObject<ScoreBoard>("Board");
+		board->SetActive(true);
 	}
 }
 
@@ -214,6 +218,9 @@ void Plane::UpdateFlightState(float deltaSeconds)
 	{
 		countOfCollisionStar_++;
 		star->SetState(Star::EState::Wait);
+
+		ScoreBoard* board = ObjectManager::Get().GetGameObject<ScoreBoard>("Board");
+		board->SetScore(countOfCollisionStar_);
 	}
 
 	Background* background = ObjectManager::Get().GetGameObject<Background>("Background");
@@ -226,6 +233,9 @@ void Plane::UpdateFlightState(float deltaSeconds)
 
 		Ground* ground = ObjectManager::Get().GetGameObject<Ground>("Ground");
 		ground->SetCanMove(false);
+
+		ScoreBoard* board = ObjectManager::Get().GetGameObject<ScoreBoard>("Board");
+		board->SetActive(false);
 	}
 }
 
