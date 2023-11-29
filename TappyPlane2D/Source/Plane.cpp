@@ -94,18 +94,6 @@ void Plane::Update(float deltaSeconds)
 void Plane::Render()
 {
 	RenderManager::Get().DrawTexture2D(animationTextures_[animationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
-
-	Rock* rock = ObjectManager::Get().GetGameObject<Rock>("Rock");
-	Star* star = ObjectManager::Get().GetGameObject<Star>("Star");
-
-	if (rock->IsCollisionPlane(this) || star->IsCollisionPlane(this))
-	{
-		RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-	}
-	else
-	{
-		RenderManager::Get().DrawWireframeRectangle2D(center_, width_, height_, 0.0f, Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
-	}
 }
 
 void Plane::Release()
