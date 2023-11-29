@@ -206,12 +206,12 @@ void Plane::UpdateFlightState(float deltaSeconds)
 		star->SetState(Star::EState::Wait);
 	}
 
-	if (scheduler->IsCollisionRocks(this))
+	Background* background = ObjectManager::Get().GetGameObject<Background>("Background");
+	if (scheduler->IsCollisionRocks(this) || !background->IsInnerPlane(this))
 	{
 		scheduler->SetActive(false);
 		state_ = EState::Crash;
 
-		Background* background = ObjectManager::Get().GetGameObject<Background>("Background");
 		background->SetCanMove(false);
 
 		Ground* ground = ObjectManager::Get().GetGameObject<Ground>("Ground");
