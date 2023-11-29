@@ -1,5 +1,6 @@
 #include "Plane.h"
 #include "Background.h"
+#include "Ground.h"
 #include "ObjectScheduler.h"
 #include "Rock.h"
 #include "Star.h"
@@ -156,6 +157,18 @@ void Plane::UpdateFlightState(float deltaSeconds)
 	{
 		countOfCollisionStar_++;
 		star->SetState(Star::EState::Wait);
+	}
+
+	if (scheduler->IsCollisionRocks(this))
+	{
+		scheduler->SetActive(false);
+		state_ = EState::Crash;
+
+		Background* background = ObjectManager::Get().GetGameObject<Background>("Background");
+		background->SetCanMove(false);
+
+		Ground* ground = ObjectManager::Get().GetGameObject<Ground>("Ground");
+		ground->SetCanMove(false);
 	}
 }
 
