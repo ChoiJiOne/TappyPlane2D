@@ -72,13 +72,6 @@ void Rock::Render()
 
 	RenderManager::Get().DrawTexture2D(topTexture_, topCenter_, topWidth_, topHeight_, 0.0f);
 	RenderManager::Get().DrawTexture2D(bottomTexture_, bottomCenter_, bottomWidth_, bottomHeight_, 0.0f);
-
-	std::array<Vector2f, 2> points;
-	for (auto& outline : outlines_)
-	{
-		points = outline.GetPoints();
-		RenderManager::Get().DrawLine2D(points[0], points[1], Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-	}
 }
 
 void Rock::Release()
