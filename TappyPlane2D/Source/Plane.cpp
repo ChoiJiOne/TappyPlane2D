@@ -182,7 +182,7 @@ void Plane::UpdateWaitState(float deltaSeconds)
 	center_.y = waitPosition_.y + 10.0f * MathUtils::ScalarSin(waitAccumulateTime_ * 2.0f);
 	collisionBound_.SetProperty(center_, width_, height_);
 
-	if (InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
+	if (InputManager::Get().GetMouseButtonPressState(EMouseButton::BUTTON_LEFT) == EPressState::Pressed)
 	{
 		currentSpeed_ = maxSpeed_;
 		state_ = EState::Flight;
@@ -201,7 +201,7 @@ void Plane::UpdateFlightState(float deltaSeconds)
 	currentSpeed_ -= dampingSpeed_;
 	center_.y -= currentSpeed_ * deltaSeconds;
 
-	if (currentSpeed_ <= 0.0f && InputManager::Get().GetKeyPressState(EKeyCode::KEY_SPACE) == EPressState::Pressed)
+	if (currentSpeed_ <= 0.0f && InputManager::Get().GetMouseButtonPressState(EMouseButton::BUTTON_LEFT) == EPressState::Pressed)
 	{
 		currentSpeed_ = maxSpeed_;
 	}
