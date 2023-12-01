@@ -71,11 +71,11 @@ void Background::Release()
 
 bool Background::IsInnerPlane(const Plane* plane) const
 {
-	const AABB& aabb = plane->GetCollisionBound();
+	const Circle& circle = plane->GetCollisionBound();
 
 	for (const auto& outline : outlines_)
 	{
-		if (aabb.IsCollision(&outline))
+		if (circle.IsCollision(&outline))
 		{
 			return false;
 		}

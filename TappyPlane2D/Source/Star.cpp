@@ -57,9 +57,9 @@ bool Star::IsCollisionPlane(const Plane* plane) const
 		return false;
 	}
 
-	const AABB& aabb = plane->GetCollisionBound();
+	const Circle& circle = plane->GetCollisionBound();
 
-	return collisionBound_.IsCollision(&aabb);
+	return collisionBound_.IsCollision(&circle);
 }
 
 void Star::SetupProperties(const Vector2f& center)
