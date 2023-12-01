@@ -47,7 +47,7 @@ void Plane::Initialize(const EColor& colorType)
 	height_ = 73.0f;
 	rotate_ = 0.0f;
 	state_ = EState::Wait;
-	collisionBound_ = AABB(center_, width_, height_);
+	collisionBound_ = Circle(center_, height_ / 2.0f);
 
 	// 애니메이션 속성 설정
 	flightAnimationTextures_ = {
@@ -181,7 +181,7 @@ void Plane::UpdateWaitState(float deltaSeconds)
 
 	center_.x = waitPosition_.x;
 	center_.y = waitPosition_.y + 10.0f * MathUtils::ScalarSin(waitAccumulateTime_ * 2.0f);
-	collisionBound_.SetProperty(center_, width_, height_);
+	collisionBound_.SetCenter(center_);
 
 	if (InputManager::Get().GetMouseButtonPressState(EMouseButton::BUTTON_LEFT) == EPressState::Pressed)
 	{
@@ -210,7 +210,7 @@ void Plane::UpdateFlightState(float deltaSeconds)
 		currentSpeed_ = maxSpeed_;
 	}
 	
-	collisionBound_.SetProperty(center_, width_, height_);
+	collisionBound_.SetCenter(center_);
 
 	ObjectScheduler* scheduler = ObjectManager::Get().GetGameObject<ObjectScheduler>("Scheduler");
 	Star* star = scheduler->GetCollisionStar(this);

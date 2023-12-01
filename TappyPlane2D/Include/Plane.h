@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "AABB.h"
+#include "Circle.h"
 #include "IGameObject.h"
 #include "Texture2D.h"
 #include "MathUtils.h"
@@ -92,7 +92,7 @@ public:
 	 * 
 	 * @return 비행기 충돌 경계 영역의 상수 참조자를 반환합니다.
 	 */
-	const AABB& GetCollisionBound() const { return collisionBound_; }
+	const Circle& GetCollisionBound() const { return collisionBound_; }
 
 
 	/**
@@ -194,11 +194,11 @@ private:
 
 
 	/**
-	 * @brief 충돌 처리를 위한 AABB입니다.
+	 * @brief 충돌 처리를 위한 원입니다.입니다.
 	 * 
 	 * @note 이 속성은 비행기의 기본 속성입니다.
 	 */
-	AABB collisionBound_;
+	Circle collisionBound_;
 
 
 	/**
