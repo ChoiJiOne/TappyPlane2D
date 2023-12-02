@@ -50,6 +50,14 @@ public:
 
 
 	/**
+	 * @brief 현재 게임 씬의 다음 씬을 설정합니다.
+	 * 
+	 * @param scene 현재 게임 씬에 연결할 다음 씬입니다.
+	 */
+	virtual void SetNextScene(const IScene* scene) = 0;
+
+
+	/**
 	 * @brief 현재 게임 씬의 다음 씬을 얻습니다.
 	 * 
 	 * @return 현재 게임 씬에 연결된 다음 씬의 포인터 값을 반환합니다.
