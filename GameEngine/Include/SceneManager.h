@@ -44,7 +44,7 @@ public:
 	template <typename TScene>
 	TScene* CreateScene(const std::string& signature)
 	{
-		ASSERT(!VerifyResource(signature), "already exist scene signature key : %s", signature.c_str());
+		ASSERT(!VerifyScene(signature), "already exist scene signature key : %s", signature.c_str());
 
 		std::unique_ptr<TScene> scene = std::make_unique<TScene>();
 		scenes_.insert({ signature, std::move(scene) });
@@ -63,7 +63,7 @@ public:
 	template <typename TScene>
 	TScene* GetScene(const std::string& signature)
 	{
-		if (!VerifyResource(signature))
+		if (!VerifyScene(signature))
 		{
 			return nullptr;
 		}
