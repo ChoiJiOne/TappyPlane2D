@@ -1,12 +1,6 @@
 #include "EngineManager.h"
 
-#include "Background.h"
-#include "Ground.h"
-#include "ObjectScheduler.h"
-#include "Plane.h"
-#include "Rock.h"
-#include "ScoreBoard.h"
-#include "Star.h"
+#include "PlayScene.h"
 
 int main(int argc, char* argv[])
 {
@@ -18,42 +12,15 @@ int main(int argc, char* argv[])
 	GameTimer globalTimer;
 	globalTimer.Reset();
 
-	Background* background = ObjectManager::Get().CreateGameObject<Background>("Background");
-	background->Initialize();
-
-	Ground* ground = ObjectManager::Get().CreateGameObject<Ground>("Ground");
-	ground->Initialize(Ground::EType::Grass);
-
-	ObjectScheduler* scheduler = ObjectManager::Get().CreateGameObject<ObjectScheduler>("Scheduler");
-	scheduler->Initialize(Rock::EType::Plain, 1100.0f);
-
-	Plane* plane = ObjectManager::Get().CreateGameObject<Plane>("Plane");
-	plane->Initialize(Plane::EColor::Yellow);
-
-	ScoreBoard* board = ObjectManager::Get().CreateGameObject<ScoreBoard>("Board");
-	board->Initialize(Vector2f(500.0f, 100.0f), Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
+	PlayScene* playScene = SceneManager::Get().CreateScene<PlayScene>("PlayScene");
+	playScene->EnterScene();
 
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
 		globalTimer.Tick();
 		InputManager::Get().Tick();
-		
-		background->Update(globalTimer.GetDeltaSeconds());
-		ground->Update(globalTimer.GetDeltaSeconds());
-		scheduler->Update(globalTimer.GetDeltaSeconds());
-		plane->Update(globalTimer.GetDeltaSeconds());
-		board->Update(globalTimer.GetDeltaSeconds());
 
-		RenderManager::Get().SetViewport(0, 0, 1000, 800);
-		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
-		
-		background->Render();
-		ground->Render();
-		scheduler->Render();
-		plane->Render();
-		board->Render();
-
-		RenderManager::Get().EndFrame();
+		playScene->TickScene(globalTimer.GetDeltaSeconds());
 	}
 
 	EngineManager::Get().Shutdown();
