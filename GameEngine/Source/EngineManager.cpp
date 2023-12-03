@@ -23,6 +23,7 @@ void EngineManager::Startup()
 	ResourceManager::Get().Startup();
 	StartupRenderManager(properties);
 	ObjectManager::Get().Startup();
+	SceneManager::Get().Startup();
 
 	LoadTextureResource(properties);
 	LoadFontResource(properties);
@@ -34,6 +35,7 @@ void EngineManager::Shutdown()
 {
 	ASSERT(bIsStartup_, "not startup before or has already been shutdowned...");
 
+	SceneManager::Get().Shutdown();
 	ObjectManager::Get().Shutdown();
 	RenderManager::Get().Shutdown();
 	ResourceManager::Get().Shutdown();

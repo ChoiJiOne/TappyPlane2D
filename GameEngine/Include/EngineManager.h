@@ -16,6 +16,7 @@
 #include "ObjectManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "SceneManager.h"
 #include "Shader.h"
 #include "SingletonMacro.h"
 #include "StringUtils.h"
