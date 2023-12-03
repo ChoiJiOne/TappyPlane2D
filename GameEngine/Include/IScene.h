@@ -54,7 +54,7 @@ public:
 	 * 
 	 * @param scene 현재 게임 씬에 연결할 다음 씬입니다.
 	 */
-	virtual void SetNextScene(const IScene* scene) = 0;
+	virtual void SetNextScene(IScene* scene) = 0;
 
 
 	/**
