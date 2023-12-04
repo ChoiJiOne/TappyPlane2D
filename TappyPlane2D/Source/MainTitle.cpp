@@ -22,7 +22,7 @@ void MainTitle::Initialize()
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);
 
 	center_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, 200.0f);
-	font_ = ResourceManager::Get().GetResource<TTFont>("kenvector_future_64");
+	font_ = ResourceManager::Get().GetResource<TTFont>("kenvector_future_100");
 	titleText_ = L"Tappy Plane 2D";
 
 	bIsInitialized_ = true;
