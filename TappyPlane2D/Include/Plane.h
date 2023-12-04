@@ -313,4 +313,16 @@ private:
 	 * @brief 비행기 대기중일 때 표시할 클릭 텍스처입니다.
 	 */
 	Texture2D* tickTapTexture_ = nullptr;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 Ready 텍스처의 위치입니다.
+	 */
+	Vector2f readyTexturePosition_;
+
+
+	/**
+	 * @brief 비행기 대기중일 때 표시할 Ready 텍스처입니다.
+	 */
+	Texture2D* readyTexture_ = nullptr;
 };

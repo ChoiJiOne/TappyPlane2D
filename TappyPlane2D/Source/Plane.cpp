@@ -68,7 +68,7 @@ void Plane::Initialize(const EColor& colorType)
 		ResourceManager::Get().GetResource<Texture2D>("explosion5"),
 	};
 	explosionAnimationTextureIndex_ = 0;
-	explosionAnimationFrameTime_ = 0.3f;
+	explosionAnimationFrameTime_ = 0.2f;
 	accumulateAnimationFrameTime_ = 0.0f;
 	
 	waitAccumulateTime_ = 0.0f;
@@ -76,7 +76,7 @@ void Plane::Initialize(const EColor& colorType)
 
 	maxSpeed_ = 400.0f;
 	currentSpeed_ = 0.0f;
-	dampingSpeed_ = 10.0f;
+	dampingSpeed_ = 20.0f;
 
 	countOfCollisionStar_ = 0;
 
@@ -86,6 +86,9 @@ void Plane::Initialize(const EColor& colorType)
 	leftTapTexture_ = ResourceManager::Get().GetResource<Texture2D>("tapLeft");
 	rightTapTexture_ = ResourceManager::Get().GetResource<Texture2D>("tapRight");
 	tickTapTexture_ = ResourceManager::Get().GetResource<Texture2D>("tapTick");
+
+	readyTexturePosition_ = Vector2f(static_cast<float>(windowWidth) / 2.0f, 200.0f);
+	readyTexture_ = ResourceManager::Get().GetResource<Texture2D>("textGetReady");
 
 	bIsInitialized_ = true;
 }
@@ -120,6 +123,7 @@ void Plane::Render()
 		RenderManager::Get().DrawTexture2D( leftTapTexture_, Vector2f(center_.x - 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
 		RenderManager::Get().DrawTexture2D(rightTapTexture_, Vector2f(center_.x + 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
 		RenderManager::Get().DrawTexture2D( tickTapTexture_, Vector2f(center_.x +  20.0f, center_.y + 70.0f), tickTapSize_, tickTapSize_, 0.0f);
+		RenderManager::Get().DrawTexture2D(readyTexture_, readyTexturePosition_, 400.0f, 73.0f, 0.0f);
 		break;
 
 	case EState::Flight:
