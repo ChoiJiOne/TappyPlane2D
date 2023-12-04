@@ -1,7 +1,6 @@
 #include "PlayScene.h"
 
 #include "AssertionMacro.h"
-#include "InputManager.h"
 #include "ObjectManager.h"
 #include "RenderManager.h"
 
