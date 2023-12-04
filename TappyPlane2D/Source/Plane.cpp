@@ -7,7 +7,6 @@
 #include "Star.h"
 
 #include "AssertionMacro.h"
-#include "CommandLineArg.h"
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
