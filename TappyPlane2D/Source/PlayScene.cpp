@@ -72,17 +72,13 @@ void PlayScene::ExitScene()
 
 void PlayScene::TickScene(float deltaSeconds)
 {
-	for (auto& object : objects_)
-	{
-		object->Update(deltaSeconds);
-	}
-
 	RenderManager& renderManager = RenderManager::Get();
 	renderManager.SetViewport(0, 0, 1000, 800);
 	renderManager.BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
 	for (auto& object : objects_)
 	{
+		object->Update(deltaSeconds);
 		object->Render();
 	}
 
