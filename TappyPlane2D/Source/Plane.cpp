@@ -116,24 +116,26 @@ void Plane::Update(float deltaSeconds)
 
 void Plane::Render()
 {
+	RenderManager& renderManager = RenderManager::Get();
+
 	switch (state_)
 	{
 	case EState::Wait:
-		RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
-		RenderManager::Get().DrawTexture2D( leftTapTexture_, Vector2f(center_.x - 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
-		RenderManager::Get().DrawTexture2D(rightTapTexture_, Vector2f(center_.x + 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
-		RenderManager::Get().DrawTexture2D( tickTapTexture_, Vector2f(center_.x +  20.0f, center_.y + 70.0f), tickTapSize_, tickTapSize_, 0.0f);
-		RenderManager::Get().DrawTexture2D(readyTexture_, readyTexturePosition_, 400.0f, 73.0f, 0.0f);
+		renderManager.DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+		renderManager.DrawTexture2D( leftTapTexture_, Vector2f(center_.x - 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
+		renderManager.DrawTexture2D(rightTapTexture_, Vector2f(center_.x + 100.0f,          center_.y), tapWidth_, tapHeight_, 0.0f);
+		renderManager.DrawTexture2D( tickTapTexture_, Vector2f(center_.x +  20.0f, center_.y + 70.0f), tickTapSize_, tickTapSize_, 0.0f);
+		renderManager.DrawTexture2D(readyTexture_, readyTexturePosition_, 400.0f, 73.0f, 0.0f);
 		break;
 
 	case EState::Flight:
-		RenderManager::Get().DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+		renderManager.DrawTexture2D(flightAnimationTextures_[flightAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
 		break;
 
 	case EState::Crash:
 		if (explosionAnimationTextureIndex_ < explosionAnimationTextures_.size())
 		{
-			RenderManager::Get().DrawTexture2D(explosionAnimationTextures_[explosionAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
+			renderManager.DrawTexture2D(explosionAnimationTextures_[explosionAnimationTextureIndex_], center_, width_, height_, rotate_, 1.0f);
 		}
 		break;
 
