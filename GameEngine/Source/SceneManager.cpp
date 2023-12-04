@@ -31,6 +31,13 @@ void SceneManager::DestroyScene(const std::string& signature)
 	}
 }
 
+void SceneManager::SwitchNextScene()
+{
+	currentScene_->ExitScene();
+	currentScene_ = currentScene_->GetNextScene();
+	currentScene_->EnterScene();
+}
+
 bool SceneManager::VerifyScene(const std::string& signature)
 {
 	return scenes_.find(signature) != scenes_.end();

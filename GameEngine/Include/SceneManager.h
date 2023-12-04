@@ -80,6 +80,28 @@ public:
 	void DestroyScene(const std::string& signature);
 
 
+	/**
+	 * @brief 현재 씬 매니저가 가리키는 씬을 얻습니다.
+	 * 
+	 * @return 현재 씬 매니저가 가리키는 씬의 포인터를 반환합니다.
+	 */
+	IScene* GetCurrentScene() { return currentScene_; }
+
+
+	/**
+	 * @brief 현재 씬 매니저가 가리키는 씬을 설정합니다.
+	 * 
+	 * @param currentScene 설정할 씬 포인터입니다.
+	 */
+	void SetCurrentScene(IScene* currentScene) { currentScene_ = currentScene; }
+
+
+	/**
+	 * @brief 현재 가리키는 씬에 연결된 다음 씬으로의 스위칭을 수행합니다.
+	 */
+	void SwitchNextScene();
+
+
 private:
 	/**
 	 * @brief 시그니처 값에 대응하는 씬이 존재하는지 확인합니다.
@@ -96,4 +118,10 @@ private:
 	 * @brief 씬 매니저가 관리하는 씬입니다.
 	 */
 	std::unordered_map<std::string, std::unique_ptr<IScene>> scenes_;
+
+
+	/**
+	 * @brief 씬 매니저가 가리키는 씬입니다.
+	 */
+	IScene* currentScene_ = nullptr;
 };
