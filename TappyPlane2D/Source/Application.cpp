@@ -13,18 +13,18 @@ int main(int argc, char* argv[])
 	GameTimer globalTimer;
 	globalTimer.Reset();
 
-	StartScene* startScene = SceneManager::Get().CreateScene<StartScene>("StartScene");
-	startScene->EnterScene();
+	SceneManager::Get().CreateScene<StartScene>("StartScene");
+	SceneManager::Get().CreateScene<PlayScene>("PlayScene");
 
-	PlayScene* playScene = SceneManager::Get().CreateScene<PlayScene>("PlayScene");
-	//playScene->EnterScene();
+	IScene* scene = SceneManager::Get().SetCurrentScene("StartScene");
+	scene->EnterScene();
 
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
 		globalTimer.Tick();
 		InputManager::Get().Tick();
 
-		startScene->TickScene(globalTimer.GetDeltaSeconds());
+		scene->TickScene(globalTimer.GetDeltaSeconds());
 	}
 
 	EngineManager::Get().Shutdown();
