@@ -42,6 +42,14 @@ public:
 
 
 	/**
+	 * @brief 게임 씬에 입장했는지 확인합니다.
+	 * 
+	 * @return 게임 씬에 입장했다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	virtual bool IsEnterScene() = 0;
+
+
+	/**
 	 * @brief 게임 씬의 한 프레임을 진행합니다.
 	 * 
 	 * @param deltaSeconds 델타 시간값입니다.
