@@ -1,6 +1,7 @@
 #include "EngineManager.h"
 
 #include "PlayScene.h"
+#include "StartScene.h"
 
 int main(int argc, char* argv[])
 {
@@ -12,15 +13,18 @@ int main(int argc, char* argv[])
 	GameTimer globalTimer;
 	globalTimer.Reset();
 
+	StartScene* startScene = SceneManager::Get().CreateScene<StartScene>("StartScene");
+	startScene->EnterScene();
+
 	PlayScene* playScene = SceneManager::Get().CreateScene<PlayScene>("PlayScene");
-	playScene->EnterScene();
+	//playScene->EnterScene();
 
 	while (!InputManager::Get().ShouldCloseWindow())
 	{
 		globalTimer.Tick();
 		InputManager::Get().Tick();
 
-		playScene->TickScene(globalTimer.GetDeltaSeconds());
+		startScene->TickScene(globalTimer.GetDeltaSeconds());
 	}
 
 	EngineManager::Get().Shutdown();
