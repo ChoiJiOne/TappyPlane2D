@@ -91,9 +91,11 @@ public:
 	/**
 	 * @brief 현재 씬 매니저가 가리키는 씬을 설정합니다.
 	 * 
-	 * @param currentScene 설정할 씬 포인터입니다.
+	 * @param signature 매니저 내부 씬의 시그니처 값입니다.
+	 * 
+	 * @return 설정된 씬의 포인터를 반환합니다.
 	 */
-	void SetCurrentScene(IScene* currentScene) { currentScene_ = currentScene; }
+	IScene* SetCurrentScene(const std::string& signature);
 
 
 	/**

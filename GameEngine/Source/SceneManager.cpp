@@ -31,6 +31,12 @@ void SceneManager::DestroyScene(const std::string& signature)
 	}
 }
 
+IScene* SceneManager::SetCurrentScene(const std::string& signature)
+{
+	currentScene_ = GetScene<IScene>(signature);
+	return currentScene_;
+}
+
 void SceneManager::SwitchNextScene()
 {
 	currentScene_->ExitScene();
