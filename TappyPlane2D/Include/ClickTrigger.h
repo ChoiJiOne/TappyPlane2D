@@ -1,10 +1,12 @@
 #pragma once
 
 #include <string>
+#include <functional>
 
 #include "IGameObject.h"
 #include "TTFont.h"
 #include "Vector2.h"
+#include "Vector4.h"
 
 
 /**
@@ -38,8 +40,10 @@ public:
 	 * 
 	 * @param text 클릭 감지 여부를 표시할 때 사용할 텍스트입니다.
 	 * @param center 클릭 감지 여부를 표시할 때 사용할 텍스트의 중심 위치입니다.
+	 * @param color 텍스트의 색상입니다.
+	 * @param trigger 클릭 감지 시 수행할 트리거 이벤트입니다.
 	 */
-	void Initialize(const std::wstring& text, const Vector2f& center);
+	void Initialize(const std::wstring& text, const Vector2f& center, const Vector4f& color, const std::function<void()>& trigger);
 
 
 	/**
@@ -90,7 +94,19 @@ private:
 
 
 	/**
+	 * @brief 텍스트의 색상입니다.
+	 */
+	Vector4f color_;
+
+
+	/**
 	 * @brief 텍스트의 중심 위치입니다.
 	 */
 	Vector2f center_;
+
+
+	/**
+	 * @brief 이벤트 감지 시 수행할 트리거 이벤트입니다.
+	 */
+	std::function<void()> trigger_;
 };
