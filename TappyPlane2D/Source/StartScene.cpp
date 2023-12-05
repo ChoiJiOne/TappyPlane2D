@@ -25,8 +25,8 @@ void StartScene::EnterScene()
 	if (!background)
 	{
 		background = ObjectManager::Get().CreateGameObject<Background>("Background");
-		background->Initialize();
 	}
+	background->Initialize();
 
 	MainTitle* mainTitle = ObjectManager::Get().GetGameObject<MainTitle>("MainTitle");
 	if (!mainTitle)
@@ -39,13 +39,13 @@ void StartScene::EnterScene()
 	if (!clickTrigger)
 	{
 		clickTrigger = ObjectManager::Get().CreateGameObject<ClickTrigger>("StartTrigger");
-		clickTrigger->Initialize(
-			L"PRESS MOUSE BUTTON", 
-			Vector2f(500.0f, 400.0f), 
-			Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
-			[&]() { currentSceneState_ = ESceneState::Exit; }
-		);
 	}
+	clickTrigger->Initialize(
+		L"PRESS MOUSE BUTTON",
+		Vector2f(500.0f, 400.0f),
+		Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+		[&]() { currentSceneState_ = ESceneState::Exit; }
+	);
 
 	objects_ = {
 		background, 
