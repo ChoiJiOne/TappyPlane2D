@@ -16,8 +16,6 @@ Star::~Star()
 
 void Star::Initialize(const Vector2f& center)
 {
-	ASSERT(!bIsInitialized_, "already initialize star game object...");
-
 	SetupProperties(center);
 
 	bIsInitialized_ = true;

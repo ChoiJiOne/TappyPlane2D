@@ -21,8 +21,6 @@ ObjectScheduler::~ObjectScheduler()
 
 void ObjectScheduler::Initialize(const Rock::EType& rockType, const float& startXPosition, const int32_t& countMaxObject)
 {
-	ASSERT(!bIsInitialized_, "already initialize object generator object...");
-
 	bIsActive_ = false;
 	rockType_ = rockType;
 	startXPosition_ = startXPosition;

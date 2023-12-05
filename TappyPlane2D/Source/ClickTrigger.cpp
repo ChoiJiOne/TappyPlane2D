@@ -16,8 +16,6 @@ ClickTrigger::~ClickTrigger()
 
 void ClickTrigger::Initialize(const std::wstring& text, const Vector2f& center, const Vector4f& color, const std::function<void()>& trigger)
 {
-	ASSERT(!bIsInitialized_, "already initialize click trigger object...");
-
 	bIsClick_ = false;
 	text_ = text;
 	color_ = color;

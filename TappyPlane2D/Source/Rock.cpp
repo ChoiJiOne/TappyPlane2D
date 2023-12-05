@@ -34,8 +34,6 @@ Rock::~Rock()
 
 void Rock::Initialize(const EType& type, const float& startXPosition)
 {
-	ASSERT(!bIsInitialized_, "already initialize rock game object...");
-
 	type_ = type;
 	startXPosition_ = startXPosition;
 	SetupProperties();

@@ -15,8 +15,6 @@ MainTitle::~MainTitle()
 
 void MainTitle::Initialize()
 {
-	ASSERT(!bIsInitialized_, "already initialize main title object...");
-
 	int32_t windowWidth = 0;
 	int32_t windowHeight = 0;
 	RenderManager::Get().GetRenderWindowSize(windowWidth, windowHeight);

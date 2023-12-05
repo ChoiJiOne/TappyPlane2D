@@ -17,8 +17,6 @@ Background::~Background()
 
 void Background::Initialize()
 {
-	ASSERT(!bIsInitialized_, "already initialize background game object...");
-
 	bCanMove_ = true;
 
 	texture_ = ResourceManager::Get().GetResource<Texture2D>("background");

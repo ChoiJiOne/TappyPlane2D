@@ -25,8 +25,6 @@ Ground::~Ground()
 
 void Ground::Initialize(const EType& type)
 {
-	ASSERT(!bIsInitialized_, "already initialize ground game object...");
-
 	bCanMove_ = true;
 	
 	int32_t windowWidth = 0;
