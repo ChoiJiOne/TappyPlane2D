@@ -111,6 +111,14 @@ public:
 	EState GetState() const { return state_; }
 
 
+	/**
+	 * @brief 비행기의 폭발 애니메이션 출력이 종료되었는지 확인합니다.
+	 * 
+	 * @return 비행기의 폭발 애니메이션 출력이 종료되었다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	bool IsDoneExplosionAnimation() const { return bIsDoneExplosionAnimation_; }
+
+
 private:
 	/**
 	 * @brief 비행기의 비행 애니메이션을 업데이트합니다.
@@ -303,6 +311,12 @@ private:
 	 * @brief 비행기 대기중일 때 표시할 클릭 탭 텍스처의 크기입니다.
 	 */
 	float tickTapSize_ = 0.0f;
+
+
+	/**
+	 * @brief 비행기 폭발 애니메이션 출력이 종료되었는지 확인합니다.
+	 */
+	bool bIsDoneExplosionAnimation_ = false;
 
 
 	/**
