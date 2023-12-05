@@ -97,21 +97,19 @@ void StartScene::TickScene(float deltaSeconds)
 	{
 	case ESceneState::Enter:
 		bias = MathUtils::Clamp<float>(enterAccumulateTime_, 0.0f, 1.0f);
+		renderManager.PostEffectFadeEffect(bias);
 		break;
 
 	case ESceneState::Exit:
 		bias = 1.0f - MathUtils::Clamp<float>(exitAccumulateTime_, 0.0f, 1.0f);
+		renderManager.PostEffectFadeEffect(bias);
 		break;
 
 	case ESceneState::Wait:
 		bias = 0.0f;
-		break;
-
-	default:
-		bias = 1.0f;
+		renderManager.PostEffectFadeEffect(bias);
 		break;
 	}
-	renderManager.PostEffectFadeEffect(bias);
 	
 	renderManager.EndFrame();
 }
