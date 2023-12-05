@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
 	PlayScene* playScene = SceneManager::Get().CreateScene<PlayScene>("PlayScene");
 
 	startScene->SetNextScene(playScene);
+	playScene->SetNextScene(startScene);
 
 	IScene* scene = SceneManager::Get().SetCurrentScene("StartScene");
 	scene->EnterScene();
