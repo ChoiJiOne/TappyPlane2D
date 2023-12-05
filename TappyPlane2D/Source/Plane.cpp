@@ -77,6 +77,8 @@ void Plane::Initialize(const EColor& colorType)
 
 	countOfCollisionStar_ = 0;
 
+	bIsDoneExplosionAnimation_ = false;
+
 	tapWidth_ = 85.0f;
 	tapHeight_ = 42.0f;
 	tickTapSize_ = 59.0f;
@@ -162,6 +164,7 @@ void Plane::UpdateExplosionAnimation(float deltaSeconds)
 {
 	if (explosionAnimationTextureIndex_ >= explosionAnimationTextures_.size())
 	{
+		bIsDoneExplosionAnimation_ = true;
 		return;
 	}
 
@@ -236,9 +239,6 @@ void Plane::UpdateFlightState(float deltaSeconds)
 
 		Ground* ground = ObjectManager::Get().GetGameObject<Ground>("Ground");
 		ground->SetCanMove(false);
-
-		ScoreBoard* board = ObjectManager::Get().GetGameObject<ScoreBoard>("Board");
-		board->SetActive(false);
 	}
 }
 
