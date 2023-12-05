@@ -103,6 +103,14 @@ public:
 	int32_t GetCountOfCollisionStar() const { return countOfCollisionStar_; }
 
 
+	/**
+	 * @brief 비행기의 상태를 얻습니다.
+	 * 
+	 * @return 비행기의 상태를 반환합니다.
+	 */
+	EState GetState() const { return state_; }
+
+
 private:
 	/**
 	 * @brief 비행기의 비행 애니메이션을 업데이트합니다.
