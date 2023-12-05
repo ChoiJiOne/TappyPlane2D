@@ -17,7 +17,11 @@ void ObjectManager::Shutdown()
 
 	for (auto& gameObject : gameObjects_)
 	{
-		gameObject.second->Release();
+		if(gameObject.second->IsInitialized())
+		{
+			gameObject.second->Release();
+		}
+
 		gameObject.second.reset();
 	}
 
