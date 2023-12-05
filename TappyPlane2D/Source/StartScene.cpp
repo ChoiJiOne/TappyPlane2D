@@ -92,20 +92,26 @@ void StartScene::TickScene(float deltaSeconds)
 		object->Render();
 	}
 
-	if (currentSceneState_ == ESceneState::Enter)
+	float bias = 0.0f;
+	switch (currentSceneState_)
 	{
-		float bias = MathUtils::Clamp<float>(enterAccumulateTime_, 0.0f, 1.0f);
-		renderManager.PostEffectFadeEffect(bias);
+	case ESceneState::Enter:
+		bias = MathUtils::Clamp<float>(enterAccumulateTime_, 0.0f, 1.0f);
+		break;
+
+	case ESceneState::Exit:
+		bias = 1.0f - MathUtils::Clamp<float>(exitAccumulateTime_, 0.0f, 1.0f);
+		break;
+
+	case ESceneState::Wait:
+		bias = 0.0f;
+		break;
+
+	default:
+		bias = 1.0f;
+		break;
 	}
-	else if (currentSceneState_ == ESceneState::Exit)
-	{
-		float bias = 1.0f - MathUtils::Clamp<float>(exitAccumulateTime_, 0.0f, 1.0f);
-		renderManager.PostEffectFadeEffect(bias);
-	}
-	else
-	{
-		renderManager.PostEffectFadeEffect(1.0f);
-	}
+	renderManager.PostEffectFadeEffect(bias);
 	
 	renderManager.EndFrame();
 }
