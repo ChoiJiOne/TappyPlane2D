@@ -114,7 +114,7 @@ private:
 	 */
 	float enterAccumulateTime_ = 0.0f;
 
-
+	
 	/**
 	 * @brief 현재 게임 플레이 씬에 연결된 다음 씬입니다.
 	 */

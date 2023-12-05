@@ -4,6 +4,7 @@
 #include "InputManager.h"
 #include "ObjectManager.h"
 #include "RenderManager.h"
+#include "SceneManager.h"
 
 #include "Background.h"
 #include "ClickTrigger.h"
@@ -101,12 +102,33 @@ void PlayScene::EnterScene()
 			}
 		}
 	);
+
+	restartTrigger_ = ObjectManager::Get().GetGameObject<ClickTrigger>("ResetTrigger");
+	if (!restartTrigger_)
+	{
+		restartTrigger_ = ObjectManager::Get().CreateGameObject<ClickTrigger>("ResetTrigger");
+	}
+	restartTrigger_->Initialize(
+		L"PRESS MOUSE BUTTON FOR RESET",
+		Vector2f(500.0f, 400.0f),
+		Vector4f(1.0f, 0.0f, 0.0f, 1.0f),
+		[&]()
+		{
+			SceneManager::Get().SwitchNextScene();
+		}
+	);
 }
 
 void PlayScene::ExitScene()
 {
 	bIsEnterScene_ = false;
 	currentSceneState_ = ESceneState::Wait;
+
+	InputManager::Get().UnbindWindowEventAction("Minimize");
+	InputManager::Get().UnbindWindowEventAction("LostFocus");
+	InputManager::Get().UnbindWindowEventAction("Move");
+
+	scheduler_->Release();
 }
 
 void PlayScene::TickScene(float deltaSeconds)
@@ -120,20 +142,94 @@ void PlayScene::TickScene(float deltaSeconds)
 		}
 	}
 
+	switch (currentSceneState_)
+	{
+	case ESceneState::Enter:
+		background_->Update(deltaSeconds);
+		ground_->Update(deltaSeconds);
+		scheduler_->Update(deltaSeconds);
+		plane_->Update(deltaSeconds);
+		board_->Update(deltaSeconds);
+		break;
+
+	case ESceneState::Play:
+		background_->Update(deltaSeconds);
+		ground_->Update(deltaSeconds);
+		scheduler_->Update(deltaSeconds);
+		plane_->Update(deltaSeconds);
+		board_->Update(deltaSeconds);
+
+		if (plane_->GetState() == Plane::EState::Crash && plane_->IsDoneExplosionAnimation())
+		{
+			currentSceneState_ = ESceneState::Crash;
+		}
+		break;
+
+	case ESceneState::Pause:
+		continueTrigger_->Update(deltaSeconds);
+		break;
+
+	case ESceneState::Crash:
+		background_->Update(deltaSeconds);
+		ground_->Update(deltaSeconds);
+		scheduler_->Update(deltaSeconds);
+		plane_->Update(deltaSeconds);
+		board_->Update(deltaSeconds);
+		restartTrigger_->Update(deltaSeconds);
+		break;
+
+	case ESceneState::Exit:
+		break;
+
+	default:
+		break;
+	}
+	
 	RenderManager& renderManager = RenderManager::Get();
 	renderManager.SetViewport(0, 0, 1000, 800);
 	renderManager.BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 
-	//for (auto& object : objects_)
-	//{
-	//	object->Update(deltaSeconds);
-	//	object->Render();
-	//}
-
-	if (currentSceneState_ == ESceneState::Enter)
+	switch (currentSceneState_)
 	{
-		float bias = MathUtils::Clamp<float>(enterAccumulateTime_, 0.0f, 1.0f);
-		renderManager.PostEffectFadeEffect(bias);
+	case ESceneState::Enter:
+		background_->Render();
+		ground_->Render();
+		scheduler_->Render();
+		plane_->Render();
+		board_->Render();
+
+		if (currentSceneState_ == ESceneState::Enter)
+		{
+			float bias = MathUtils::Clamp<float>(enterAccumulateTime_, 0.0f, 1.0f);
+			renderManager.PostEffectFadeEffect(bias);
+		}
+		break;
+
+	case ESceneState::Play:
+		background_->Render();
+		ground_->Render();
+		scheduler_->Render();
+		plane_->Render();
+		board_->Render();
+		break;
+
+	case ESceneState::Pause:
+		background_->Render();
+		ground_->Render();
+		scheduler_->Render();
+		plane_->Render();
+		board_->Render();
+		continueTrigger_->Render();
+		break;
+
+	case ESceneState::Crash:
+		background_->Render();
+		ground_->Render();
+		scheduler_->Render();
+		plane_->Render();
+		board_->Render();
+		restartTrigger_->Render();
+		break;
 	}
 
 	renderManager.EndFrame();
