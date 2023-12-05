@@ -16,8 +16,6 @@ ScoreBoard::~ScoreBoard()
 
 void ScoreBoard::Initialize(const Vector2f& center, const Vector4f& color)
 {
-	ASSERT(!bIsInitialized_, "already initialize rock game object...");
-
 	bIsActive_ = false;
 
 	center_ = center;
