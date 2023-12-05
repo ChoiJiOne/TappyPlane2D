@@ -13,6 +13,19 @@ class StartScene : public IScene
 {
 public:
 	/**
+	 * @brief 게임 시작 씬의 상태입니다.
+	 */
+	enum class ESceneState : int32_t
+	{
+		Wait  = 0x00,
+		Enter = 0x01,
+		Play  = 0x02,
+		Exit  = 0x03,
+	};
+
+
+public:
+	/**
 	 * @brief 게임 시작 씬의 디폴트 생성자입니다.
 	 */
 	StartScene() = default;
@@ -63,7 +76,7 @@ public:
 	 *
 	 * @param scene 현재 게임 시작 씬에 연결할 다음 씬입니다.
 	 */
-	virtual void SetNextScene(IScene * scene) override;
+	virtual void SetNextScene(IScene* scene) override;
 
 
 	/**
@@ -82,6 +95,24 @@ private:
 
 
 	/**
+	 * @brief 현재 게임 시작 씬의 상태입니다.
+	 */
+	ESceneState currentSceneState_ = ESceneState::Wait;
+
+
+	/**
+	 * @brief 입장 상태가 되었을 때의 누적 시간값입니다.
+	 */
+	float enterAccumulateTime_ = 0.0f;
+
+
+	/**
+	 * @brief 퇴장 상태가 되었을 때의 누적 시간값입니다.
+	 */
+	float exitAccumulateTime_ = 0.0f;
+
+
+	/**
 	 * @brief 현재 게임 시작 씬에 연결된 다음 씬입니다.
 	 */
 	IScene* nextScene_ = nullptr;
@@ -90,5 +121,5 @@ private:
 	/**
 	 * @brief 게임 시작 씬의 오브젝트들입니다.
 	 */
-	std::array<IGameObject*, 2> objects_;
+	std::array<IGameObject*, 3> objects_;
 };
